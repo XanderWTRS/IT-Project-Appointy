@@ -172,39 +172,29 @@ export default function Register() {
                     />
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
-
+                
                 <div className="mt-4">
-                    <InputLabel htmlFor="keuze_sms" value="Keuze SMS" />
-                    <select
-                        id="keuze_sms"
-                        name="keuze_sms"
-                        value={data.keuze_sms}
-                        onChange={(e) => setData('keuze_sms', e.target.value === 'true')}
-                        className="mt-1 block w-full"
-                        required
-                    >
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                    <InputError message={errors.keuze_sms} className="mt-2" />
+                    <label className="flex items-center">
+                        <input
+                            type="checkbox"
+                            name="privacy_policy"
+                            checked={data.privacy_policy}
+                            onChange={(e) => setData('privacy_policy', e.target.checked)}
+                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                        />
+                        <span className="ml-2 text-sm text-gray-600">
+                            Ik ga akkoord met de{' '}
+                            <Link
+                                href="/privacy-policy"
+                                className="text-indigo-500 underline hover:text-indigo-700"
+                                target="_blank"
+                            >
+                                Privacy Policy
+                            </Link>
+                        </span>
+                    </label>
+                    <InputError message={errors.privacy_policy} className="mt-2" />
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="keuze_email" value="Keuze Email" />
-                    <select
-                        id="keuze_email"
-                        name="keuze_email"
-                        value={data.keuze_email}
-                        onChange={(e) => setData('keuze_email', e.target.value === 'true')}
-                        className="mt-1 block w-full"
-                        required
-                    >
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                    <InputError message={errors.keuze_email} className="mt-2" />
-                </div>
-
                 <div className="mt-4 flex items-center justify-end">
                     <Link
                         href={route('login')}

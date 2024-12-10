@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('afspraken', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('afspraak_id');
+            $table->unsignedBigInteger('user_id'); 
+            $table->date('datum'); 
+            $table->text('behandeling'); 
+            $table->timestamps(); 
         });
     }
 

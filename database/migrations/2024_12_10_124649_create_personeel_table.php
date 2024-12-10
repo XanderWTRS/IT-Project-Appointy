@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('personeel', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('voornaam', 255); 
+            $table->string('naam', 255); 
+            $table->string('functie', 255); 
+            $table->text('bio')->nullable(); 
+            $table->timestamps(); 
         });
     }
 
