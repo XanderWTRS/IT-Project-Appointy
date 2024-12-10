@@ -11,11 +11,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         {/* Logo */}
                         <div className="flex items-center">
                             <img
-                                src="/path-to-logo.png" // Replace with your logo image path
+                                src="/Assets/IMG/logo_liedent.png"
                                 alt="Liedent Logo"
-                                className="h-10"
+                                className="h-14"
                             />
-                            <span className="ml-2 text-2xl font-bold text-gray-800">Liedent</span>
                         </div>
 
                         {/* Navigation */}
@@ -34,26 +33,31 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </a>
                         </nav>
 
-                        {/* Appointment Button */}
-                        <div className="flex items-center space-x-4">
-                            <a
-                                href="#appointment"
-                                className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500"
-                            >
-                                Afspraak Maken
-                            </a>
-                            <button className="text-gray-800">
-                                <i className="fas fa-user-circle text-2xl"></i> {/* User icon */}
+                        <div className='flex items-center'>
+                            {/* Appointment Button */}
+                            <div className="flex items-center space-x-4">
+                                <a
+                                    href="#appointment"
+                                    className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500"
+                                >
+                                    Afspraak Maken
+                                </a>
+                                <button className="text-gray-800">
+                            {/* User icon */}
                             </button>
+                                </div>
+                                    <button className="flex items-center space-x-2 ml-4">
+                                        <img src="/Assets/Icons/Profile.svg" alt="Button Icon" className="h-10" />
+                                    </button>
+                                </div>
                         </div>
-                    </div>
-                </header>
+                    </header>
 
                 {/* Hero Section */}
                 <main
-                    className="relative bg-gray-100"
+                    className="relative bg-gray-100 h-[70vh]"
                     style={{
-                        backgroundImage: `url('/path-to-background-image.jpg')`, // Replace with your hero background image path
+                        backgroundImage: `url('/Assets/IMG/Hero.png')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
