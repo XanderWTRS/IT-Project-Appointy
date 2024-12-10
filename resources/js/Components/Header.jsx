@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@inertiajs/react';
 
 const Header = () => {
     return (
@@ -50,13 +51,12 @@ const Header = () => {
                         >
                             Afspraak Maken
                         </a>
-                        <button className="text-gray-800">
-                            {/* User icon */}
-                        </button>
                     </div>
-                    <button className="flex items-center space-x-2 ml-4">
-                        <img src="/Assets/Icons/Profile.svg" alt="Button Icon" className="h-10" />
-                    </button>
+                    <Link href="/register">
+                        <button className="flex items-center space-x-2 ml-4">
+                            <img src="/Assets/Icons/Profile.svg" alt="Button Icon" className="h-10" />
+                        </button>
+                    </Link>
                 </div>
             </div>
         </header>

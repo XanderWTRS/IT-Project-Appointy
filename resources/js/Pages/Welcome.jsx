@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import Header from '@/Components/Header';
-import { Link } from '@inertiajs/react';
+
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
