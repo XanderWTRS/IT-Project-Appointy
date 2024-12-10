@@ -1,12 +1,13 @@
 import { Head } from '@inertiajs/react';
 import Header from '@/Components/Header';
+import { Link } from '@inertiajs/react';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
             <div className="font-sans">
-                <Header auth={auth} />
+            <Header auth={auth} />
 
                 {/* Hero Section */}
                 <main
