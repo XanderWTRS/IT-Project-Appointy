@@ -13,11 +13,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('voornaam', 255); 
+            $table->string('naam', 255); 
+            $table->date('geboortedatum');
+            $table->string('mutualiteit', 255)->nullable();
+            $table->string('rijksregister_nr', 11)->unique();
+            $table->string('tandarts', 255)->nullable(); 
+            $table->string('gsm_nummer', 15);
+            $table->string('email')->unique(); 
+            $table->string('password'); 
+            $table->timestamp('datum_registratie')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->boolean('keuze_sms')->default(false); 
+            $table->boolean('keuze_email')->default(false); 
+            $table->boolean('betaald')->default(false);
+            $table->rememberToken(); 
             $table->timestamps();
         });
 
@@ -29,7 +38,7 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');

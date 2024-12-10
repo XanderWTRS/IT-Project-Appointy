@@ -14,7 +14,11 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
+
+Route::get('/register', function () {
+    return Inertia::render('Register');
+})->middleware(['auth', 'verified'])->name('register');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -34,5 +38,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/klanten', function () {
+    return Inertia::render('KlantenPage');
+})->name('klanten');
 
 require __DIR__.'/auth.php';
