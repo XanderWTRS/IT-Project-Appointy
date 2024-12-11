@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AppointmentController;
 
+use App\Http\Controllers\KlantenController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -72,4 +73,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return Inertia::render('Admin/AdminPage');
         })->name('nieuwe-pagina');
 });
+
+Route::get('/admin/klanten', [KlantenController::class, 'index'])->name('admin.klanten');
+
 require __DIR__.'/auth.php';

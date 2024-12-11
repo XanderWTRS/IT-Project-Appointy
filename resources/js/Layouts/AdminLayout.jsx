@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "../Components/Sidebar";
 
+
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const sidebarRef = useRef(null);
@@ -73,20 +74,11 @@ const AdminLayout = ({ children }) => {
 
                         {/* Profile Icon */}
                         <div className="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-gray-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5.121 17.804A7.5 7.5 0 0112 15a7.5 7.5 0 016.879 2.804M15 11a4 4 0 11-8 0 4 4 0 018 0z"
-                                />
-                            </svg>
+                        <img
+                            src="/Assets/Icons/Profile.svg" 
+                            alt="Profile Icon"
+                            className="h-6 w-6" 
+                        />
                         </div>
                     </div>
                 </header>
