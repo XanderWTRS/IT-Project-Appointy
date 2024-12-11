@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import BrutalistButton from './BrutalistButton';
+import '../../css/BrutalistButton.css';
 
 const Footer = () => {
     return (
-        <footer className="text-white bg-gray-800 py-8">
+        <footer className="text-white bg-gray-800 pt-4">
             <div className="max-w-6xl grid grid-cols-1 md:grid-cols-3 text-left" style={{ marginLeft: '20rem' , gap: '15.75rem'}}>
                 {/* Column 1 */}
                 <div>
@@ -54,7 +56,8 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-2 -mb-4 pt-4 text-center text-sm">
+            <div className="mt-2 pb-2 pt-4 text-center text-sm flex" style={{flexDirection: 'column', alignItems: 'center'}}>
+                <BrutalistButton/>
                 &copy; {new Date().getFullYear()} Liedent. All rights reserved.
             </div>
         </footer>
