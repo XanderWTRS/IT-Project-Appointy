@@ -18,6 +18,13 @@ export default function Edit({ user }) {
     const submit = (e) => {
         e.preventDefault();
         put(route('profile.update'));
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.style.display = 'flex';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
     };
 
     return (
@@ -170,6 +177,14 @@ export default function Edit({ user }) {
                                         const form = document.createElement('form');
                                         form.method = 'POST';
                                         form.action = route('logout');
+
+                                        const csrfToken = document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content');
+                                        const input = document.createElement('input');
+                                        input.type = 'hidden';
+                                        input.name = '_token';
+                                        input.value = csrfToken;
+                                        form.appendChild(input);
+
                                         document.body.appendChild(form);
                                         form.submit();
                                     }}
