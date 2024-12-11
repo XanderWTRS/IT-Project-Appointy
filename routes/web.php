@@ -45,4 +45,21 @@ Route::get('/klanten', function () {
     return Inertia::render('KlantenPage');
 })->name('klanten');
 
+//------------------USER------------------
+Route::get('/tandheelkunde', function () {
+    return Inertia::render('TandheelkundePage');
+})->name('tandheelkunde');
+
+Route::get('/orthodontie', function () {
+    return Inertia::render('OrthodontiePage');
+})->name('orthodontie');
+
+Route::get('/endodontie', function () {
+    return Inertia::render('EndodontiePage');
+})->name('endodontie');
+
+Route::get('/paradontologie', function () {
+    return Inertia::render('ParadontologiePage');
+})->name('paradontologie');
+
 require __DIR__.'/auth.php';
