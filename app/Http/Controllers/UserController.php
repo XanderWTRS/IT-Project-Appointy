@@ -44,4 +44,6 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Gebruiker succesvol verwijderd']);
     }
+
+    
 }
