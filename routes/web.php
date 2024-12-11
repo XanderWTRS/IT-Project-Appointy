@@ -28,8 +28,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/klanten', function () {
-    return Inertia::render('KlantenPage'); 
-})->name('klanten');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/klanten', function () {
+        return Inertia::render('Admin/KlantenPage');
+    })->name('klanten');
+
+        // Nieuwe pagina (AdminPage)
+        Route::get('/nieuwe-pagina', function () {
+            return Inertia::render('Admin/AdminPage');
+        })->name('nieuwe-pagina');
+});
+
 
 require __DIR__.'/auth.php';
