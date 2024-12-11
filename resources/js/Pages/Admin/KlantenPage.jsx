@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
-import Edit from "../Components/Edit";
+import Edit from "/resources/js/Components/Edit";
 
 const KlantenPage = ({ klanten }) => {
-    const [search, setSearch] = useState(""); 
-    const [filteredKlanten, setFilteredKlanten] = useState(klanten); 
+    const [search, setSearch] = useState("");
+    const [filteredKlanten, setFilteredKlanten] = useState(klanten);
 
     const handleSearch = (e) => {
-        const value = e.target.value.toLowerCase(); 
+        const value = e.target.value.toLowerCase();
         setSearch(value);
 
         const filtered = klanten.filter(
