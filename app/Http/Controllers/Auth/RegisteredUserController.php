@@ -55,7 +55,7 @@ class RegisteredUserController extends Controller
             'tandarts' => $request->tandarts,
             'gsm_nummer' => $request->gsm_nummer,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->input('password')),
             'keuze_sms' => $request->keuze_sms,
             'keuze_email' => $request->keuze_email,
         ]);

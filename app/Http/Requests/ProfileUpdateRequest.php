@@ -2,29 +2,32 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function authorize()
+    {
+        return true; 
+    }
+
+    public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
-            ],
+            'voornaam' => ['required', 'string', 'max:255'],
+            'naam' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($this->user()->id)],
+            'geboortedatum' => ['nullable', 'date'],
+            'mutualiteit' => ['nullable', 'string', 'max:255'],
+            'rijksregister_nr' => ['nullable', 'string', 'max:255'],
+            'tandarts' => ['nullable', 'string', 'max:255'],
+            'gsm_nummer' => ['nullable', 'string', 'max:255'],
+            'datum_registratie' => ['nullable', 'date'],
+            'keuze_sms' => ['nullable', 'string', 'max:255'],
+            'keuze_email' => ['nullable', 'string', 'max:255'],
+            'betaald' => ['nullable', 'boolean'],
+            'password' => ['nullable', 'string', 'min:8'],
         ];
     }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import '../../css/BrutalistButton.css'; // Adjust based on actual folder structure
+import '../../css/BrutalistButton.css';
 
 const BrutalistButton = ({ text = 'MXS', subtext = 'Get it from' }) => {
-  const logoPath = `${process.env.PUBLIC_URL}/assets/img/download.png`;
+  const logoPath = '/Assets/MaxelixSolutions/LOGO-icon.png';
 
   return (
     <button className="brutalist-button">

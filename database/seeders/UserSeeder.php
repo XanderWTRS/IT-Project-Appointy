@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -14,19 +15,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'voornaam' => 'test',
-            'naam' => 'test',
-            'geboortedatum' => '1990-01-01',
-            'mutualiteit' => 'Partena',
-            'rijksregister_nr' => '90010100100',
-            'tandarts' => 'Dr. Janssens',
-            'gsm_nummer' => '0499123456',
-            'email' =>'test@test.com',
-            'password' => Hash::make('testtest'),
-            'datum_registratie' => '2021-01-01',
-            'keuze_sms' => true,
-            'keuze_email' => true,
-            'betaald' => false]);
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            User::create([
+                'voornaam' => $faker->firstName,
+                'naam' => $faker->lastName,
+                'geboortedatum' => $faker->date($format = 'Y-m-d', $max = '2010-01-01'),
+                'mutualiteit' => $faker->randomElement(['Partena', 'CM', 'LM', 'OZ', 'Bond Moyson']),
+                'rijksregister_nr' => $faker->regexify('[0-9]{11}'),
+                'tandarts' => 'Dr. ' . $faker->lastName,
+                'gsm_nummer' => $faker->phoneNumber,
+                'email' => $faker->unique()->safeEmail,
+                'password' => Hash::make('password123'), // Standaard wachtwoord
+                'datum_registratie' => $faker->date($format = 'Y-m-d', $max = 'now'),
+                'keuze_sms' => $faker->boolean,
+                'keuze_email' => $faker->boolean,
+                'betaald' => $faker->boolean,
+            ]);
+        }
     }
 }

@@ -1,7 +1,7 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ApplicationLogo from '/resources/js/Components/ApplicationLogo';
+import Dropdown from '/resources/js/Components/Dropdown';
+import NavLink from '/resources/js/Components/NavLink';
+import ResponsiveNavLink from '/resources/js/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -25,10 +25,10 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    href={route('profile.edit')}
+                                    active={route().current('profile.edit')}
                                 >
-                                    Dashboard
+                                    Profile edit
                                 </NavLink>
                             </div>
                         </div>
@@ -129,10 +129,10 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('profile.edit')}
+                            active={route().current('profile.edit')}
                         >
-                            Dashboard
+                            Profile edit
                         </ResponsiveNavLink>
                     </div>
 
