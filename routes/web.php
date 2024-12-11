@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AppointmentController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -19,7 +21,10 @@ Route::get('/register', function () {
 })->middleware(['auth', 'verified'])->name('register');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'auth' => [
+            'user' => Auth::user(),
+        ],]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -27,6 +32,35 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+});
+
+
+Route::get('/klanten', function () {
+    return Inertia::render('KlantenPage'); 
+})->name('klanten');
+
+Route::get('/tandheelkunde', function () {
+    return Inertia::render('TandheelkundePage');
+})->name('tandheelkunde');
+
+Route::get('/orthodontie', function () {
+    return Inertia::render('OrthodontiePage');
+})->name('orthodontie');
+
+Route::get('/endodontie', function () {
+    return Inertia::render('EndodontiePage');
+})->name('endodontie');
+
+Route::get('/paradontologie', function () {
+    return Inertia::render('ParadontologiePage');
+})->name('paradontologie');
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/klanten', function () {
@@ -38,6 +72,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
             return Inertia::render('Admin/AdminPage');
         })->name('nieuwe-pagina');
 });
-
-
 require __DIR__.'/auth.php';
