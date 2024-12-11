@@ -3,7 +3,6 @@ import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import BehandelingenCard from '/resources/js/Components/BehandelingCard';
 import BackToTop from '/resources/js/Components/BackToTop';
-import Chatbot from '/resources/js/Components/ChatBot';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
@@ -297,7 +296,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
                         </div>
                     </section>
-                    <Chatbot />
                 <Footer />
             </div>
         </>
