@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
-import { Link } from "@inertiajs/react";
 
 const KlantenPage = ({ klanten }) => {
+    const [search, setSearch] = useState(""); // Zoekterm bijhouden
+    const [filteredKlanten, setFilteredKlanten] = useState(klanten); // Gefilterde klanten
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase(); // Zet de zoekterm in kleine letters
+        setSearch(value);
+
+        // Filter klanten op basis van voornaam, achternaam of rijksregisternummer
+        const filtered = klanten.filter(
+            (klant) =>
+                klant.voornaam.toLowerCase().includes(value) ||
+                klant.naam.toLowerCase().includes(value) ||
+                klant.rijksregister_nr.toLowerCase().includes(value)
+        );
+
+        setFilteredKlanten(filtered);
+    };
+
     return (
         <AdminLayout>
             <div className="flex justify-between items-center mb-6">
@@ -16,6 +33,8 @@ const KlantenPage = ({ klanten }) => {
                     <input
                         type="text"
                         placeholder="Zoek een klant..."
+                        value={search}
+                        onChange={handleSearch}
                         className="w-full p-2 border border-gray-300 rounded"
                     />
                 </div>
@@ -28,24 +47,35 @@ const KlantenPage = ({ klanten }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {klanten.map((klant) => (
-                            <tr key={klant.id} className="hover:bg-gray-50">
-                                <td className="p-2 border border-gray-300">
-                                    {klant.voornaam} {klant.naam}{" "}
-                                    <span className="text-blue-500">
-                                        #{klant.id}
-                                    </span>
-                                </td>
-                                <td className="p-2 border border-gray-300">
-                                    {klant.rijksregister_nr || "Onbekend"}
-                                </td>
-                                <td className="p-2 border border-gray-300 text-center">
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                        Info
-                                    </button>
+                        {filteredKlanten.length > 0 ? (
+                            filteredKlanten.map((klant) => (
+                                <tr key={klant.id} className="hover:bg-gray-50">
+                                    <td className="p-2 border border-gray-300">
+                                        {klant.voornaam} {klant.naam}{" "}
+                                        <span className="text-blue-500">
+                                            #{klant.id}
+                                        </span>
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        {klant.rijksregister_nr || "Onbekend"}
+                                    </td>
+                                    <td className="p-2 border border-gray-300 text-center">
+                                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                            Info
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan="3"
+                                    className="p-2 text-center text-gray-500"
+                                >
+                                    Geen resultaten gevonden.
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>

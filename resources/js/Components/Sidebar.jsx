@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     Dashboard
                 </a>
                 <a
-                    href="/klanten"
+                    href="/admin/klanten"
                     className="block py-2.5 px-4 rounded bg-blue-600"
                 >
                     Klanten

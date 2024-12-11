@@ -1,0 +1,14 @@
+@keyframes spinToGreenQuick {
+    0% {
+        transform: rotate(0deg);
+        border-color: gray gray gray lightgreen;
+    }
+    100% {
+        transform: rotate(360deg);
+        border-color: lightgreen lightgreen lightgreen lightgreen;
+    }
+}
+
+.animate-spin-to-green {
+    animation: spinToGreenQuick 1s ease-in-out forwards; /* 0.5 seconden */
+}

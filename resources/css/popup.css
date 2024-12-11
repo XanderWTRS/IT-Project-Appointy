@@ -1,0 +1,62 @@
+.delete-popup {
+    background-color: #ffffff; /* Witte achtergrond */
+    border: 1px solid #e5e7eb; /* Lichtgrijze rand */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 24px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  .delete-popup h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937; /* Donkergrijze kleur */
+    margin-bottom: 16px;
+  }
+  
+  .delete-popup p {
+    font-size: 0.875rem;
+    color: #6b7280; /* Middengrijze kleur */
+    margin-bottom: 24px;
+  }
+  
+  .delete-popup .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .delete-popup .button-cancel {
+    background-color: #f9fafb; /* Lichtgrijze achtergrond */
+    color: #6b7280; /* Middengrijze tekstkleur */
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid #d1d5db; /* Grijze rand */
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .delete-popup .button-cancel:hover {
+    background-color: #f3f4f6; /* Iets donkerdere grijze achtergrond */
+    color: #374151; /* Donkerdere tekstkleur */
+    border-color: #cbd5e1;
+  }
+  
+  .delete-popup .button-confirm {
+    background-color: #ef4444; /* Rood */
+    color: #ffffff; /* Witte tekst */
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .delete-popup .button-confirm:hover {
+    background-color: #dc2626; /* Donkerder rood */
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+  }
+  
