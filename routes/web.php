@@ -22,10 +22,7 @@ Route::get('/register', function () {
 })->middleware(['auth', 'verified'])->name('register');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
-        'auth' => [
-            'user' => Auth::user(),
-        ],]);
+    return redirect()->route('profile.edit');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

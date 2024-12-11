@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
-import Header from '@/Components/Header';
-import Footer from '@/Components/Footer';
-import BehandelingenCard from '@/Components/BehandelingCard';
+import Header from '/resources/js/Components/Header';
+import Footer from '/resources/js/Components/Footer';
+import BehandelingenCard from '/resources/js/Components/BehandelingCard';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (

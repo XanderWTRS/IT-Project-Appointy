@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from '/resources/js/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 
 

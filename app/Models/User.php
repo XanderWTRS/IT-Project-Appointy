@@ -30,6 +30,7 @@ class User extends Authenticatable
         'keuze_sms',
         'keuze_email',
         'betaald',
+        'password',
     ];
 
 
