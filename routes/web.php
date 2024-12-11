@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AppointmentController;
 
+use App\Http\Controllers\KlantenController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -42,7 +43,37 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/klanten', function () {
-    return Inertia::render('KlantenPage');
+    return Inertia::render('KlantenPage'); 
 })->name('klanten');
+
+Route::get('/tandheelkunde', function () {
+    return Inertia::render('TandheelkundePage');
+})->name('tandheelkunde');
+
+Route::get('/orthodontie', function () {
+    return Inertia::render('OrthodontiePage');
+})->name('orthodontie');
+
+Route::get('/endodontie', function () {
+    return Inertia::render('EndodontiePage');
+})->name('endodontie');
+
+Route::get('/paradontologie', function () {
+    return Inertia::render('ParadontologiePage');
+})->name('paradontologie');
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/klanten', function () {
+        return Inertia::render('Admin/KlantenPage');
+    })->name('klanten');
+
+        // Nieuwe pagina (AdminPage)
+        Route::get('/nieuwe-pagina', function () {
+            return Inertia::render('Admin/AdminPage');
+        })->name('nieuwe-pagina');
+});
+
+Route::get('/admin/klanten', [KlantenController::class, 'index'])->name('admin.klanten');
 
 require __DIR__.'/auth.php';
