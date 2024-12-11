@@ -48,29 +48,29 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <BehandelingenCard
                             afb={"/Assets/Icons/tandheelkunde.png"}
                             title={"Tandheelkunde"}
-                            description={"De algemene tandheelkunde wordt in onze praktijk uitgevoerd door tandartsen en mondhygiënisten."}>
-                        </BehandelingenCard>
+                            description={"De algemene tandheelkunde wordt in onze praktijk uitgevoerd door tandartsen en mondhygiënisten."}
+                            route="/tandheelkunde"/>
 
                         {/* Orthodontie */}
                         <BehandelingenCard
                             afb={"/Assets/Icons/orthodontie.png"}
                             title={"Orthodontie"}
-                            description={"Orthodontie is een specialisme in de tandheelkunde dat zich bezighoudt met het optimaliseren van de stand van tanden in de kaken door middel van beugels."}>
-                        </BehandelingenCard>
+                            description={"Orthodontie is een specialisme in de tandheelkunde dat zich bezighoudt met het optimaliseren van de stand van tanden in de kaken door middel van beugels."}
+                            route="/orthodontie"/>
 
                         {/* Endodontie */}
                         <BehandelingenCard
                             afb={"/Assets/Icons/endondontie.png"}
                             title={"Endodontie"}
-                            description={"Cariës, een trauma of een diepe vulling kunnen de tandzenuw of pulpa aantasten. Als gevolg daarvan kan het pulpaweefsel ontsteken (pulpitis) en tandpijn veroorzaken."}>
-                        </BehandelingenCard>
+                            description={"Cariës, een trauma of een diepe vulling kunnen de tandzenuw of pulpa aantasten. Als gevolg daarvan kan het pulpaweefsel ontsteken (pulpitis) en tandpijn veroorzaken."}
+                            route="/endodontie"/>
 
                         {/* Paradontologie */}
                         <BehandelingenCard
                             afb={"/Assets/Icons/paradontologie.png"}
-                            title={"Paraondontologie"}
-                            description={"In de paradontologie legt men zich toe op het behandelen van ontstoken tandvlees (gingivitis) en andere weefsels rond de tand (parodontitis)."}>
-                        </BehandelingenCard>
+                            title={"Parodontologie"}
+                            description={"In de paradontologie legt men zich toe op het behandelen van ontstoken tandvlees (gingivitis) en andere weefsels rond de tand (parodontitis)."}
+                            route="/paradontologie"/>
                     </div>
                     </section>
 
