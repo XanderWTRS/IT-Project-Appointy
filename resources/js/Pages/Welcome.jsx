@@ -297,7 +297,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
                         </div>
                     </section>
-                    <Chatbot />
                 <Footer />
             </div>
         </>
