@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
 import "../../css/button.css";
-import "/resources/css/logout.css"; // Zorg dat je CSS voor de nieuwe Logout-knop hier wordt geïmporteerd
+import "/resources/css/logout.css";
 
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,7 +26,7 @@ const AdminLayout = ({ children }) => {
     }, []);
 
     const handleLogout = () => {
-        window.location.href = "/logout"; // Voeg hier je logout-logica 
+        window.location.href = "/logout"; 
     };
 
     return (

@@ -33,13 +33,18 @@ const UserDetailsPage = ({ user }) => {
     const handleConfirmDelete = async () => {
         try {
             await axios.delete(`/admin/users/${user.id}`);
-            alert("Gebruiker succesvol verwijderd");
             setShowDeletePopUp(false);
+            setShowConfirmation(true);
+            setTimeout(() => {
+                setShowConfirmation(false);
+                window.location.href = "/admin/klanten"; 
+            }, 2000);
         } catch (error) {
             console.error("Error bij het verwijderen van de gebruiker:", error);
-            alert("Er is iets misgegaan. Probeer het opnieuw.");
         }
     };
+    
+    
 
     const handleCancelDelete = () => {
         setShowDeletePopUp(false);
