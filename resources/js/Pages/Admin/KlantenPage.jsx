@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import Excel from "/resources/js/Components/Excel";
 import SearchBar from "/resources/js/Components/SearchBar";
-import Edit from "../Components/Edit";
+import Edit from "/resources/js/Components/Edit";
 
 const KlantenPage = ({ klanten }) => {
   const [search, setSearch] = useState("");
