@@ -2,6 +2,8 @@ import { Head } from '@inertiajs/react';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import BehandelingenCard from '/resources/js/Components/BehandelingCard';
+import BackToTop from '/resources/js/Components/BackToTop';
+import Chatbot from '/resources/js/Components/ChatBot';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
@@ -36,8 +38,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
                 </main>
 
+                <BackToTop />
+
                 {/* Kaarten */}
-                <section className="container mx-auto justify-between items-center py-4 px-8" style={{ height: '75vh' }}>
+                <section id='behandelingen' className="container mx-auto justify-between items-center py-4 px-8" style={{ height: '75vh' }}>
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
                         Behandelingen
                         <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
@@ -75,15 +79,15 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </section>
 
                     {/* Team Section */}
-                    <section className="container mx-auto justify-between items-center py-4 px-6" style={{ height: '75vh' }}>
+                    <section id='team' className="container mx-auto justify-between items-center py-4 px-6" style={{ height: '75vh' }}>
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
                         Team
                         <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
                     </h1>
                     </section>
 
-
-                    <section className="container mx-auto justify-between items-center py-4 px-6" style={{ height: '75vh' }}>
+                    {/* Contact */}
+                    <section id='contact' className="container mx-auto justify-between items-center py-4 px-6" style={{ height: '75vh' }}>
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
                             Contact
                             <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
@@ -129,7 +133,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </section>
 
                     {/* ContactUs Section */}
-                    <section className="container mx-auto py-4 px-6" style={{ height: '75vh'}}>
+                    <section id='contacteer-ons' className="container mx-auto py-4 px-6" style={{ height: '75vh'}}>
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
                             Contacteer ons
                             <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
@@ -213,7 +217,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
 
                     {/* Wachtdienst Section */}
-                    <section className="container mx-auto py-4 px-6 mb-14">
+                    <section id='wachtdienst' className="container mx-auto py-4 px-6 mb-14">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
                             Wachtdienst
                             <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
@@ -292,8 +296,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 </div>
                             </div>
                         </div>
-                        </section>
-
+                    </section>
+                    <Chatbot />
                 <Footer />
             </div>
         </>
