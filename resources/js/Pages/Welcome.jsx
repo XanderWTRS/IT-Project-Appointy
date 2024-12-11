@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head} from '@inertiajs/react';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import BehandelingenCard from '/resources/js/Components/BehandelingCard';

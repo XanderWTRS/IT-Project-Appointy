@@ -7,6 +7,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\AppointmentController;
 
 use App\Http\Controllers\KlantenController;
+use App\Http\Controllers\UserController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -22,10 +24,7 @@ Route::get('/register', function () {
 })->middleware(['auth', 'verified'])->name('register');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
-        'auth' => [
-            'user' => Auth::user(),
-        ],]);
+    return redirect()->route('profile.edit');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -74,6 +73,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         })->name('nieuwe-pagina');
 });
 
-Route::get('/admin/klanten', [KlantenController::class, 'index'])->name('admin.klanten');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/klanten', [KlantenController::class, 'index'])->name('klanten');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+
+
 
 require __DIR__.'/auth.php';

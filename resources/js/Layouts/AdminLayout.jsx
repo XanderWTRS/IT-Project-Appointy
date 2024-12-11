@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
-
+import "../../css/button.css";
+import "/resources/css/logout.css";
 
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,7 +14,7 @@ const AdminLayout = ({ children }) => {
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
-                setIsSidebarOpen(false); 
+                setIsSidebarOpen(false);
             }
         };
 
@@ -23,6 +24,10 @@ const AdminLayout = ({ children }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    const handleLogout = () => {
+        window.location.href = "/logout"; 
+    };
 
     return (
         <div className="flex h-screen bg-blue-50 relative">
@@ -41,11 +46,11 @@ const AdminLayout = ({ children }) => {
                 {!isSidebarOpen && (
                     <button
                         onClick={(e) => {
-                            e.stopPropagation(); 
+                            e.stopPropagation();
                             toggleSidebar();
                         }}
                         className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full focus:outline-none hover:scale-110 transform transition-transform"
-                        style={{ top: "4.2rem" , left: "1rem" }}  
+                        style={{ top: "4.5rem", left: "1rem" }}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -72,14 +77,15 @@ const AdminLayout = ({ children }) => {
                             Liedent Dashboard
                         </h1>
 
-                        {/* Profile Icon */}
-                        <div className="flex items-center">
-                        <img
-                            src="/Assets/Icons/Profile.svg" 
-                            alt="Profile Icon"
-                            className="h-6 w-6" 
-                        />
-                        </div>
+                        {/* Logout Button */}
+                        <button className="Btn" onClick={handleLogout}>
+                            <div className="sign">
+                                <svg viewBox="0 0 512 512">
+                                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                                </svg>
+                            </div>
+                            <div className="text">Uitloggen</div>
+                        </button>
                     </div>
                 </header>
 
