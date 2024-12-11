@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
+import Edit from "../Components/Edit";
 
 const KlantenPage = ({ klanten }) => {
-    const [search, setSearch] = useState(""); // Zoekterm bijhouden
-    const [filteredKlanten, setFilteredKlanten] = useState(klanten); // Gefilterde klanten
+    const [search, setSearch] = useState(""); 
+    const [filteredKlanten, setFilteredKlanten] = useState(klanten); 
 
     const handleSearch = (e) => {
-        const value = e.target.value.toLowerCase(); // Zet de zoekterm in kleine letters
+        const value = e.target.value.toLowerCase(); 
         setSearch(value);
 
-        // Filter klanten op basis van voornaam, achternaam of rijksregisternummer
         const filtered = klanten.filter(
             (klant) =>
                 klant.voornaam.toLowerCase().includes(value) ||
@@ -60,9 +60,7 @@ const KlantenPage = ({ klanten }) => {
                                         {klant.rijksregister_nr || "Onbekend"}
                                     </td>
                                     <td className="p-2 border border-gray-300 text-center">
-                                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                            Info
-                                        </button>
+                                        <Edit userId={klant.id} />
                                     </td>
                                 </tr>
                             ))

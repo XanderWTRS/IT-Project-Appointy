@@ -8,8 +8,6 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-
-
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -17,7 +15,8 @@ class UserController extends Controller
         return Inertia::render('Admin/UserDetailsPage', [
             'user' => $user,
         ]);
-    }   
+    }
+
     public function update(Request $request, $id)
     {
         // Valideer de gegevens
@@ -35,5 +34,14 @@ class UserController extends Controller
         $user->update($validatedData);
 
         return response()->json(['message' => 'Gebruiker succesvol bijgewerkt']);
+    }
+
+    public function destroy($id)
+    {
+        // Zoek en verwijder de gebruiker
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'Gebruiker succesvol verwijderd']);
     }
 }
