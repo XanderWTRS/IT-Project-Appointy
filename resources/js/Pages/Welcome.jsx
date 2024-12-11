@@ -21,10 +21,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 >
                     <div className="bg-black bg-opacity-50 absolute inset-0"></div>
                     <div className="relative container mx-auto py-32 px-6 text-white text-center">
-                        <h1 className="text-4xl font-bold mb-4">
+                        <h1 className="text-6xl font-bold mb-4">
                             Tandartsen Praktijk Liedent
                         </h1>
-                        <p className="text-lg font-light mb-6">
+                        <p className="text-lg font-light mb-10">
                             Tandheelkunde - Orthodontie - Endodontie - Parodontologie
                         </p>
                         <a
@@ -107,7 +107,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </p>
                             <p className="text-lg">
                                 <span role="img" aria-label="clock">🕒</span>
-                                09:00 - 17:00
+                                MA-VRIJ:
+                                <span className="text-blue-500"> 08:00 - 17:00</span><br></br>
+                                <span className='ml-6'>ZAT-ZON:</span>
+                                <span className="text-blue-500"> GESLOTEN</span>
                             </p>
                         </div>
 
