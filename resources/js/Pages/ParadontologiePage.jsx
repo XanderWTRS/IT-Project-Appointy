@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
-import Header from '@/Components/Header';
-import Footer from '@/Components/Footer';
+import Header from '/resources/js/Components/Header';
+import Footer from '/resources/js/Components/Footer';
 import React from 'react';
 
 export default function ParadontologiePage() {
