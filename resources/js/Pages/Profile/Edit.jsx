@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from "react";
 import { Head, useForm } from '@inertiajs/react';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
+import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
+import DeletePopUp from '/resources/js/Components/DeletePopUp';
+import "/resources/css/bevstig.css";
 
 export default function Edit({ user }) {
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+
     const { data, setData, put, processing, errors } = useForm({
         email: user.email || '',
         voornaam: user.voornaam || '',
@@ -18,13 +24,22 @@ export default function Edit({ user }) {
     const submit = (e) => {
         e.preventDefault();
         put(route('profile.update'));
-        const successMessage = document.getElementById('success-message');
-        if (successMessage) {
-            successMessage.style.display = 'flex';
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 3000);
-        }
+    };
+
+    const handleDeleteAccount = () => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = route('delete-account', { id: user.id });
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = '_token';
+        input.value = csrfToken;
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
     };
 
     return (
@@ -158,6 +173,10 @@ export default function Edit({ user }) {
                                     type="submit"
                                     disabled={processing}
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    onClick={(e) => {
+                                        setShowConfirmation(true);
+                                        setTimeout(() => setShowConfirmation(false), 1100);
+                                    }}
                                 >
                                     Opslaan
                                 </button>
@@ -165,7 +184,7 @@ export default function Edit({ user }) {
                                 <button
                                     type="button"
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                    onClick={() => confirm('Weet je zeker dat je je account wilt verwijderen?') && put(route('account.delete'))}
+                                    onClick={() => setShowDeletePopUp(true)}
                                 >
                                     Account Verwijderen
                                 </button>
@@ -178,7 +197,7 @@ export default function Edit({ user }) {
                                         form.method = 'POST';
                                         form.action = route('logout');
 
-                                        const csrfToken = document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content');
+                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                                         const input = document.createElement('input');
                                         input.type = 'hidden';
                                         input.name = '_token';
@@ -196,6 +215,17 @@ export default function Edit({ user }) {
                     </div>
                 </div>
             </div>
+            <ConfirmationAnimation show={showConfirmation} />
+
+            {showDeletePopUp && (
+                <DeletePopUp
+                    onCancel={() => setShowDeletePopUp(false)}
+                    onConfirm={() => {
+                        setShowDeletePopUp(false);
+                        handleDeleteAccount();
+                    }}
+                />
+            )}
 
             <Footer />
         </>
