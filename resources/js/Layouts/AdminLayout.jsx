@@ -2,19 +2,40 @@ import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
 import "../../css/button.css";
 import "/resources/css/logout.css";
+import "/resources/css/animatie.css";
 
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [showButtonAnimation, setShowButtonAnimation] = useState(false); 
     const sidebarRef = useRef(null);
 
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
+        if (isSidebarOpen) {
+            setIsSidebarOpen(false);
+            setShowButtonAnimation(true); 
+        } else {
+            setShowButtonAnimation(true); 
+            setTimeout(() => {
+                setIsSidebarOpen(true);
+                setShowButtonAnimation(false); 
+            }, 180); 
+        }
     };
+    
+    useEffect(() => {
+        if (!isSidebarOpen) {
+            const timer = setTimeout(() => {
+                setShowButtonAnimation(false); 
+            }, 1500); 
+            return () => clearTimeout(timer);
+        }
+    }, [isSidebarOpen]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
                 setIsSidebarOpen(false);
+                setShowButtonAnimation(true);
             }
         };
 
@@ -26,7 +47,7 @@ const AdminLayout = ({ children }) => {
     }, []);
 
     const handleLogout = () => {
-        window.location.href = "/logout"; 
+        window.location.href = "/logout";
     };
 
     return (
@@ -49,7 +70,9 @@ const AdminLayout = ({ children }) => {
                             e.stopPropagation();
                             toggleSidebar();
                         }}
-                        className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full focus:outline-none hover:scale-110 transform transition-transform"
+                        className={`p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full focus:outline-none hover:scale-110 transform transition-transform ${
+                            showButtonAnimation ? "spin-fade-in" : ""
+                        }`}
                         style={{ top: "4.5rem", left: "1rem" }}
                     >
                         <svg
@@ -74,7 +97,7 @@ const AdminLayout = ({ children }) => {
                     <div className="flex justify-between items-center px-6 py-4">
                         {/* Title */}
                         <h1 className="text-lg font-bold text-gray-700">
-                            Liedent Dashboard
+                            Dashboard
                         </h1>
 
                         {/* Logout Button */}
