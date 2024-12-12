@@ -1,156 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
-import DeletePopUp from "../../Components/DeletePopUp";
-import ConfirmationAnimation from "../../Components/ConfirmationAnimation"; // Importeer hier
-import axios from "axios";
-import "/resources/css/bevstig.css";
+import SearchBar from "../../Components/SearchBar";
+import { Inertia } from "@inertiajs/inertia";
 
-const UserDetailsPage = ({ user }) => {
-    const [formData, setFormData] = useState(user);
-    const [showDeletePopUp, setShowDeletePopUp] = useState(false);
-    const [showConfirmation, setShowConfirmation] = useState(false);
+const AfsprakenPage = ({ afspraken, filters }) => {
+    const [search, setSearch] = useState(filters.search || "");
+    const [timeoutId, setTimeoutId] = useState(null);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleUpdate = async () => {
-        try {
-            const response = await axios.patch(`/admin/users/${user.id}`, formData);
-            setShowConfirmation(true);
-            setTimeout(() => setShowConfirmation(false), 1100);
-        } catch (error) {
-            console.error("Error bij het bijwerken van de gebruiker:", error);
-            alert("Er is iets misgegaan. Probeer het opnieuw.");
+    // Debounce effect: wacht 300ms na het stoppen met typen om te zoeken
+    useEffect(() => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
         }
-    };
 
-    const handleDeleteClick = () => {
-        setShowDeletePopUp(true);
-    };
+        const id = setTimeout(() => {
+            handleSearch();
+        }, 300);
 
-    const handleConfirmDelete = async () => {
-        try {
-            await axios.delete(`/admin/users/${user.id}`);
-            setShowDeletePopUp(false);
-            setShowConfirmation(true);
-            setTimeout(() => {
-                setShowConfirmation(false);
-                window.location.href = "/admin/klanten"; 
-            }, 2000);
-        } catch (error) {
-            console.error("Error bij het verwijderen van de gebruiker:", error);
-        }
-    };
-    
-    
+        setTimeoutId(id);
 
-    const handleCancelDelete = () => {
-        setShowDeletePopUp(false);
+        // Clear timeout bij unmount
+        return () => clearTimeout(id);
+    }, [search]);
+
+    const handleSearch = () => {
+        // Stuur een GET request naar de server met de huidige search waarde
+        // De server moet de logica hebben om bij lege search alle resultaten te tonen
+        // en bij niet-lege search gefilterde/gesorteerde resultaten.
+        Inertia.get(route("admin.afspraken"), { search });
     };
 
     return (
         <AdminLayout>
-            <h1 className="text-2xl font-bold mb-6">Gebruiker details</h1>
-            <form className="grid grid-cols-2 gap-6">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Voornaam</label>
-                    <input
-                        type="text"
-                        name="voornaam"
-                        value={formData.voornaam || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Achternaam</label>
-                    <input
-                        type="text"
-                        name="naam"
-                        value={formData.naam || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Telefoon</label>
-                    <input
-                        type="text"
-                        name="gsm_nummer"
-                        value={formData.gsm_nummer || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Rijksregisternummer</label>
-                    <input
-                        type="text"
-                        name="rijksregister_nr"
-                        value={formData.rijksregister_nr || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Mutualiteit</label>
-                    <input
-                        type="text"
-                        name="mutualiteit"
-                        value={formData.mutualiteit || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email || ""}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                <div className="button-wrapper col-span-2 flex justify-end gap-4 mt-6">
-                    <button
-                        type="button"
-                        onClick={handleUpdate}
-                        className="button bevestigen"
-                    >
-                        Bevestigen
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => console.log("Placeholder Boete")}
-                        className="button boete"
-                    >
-                        Boete
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleDeleteClick}
-                        className="button verwijderen"
-                    >
-                        Verwijderen
-                    </button>
-                </div>
-            </form>
+            <h1 className="text-2xl font-bold mb-2">Afspraken Overzicht</h1>
+            {/* Dikke blauwe streep */}
+            <div className="h-1 bg-blue-500 mb-6"></div>
 
-            <ConfirmationAnimation show={showConfirmation} />
+            {/* SearchBar Component */}
+            <div className="mb-6">
+                <SearchBar
+                    value={search}
+                    onChange={(val) => setSearch(val)}
+                    onReset={() => setSearch('')}
+                    // De onSearch knop is niet meer strikt nodig, 
+                    // maar je kunt hem laten staan als extra trigger.
+                    onSearch={handleSearch}
+                />
+            </div>
 
-            {showDeletePopUp && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                    <DeletePopUp
-                        onCancel={handleCancelDelete}
-                        onConfirm={handleConfirmDelete}
-                    />
+            {/* Container met lichtgrijze achtergrond en witte box */}
+            <div className="bg-gray-100 p-4 rounded-lg shadow-inner">
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full">
+                            <thead>
+                                <tr className="bg-blue-600 text-white">
+                                    <th className="px-4 py-3 text-left font-bold">User ID</th>
+                                    <th className="px-4 py-3 text-left font-bold">Datum</th>
+                                    <th className="px-4 py-3 text-left font-bold">Behandeling</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {afspraken && afspraken.length > 0 ? (
+                                    afspraken.map((afspraak, index) => (
+                                        <tr
+                                            key={afspraak.user_id}
+                                            className={
+                                                index % 2 === 0
+                                                    ? "bg-white hover:bg-gray-50"
+                                                    : "bg-gray-50 hover:bg-gray-100"
+                                            }
+                                        >
+                                            <td className="px-4 py-2 text-gray-700">{afspraak.user_id}</td>
+                                            <td className="px-4 py-2 text-gray-700">{afspraak.datum}</td>
+                                            <td className="px-4 py-2 text-gray-700">{afspraak.behandeling}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td
+                                            className="px-4 py-2 text-center text-gray-500"
+                                            colSpan={3}
+                                        >
+                                            Geen afspraken gevonden.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            )}
+            </div>
         </AdminLayout>
     );
 };
 
-export default UserDetailsPage;
+export default AfsprakenPage;

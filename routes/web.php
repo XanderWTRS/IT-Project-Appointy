@@ -80,7 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-
+    Route::get('/afspraken', [\App\Http\Controllers\AfspraakController::class, 'index'])->name('afspraken');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -88,6 +88,8 @@ Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('adm
 
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
+
 
 
 require __DIR__.'/auth.php';

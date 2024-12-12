@@ -42,7 +42,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return response()->json(['message' => 'Gebruiker succesvol verwijderd']);
+        return redirect()->route('home');
     }
 
     
