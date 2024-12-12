@@ -1,0 +1,31 @@
+@keyframes spin-open {
+  from {
+      opacity: 1;
+      transform: rotate(0deg);
+  }
+  to {
+      opacity: 1;
+      transform: rotate(360deg);
+  }
+}
+
+.spin-open {
+  animation: spin-open 0.5s ease-out;
+}
+
+
+
+  @keyframes spin-fade-in {
+    from {
+      opacity: 0;
+      transform: rotate(-360deg) scale(0.5); 
+    }
+    to {
+      opacity: 1;
+      transform: rotate(0deg) scale(1); 
+    }
+  }
+
+  .spin-fade-in {
+    animation: spin-fade-in 0.5s ease-out;
+  }
