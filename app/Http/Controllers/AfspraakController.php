@@ -12,14 +12,18 @@ class AfspraakController extends Controller
     {
         $search = $request->query('search', '');
 
-        // Selecteer alleen de kolommen id, user_id, datum, behandeling
-        // en filter op datum of behandeling indien search is ingevuld.
-        $afspraken = Afspraak::select('afspraak_id', 'user_id', 'datum', 'behandeling')
-            ->when($search, function ($query, $search) {
-                $query->where('datum', 'like', '%' . $search . '%')
-                      ->orWhere('behandeling', 'like', '%' . $search . '%');
-            })
-            ->get();
+        $afspraken = Afspraak::with('user')
+        ->whereHas('user') // Alleen afspraken met gekoppelde gebruikers
+        ->when($search, function ($query, $search) {
+            $query->where('datum', 'like', '%' . $search . '%')
+                  ->orWhere('behandeling', 'like', '%' . $search . '%')
+                  ->orWhereHas('user', function ($query) use ($search) {
+                      $query->where('voornaam', 'like', '%' . $search . '%')
+                            ->orWhere('naam', 'like', '%' . $search . '%');
+                  });
+        })
+        ->get();
+    
 
         return Inertia::render('Admin/AfsprakenPage', [
             'afspraken' => $afspraken,
