@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Head } from '@inertiajs/react';
 import Header from '/resources/js/Components/Header';
@@ -7,11 +5,11 @@ import Footer from '/resources/js/Components/Footer';
 
 export default function EndodontiePage() {
     return (
-        <div className="bg-white text-gray-900">
+        <div className="flex flex-col min-h-screen bg-white text-gray-900">
             <Head title="Endodontie" />
             <Header />
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">  
+            <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">  
                 {/* Endodontie section */}
                 <section className="mb-16">
                     <div className="flex flex-row justify-between items-start">
