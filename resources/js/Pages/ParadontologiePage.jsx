@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function ParadontologiePage() {
     return (
-        <div className="flex flex-col min-h-screen bg-white text-gray-900">
+        <div className="bg-white text-gray-900">
             <Head title="Paradontologie" />
             <Header />
             <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -22,7 +22,7 @@ export default function ParadontologiePage() {
                             De parodontoloog neemt ook de plaatsing van implantaten ter vervanging van ontbrekende
                             tanden op zich of haar rekening.
                         </p>
-                        <button className="bg-blue-600 text-white py-3 px-6 rounded-3xl hover:bg-blue-500">
+                        <button className="bg-blue-600 text-white py-2 px-4 w-36 rounded-3xl hover:bg-blue-500">
                             Afspraak maken
                         </button>
                     </div>
