@@ -31,10 +31,11 @@ const Footer = () => {
                 <div>
                     <h3 className="font-bold text-lg mb-4">Behandelingen</h3>
                     <ul className="space-y-2">
-                        <li><Link href="#" className="hover:text-blue-600">Tandheelkunde</Link></li>
-                        <li><Link href="#" className="hover:text-blue-600">Orthodontie</Link></li>
-                        <li><Link href="#" className="hover:text-blue-600">Endodontie</Link></li>
-                        <li><Link href="#" className="hover:text-blue-600">Paradontologie</Link></li>
+                        <li><Link href={route('tandheelkunde')} className="hover:text-blue-600">Tandheelkunde</Link></li>
+                        <li><Link href={route('orthodontie')} className="hover:text-blue-600">Orthodontie</Link></li>
+                        <li><Link href={route('endodontie')} className="hover:text-blue-600">Endodontie</Link></li>
+                        <li><Link href={route('paradontologie')} className="hover:text-blue-600">Paradontologie</Link></li>
+
                     </ul>
                 </div>
 
