@@ -80,7 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-
+    Route::get('/afspraken', [\App\Http\Controllers\AfspraakController::class, 'index'])->name('afspraken');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
