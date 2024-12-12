@@ -51,8 +51,6 @@ export default function EndodontiePage() {
                             </p>
                         </div>
                 </div>
-
-
             </main>
 
             <Footer />
