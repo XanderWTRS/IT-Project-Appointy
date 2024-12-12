@@ -64,11 +64,12 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                                                 : "bg-gray-50 hover:bg-gray-100"
                                         }
                                     >
-                                        <td className="px-4 py-2 text-gray-700">
-    {afspraak.user
-        ? `${afspraak.user.user_id} - ${afspraak.user.voornaam} ${afspraak.user.naam}`
-        : `${afspraak.user_id} - Onbekende gebruiker`}
-</td>
+                                      <td className="px-4 py-2 text-gray-700">
+                                    {afspraak.user
+                                        ? `${afspraak.user.voornaam} ${afspraak.user.naam}`
+                                        : `Onbekende gebruiker`}
+                                </td>
+
                                         <td className="px-4 py-2 text-gray-700">{afspraak.datum}</td>
                                         <td className="px-4 py-2 text-gray-700">{afspraak.behandeling}</td>
                                     </tr>
