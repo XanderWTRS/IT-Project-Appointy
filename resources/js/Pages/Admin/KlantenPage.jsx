@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
-import Edit from "/resources/js/Components/Edit";
 import Excel from "/resources/js/Components/Excel";
 import SearchBar from "/resources/js/Components/SearchBar";
+import Edit from "/resources/js/Components/Edit";
 
 const KlantenPage = ({ klanten }) => {
-  const [search, setSearch] = useState(""); 
-  const [filteredKlanten, setFilteredKlanten] = useState(klanten); 
+  const [search, setSearch] = useState("");
+  const [filteredKlanten, setFilteredKlanten] = useState(klanten);
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -18,7 +18,7 @@ const KlantenPage = ({ klanten }) => {
         klant.rijksregister_nr.toLowerCase().includes(value.toLowerCase())
     );
 
-    setFilteredKlanten(filtered);   
+    setFilteredKlanten(filtered);
   };
 
   const handleReset = () => {
