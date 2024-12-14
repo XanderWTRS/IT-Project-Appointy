@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+// src/components/AppointmentCalendar.jsx
+
+import React, { useState, useRef } from "react";
 import { usePage } from "@inertiajs/react";
+import ConfirmationModal from "/resources/js/Components/ConfirmationModal"; // Ensure this path is correct
 
 const slots = {
     tuesday: ["10:00-10:30", "10:30-11:00", "15:00-15:30", "15:30-16:00"],
@@ -38,6 +41,11 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
     const [treatment, setTreatment] = useState("");
     const [month, setMonth] = useState(new Date().getMonth());
     const [year, setYear] = useState(new Date().getFullYear());
+
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+    const [appointmentData, setAppointmentData] = useState(null); // Appointment details for modal
+
+    const formRef = useRef(null); // Reference to the form
 
     const currentDate = new Date();
     const calendarDates = generateCalendar(month, year);
@@ -109,10 +117,47 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
         }
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        if (!selectedDate || !selectedSlot || !treatment) {
+            alert("Please select a date, time slot, and treatment.");
+            return;
+        }
+
+        // Prepare appointment data
+        const appointment = {
+            date: formatDate(selectedDate),
+            time: selectedSlot,
+            treatment: treatment.charAt(0).toUpperCase() + treatment.slice(1), // Capitalize first letter
+        };
+
+        // Set the appointment data and open the modal
+        setAppointmentData(appointment);
+        setIsModalOpen(true);
+    };
+
+    const handleConfirm = () => {
+        setIsModalOpen(false);
+        // Submit the form programmatically
+        if (formRef.current) {
+            formRef.current.submit();
+        }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg">
             <h1 className="text-3xl font-bold mb-6">Afspraak vastleggen</h1>
-            <form action={route("afspraak.store")} method="post">
+            <form
+                action={route("afspraak.store")}
+                method="post"
+                ref={formRef}
+                onSubmit={handleSubmit} // Attach the submit handler
+            >
                 <input type="hidden" name="_token" value={csrf_token} />
                 <input type="hidden" name="treatment" value={treatment} />
                 <input
@@ -185,8 +230,8 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
                                             selectedDate?.toDateString() === date.toDateString()
                                                 ? "bg-blue-500 text-white"
                                                 : isPastDate(date)
-                                                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                                                : "bg-gray-100 hover:bg-gray-200"
+                                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                                    : "bg-gray-100 hover:bg-gray-200"
                                         } ${getAvailableSlots(date).length > 0 ? "" : "cursor-not-allowed opacity-50"}`}
                                         onClick={() =>
                                             !isPastDate(date) && getAvailableSlots(date).length > 0 && handleDateClick(date)
@@ -220,8 +265,8 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
                                             taken
                                                 ? "bg-red-500 text-white cursor-not-allowed"
                                                 : selectedSlot === slot
-                                                ? "bg-green-500 text-white"
-                                                : "bg-gray-200 hover:bg-gray-300"
+                                                    ? "bg-green-500 text-white"
+                                                    : "bg-gray-200 hover:bg-gray-300"
                                         }`}
                                     >
                                         {slot}
@@ -236,12 +281,25 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
                 <div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
+                        className={`w-full py-3 rounded-lg transition ${
+                            !selectedDate || !selectedSlot || !treatment
+                                ? "bg-blue-500 opacity-50 text-white cursor-not-allowed"
+                                : "bg-blue-500 text-white hover:bg-blue-600"
+                        }`}
+                        disabled={!selectedDate || !selectedSlot || !treatment}
                     >
                         Leg afspraak vast
                     </button>
                 </div>
             </form>
+
+            {/* Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={handleCancel}
+                onConfirm={handleConfirm}
+                appointment={appointmentData}
+            />
         </div>
     );
 }
