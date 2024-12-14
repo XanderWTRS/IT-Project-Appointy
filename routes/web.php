@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::get('/', function () {
@@ -36,14 +37,21 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/appointment', [AppointmentController::class, 'create'])->name('appointment.create');
-    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::get('/payment/success', [PaymentController::class, 'succes'])->name('payment.succes');
+    Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    Route::post('/payment/paypositionwaitlist', [PaymentController::class, 'paypositionwaitlist'])->name('payment.paypositionwaitlist');
 });
+
+Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
+
 
 
 Route::get('/klanten', function () {
-    return Inertia::render('KlantenPage'); 
+    return Inertia::render('KlantenPage');
 })->name('klanten');
 
 Route::get('/tandheelkunde', function () {
@@ -89,6 +97,9 @@ Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('adm
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
+
+
+
 
 
 
