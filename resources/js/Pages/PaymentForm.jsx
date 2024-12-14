@@ -7,32 +7,10 @@ import TextInput from '/resources/js/Components/TextInput';
 
 export default function PaymentForm() {
     const { props } = usePage();
-    const { flash } = props;
-    const [visible, setVisible] = useState(true);
-
-    useEffect(() => {
-        if (flash.success || flash.error) {
-            const timer = setTimeout(() => {
-                setVisible(false);
-            }, 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [flash]);
 
     return (
         <div className="max-w-lg mx-auto mt-12 bg-white p-8 rounded-lg shadow-lg">
             <h2 className="text-3xl font-semibold text-gray-800 mb-6">Afspraak Vastleggen</h2>
-
-            {visible && flash.success && (
-                <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
-                    {flash.success}
-                </div>
-            )}
-            {visible && flash.error && (
-                <div className="bg-red-100 text-red-700 p-4 rounded mb-6">
-                    {flash.error}
-                </div>
-            )}
 
             <p className="text-gray-700 mb-4">
                 U wordt eerst in een <strong>wachtlijst</strong> gezet. Zodra het uw beurt is, ontvangt u een

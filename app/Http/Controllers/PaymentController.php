@@ -8,7 +8,7 @@ use Stripe\Webhook;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\WaitList;
+use App\Models\Wachtlijst;
 
 
 class PaymentController extends Controller
@@ -19,6 +19,10 @@ class PaymentController extends Controller
         if(!$user){
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        if ($user->betaald) {
+            return redirect()->route('afspraken')->with('success', 'U heeft al betaald. U kunt uw afspraak beheren.');
+        }
+
         return inertia('PaymentForm', [
             'keuze_email' => $user->keuze_email,
             'keuze_sms' => $user->keuze_gsm,
@@ -55,7 +59,7 @@ class PaymentController extends Controller
             'session_id' => $session->id,
             'keuze_email' => $request->input('keuze_email', false),
             'keuze_sms' => $request->input('keuze_sms', false),
-            'behandeling' => $request->input('behandeling'),
+            'behandeling' => $request->input('treatment'),
             'amount' => 2500,
         ]);
         return redirect($session->url);
@@ -63,11 +67,11 @@ class PaymentController extends Controller
 
     public function succes()
     {
-        return redirect()->route('payment.index')->with('success', 'Payment successful');
+        return redirect()->route('afspraken')->with('success', 'Payment successful');
     }
     public function cancel()
     {
-        return redirect()->route('payment.index')->with('error', 'Payment cancelled');
+        return redirect()->route('afspraken')->with('error', 'Payment cancelled');
     }
 
     public function webhook(Request $request)
@@ -99,12 +103,11 @@ class PaymentController extends Controller
                         'keuze_email' => $transaction->keuze_email,
                         'keuze_sms' => $transaction->keuze_sms,
                     ]);
-                    WaitList::create([
-                        'user_id' => $user->id,
+                    Wachtlijst::create([
+                        'user_id' => $transaction->user_id,
                         'added_at' => now(),
                         'behandeling' => $transaction->behandeling,
                     ]);
-
                 }
                 break;
             default:

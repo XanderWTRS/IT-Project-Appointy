@@ -11,6 +11,7 @@ use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AfspraakController;
+use App\Http\Controllers\WachtlijstController;
 
 
 Route::get('/', function () {
@@ -49,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 
-
+Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afspraken');
 
 Route::get('/klanten', function () {
     return Inertia::render('KlantenPage');
