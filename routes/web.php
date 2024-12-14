@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AfspraakController;
 
 
 Route::get('/', function () {
@@ -88,7 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-
+    Route::get('/afspraken', [AfspraakController::class, 'index'])->name('afspraken');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');

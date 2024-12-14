@@ -45,6 +45,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     Klanten
                 </a>
                 <a
+                    href="/admin/afspraken"
+                    className="block py-2.5 px-4 rounded bg-blue-600"
+                >
+                    Afspraken
+                </a>
+                <a
                     href="/klant-toevoegen"
                     className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
                 >

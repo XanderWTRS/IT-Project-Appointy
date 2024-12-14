@@ -25,6 +25,7 @@
       transform: rotate(0deg) scale(1); 
     }
   }
+  
 
   .spin-fade-in {
     animation: spin-fade-in 0.5s ease-out;

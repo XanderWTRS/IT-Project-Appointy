@@ -15,7 +15,7 @@ const AdminLayout = ({ children }) => {
             setShowButtonAnimation(true); 
         } else {
             setShowButtonAnimation(true); 
-            setTimeout(() => {
+            setTimeout(() => {  
                 setIsSidebarOpen(true);
                 setShowButtonAnimation(false); 
             }, 180); 

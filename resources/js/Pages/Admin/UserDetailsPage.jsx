@@ -152,5 +152,4 @@ const UserDetailsPage = ({ user }) => {
         </AdminLayout>
     );
 };
-
 export default UserDetailsPage;
