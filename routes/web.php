@@ -55,6 +55,7 @@ Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afs
 Route::post('/afspraken/annuleer', [WachtlijstController::class, 'cancel'])->name('afspraken.cancel');
 
 Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
+Route::post('/afspraak/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');
 
 
 

@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('afspraken', function (Blueprint $table) {
             $table->id('afspraak_id');
-            $table->unsignedBigInteger('user_id'); 
-            $table->date('datum'); 
-            $table->text('behandeling'); 
-            $table->timestamps(); 
+            $table->unsignedBigInteger('user_id');
+            $table->date('datum');
+            $table->string('tijd');
+            $table->text('behandeling');
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

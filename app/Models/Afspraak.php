@@ -14,6 +14,7 @@ class Afspraak extends Model
     protected $fillable = [
         'user_id',
         'datum',
+        'tijd',
         'behandeling',
     ];
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Wachtlijst;
-
+use App\Models\Afspraak;
 use Illuminate\Http\Request;
 
 class WachtlijstController extends Controller
@@ -19,8 +19,7 @@ class WachtlijstController extends Controller
         $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
 
         if (!$wachtlijst) {
-            // User is not in the waiting list
-            return inertia('AfspraakPage', [
+            return inertia('WachtlijstPage', [
                 'inWachtlijst' => false,
                 'csrf_token' => csrf_token(),
             ]);
@@ -29,17 +28,14 @@ class WachtlijstController extends Controller
         $addedAt = Carbon::parse($wachtlijst->added_at);
         $now = Carbon::now();
 
-        // Target date: 3 months after the user was added to the waiting list
         $targetDate = $addedAt->copy()->addMonths(3);
 
-        // Calculate the difference between now and the target date
         $diff = $now->diff($targetDate);
 
-        // Remaining months and days
-        $remainingMonths = $diff->m; // Remaining months
-        $remainingDays = $diff->d;   // Remaining days
+        $remainingMonths = $diff->m;
+        $remainingDays = $diff->d;
 
-        return inertia('AfspraakPage', [
+        return inertia('WachtlijstPage', [
             'inWachtlijst' => true,
             'wachtlijst' => $wachtlijst,
             'monthsLeft' => $remainingMonths,
@@ -72,6 +68,62 @@ class WachtlijstController extends Controller
         if (!$user) {
             return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
         }
+
+        // Define the date range: from today to six months ahead
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->addMonths(6)->endOfDay();
+
+        // Fetch all appointments within the next 6 months
+        $takenAppointments = Afspraak::whereBetween('datum', [$startDate->toDateString(), $endDate->toDateString()])
+            ->get()
+            ->groupBy('datum')
+            ->map(function ($appointmentsOnDay) {
+                return $appointmentsOnDay->pluck('tijd')->all();
+            })
+            ->toArray();
+
+        return inertia('AfspraakPage', [
+            'csrf_token' => csrf_token(),
+            'appointments' => $takenAppointments,
+            'current_date' => $startDate->toDateString(), // Pass current date to frontend
+        ]);
+    }
+
+    public function storeAfspraak(Request $request)
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
+        }
+
+        $validated = $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+            'time' => 'required|string',
+            'treatment' => 'required|string',
+        ]);
+
+        // Ensure the date is within the next 6 months
+        $maxDate = Carbon::now()->addMonths(6)->toDateString();
+        if ($validated['date'] > $maxDate) {
+            return redirect()->route('afspraken.make')->with('error', 'U kunt geen afspraken maken meer dan 6 maanden in de toekomst.');
+        }
+
+        $existingAppointment = Afspraak::where('datum', $validated['date'])
+            ->where('tijd', $validated['time'])
+            ->where('behandeling', $validated['treatment'])
+            ->first();
+
+        if ($existingAppointment) {
+            return redirect()->route('afspraken.make')->with('error', 'Dit tijdslot is al bezet. Kies een andere tijd.');
+        }
+
+        Afspraak::create([
+            'user_id' => $user->id,
+            'datum' => $validated['date'],
+            'tijd' => $validated['time'],
+            'behandeling' => $validated['treatment'],
+        ]);
 
         return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol vastgelegd.');
     }
