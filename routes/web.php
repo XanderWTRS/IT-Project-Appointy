@@ -50,7 +50,13 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 
+
 Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afspraken');
+Route::post('/afspraken/annuleer', [WachtlijstController::class, 'cancel'])->name('afspraken.cancel');
+
+Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
+
+
 
 Route::get('/klanten', function () {
     return Inertia::render('KlantenPage');

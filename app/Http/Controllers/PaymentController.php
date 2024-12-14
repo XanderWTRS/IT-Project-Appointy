@@ -67,11 +67,11 @@ class PaymentController extends Controller
 
     public function succes()
     {
-        return redirect()->route('afspraken')->with('success', 'Payment successful');
+        return redirect()->route('afspraken')->with('success', 'Betaling in orde!');
     }
     public function cancel()
     {
-        return redirect()->route('afspraken')->with('error', 'Payment cancelled');
+        return redirect()->route('afspraken')->with('error', 'Betaling geannuleerd!');
     }
 
     public function webhook(Request $request)

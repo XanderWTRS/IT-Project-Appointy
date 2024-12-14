@@ -10,11 +10,11 @@ export default function PaymentForm() {
 
     return (
         <div className="max-w-lg mx-auto mt-12 bg-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Afspraak Vastleggen</h2>
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6">Toevoegen aan wachtlijst</h2>
 
             <p className="text-gray-700 mb-4">
                 U wordt eerst in een <strong>wachtlijst</strong> gezet. Zodra het uw beurt is, ontvangt u een
-                <strong>mail</strong> of <strong>sms</strong> om een afspraak vast te leggen.
+                <strong> mail</strong> of <strong>sms</strong> om een afspraak vast te leggen.
             </p>
 
             <p className="text-gray-700 mb-4">
@@ -41,8 +41,10 @@ export default function PaymentForm() {
                         required
                     >
                         <option value="">-- Selecteer een behandeling --</option>
-                        <option value="classic">Classic</option>
+                        <option value="classic">Tandheelkunde</option>
                         <option value="orthodontie">Orthodontie</option>
+                        <option value="Endodontie">Endodontie</option>
+                        <option value="Parodontologie">Parodontologie</option>
                     </select>
                 </div>
 
@@ -86,7 +88,7 @@ export default function PaymentForm() {
                             required
                             className="mr-2"
                         />
-                        Ik ga akkoord met het{' '}
+                        Ik ga akkoord met het {' '}
                         <a href="#" className="text-blue-500 underline">
                             afspraak reglement
                         </a>
