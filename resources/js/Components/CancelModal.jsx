@@ -1,19 +1,17 @@
 import React from "react";
 
-export default function CancelModal({ isOpen, onClose, onConfirm }) {
+export default function CancelModal({ isOpen, onClose, onConfirm, title, message }) {
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full">
                 <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                    Bent u zeker dat u uit de wachtlijst wilt?
+                    {title || "Bent u zeker dat u wilt annuleren?"}
                 </h2>
                 <p className="text-gray-600 mb-6">
-                    Als u annuleert, zult u niet meer in de wachtlijst staan en moet u opnieuw toegevoegd worden aan de wachtlijst om in de toekomst een afspraak te kunnen maken.
-                </p>
-                <p className="text-gray-600 mb-6">
-                    U zult uw voorstorting terugkrijgen als u annuleert. Deze zal binnen <strong>5 werkdagen</strong> op uw rekening staan.
+                    {message ||
+                        "Als u annuleert, zult u niet meer op de wachtlijst staan of uw afspraak verliezen. Wilt u doorgaan?"}
                 </p>
                 <div className="flex justify-end space-x-4">
                     <button
@@ -33,4 +31,5 @@ export default function CancelModal({ isOpen, onClose, onConfirm }) {
         </div>
     );
 }
+
 

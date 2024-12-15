@@ -19,14 +19,12 @@ class Wachtlijst extends Model
         'behandeling',
     ];
 
-    // Disable auto-incrementing ID since we don't use it here
-    public $incrementing = false;
-
-    // Define the primary key (if it's not the default `id`)
-    protected $primaryKey = 'user_id';
-
     // Define the attribute casting
     protected $casts = [
         'added_at' => 'datetime',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

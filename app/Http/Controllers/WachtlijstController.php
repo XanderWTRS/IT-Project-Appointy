@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use App\Models\Wachtlijst;
 use App\Models\Afspraak;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class WachtlijstController extends Controller
 {
@@ -18,41 +19,58 @@ class WachtlijstController extends Controller
 
         $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
 
-        if (!$wachtlijst) {
-            return inertia('WachtlijstPage', [
-                'inWachtlijst' => false,
-                'csrf_token' => csrf_token(),
-            ]);
-        }
+        // Fetch the user's latest appointment
+        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
+
         Carbon::setLocale('nl');
-        $addedAt = Carbon::parse($wachtlijst->added_at);
-        $now = Carbon::now();
 
-        $targetDate = $addedAt->copy()->addMonths(3);
+        if ($wachtlijst) {
+            $addedAt = Carbon::parse($wachtlijst->added_at);
+            $now = Carbon::now();
 
-        $diff = $now->diff($targetDate);
+            $targetDate = $addedAt->copy()->addMonths(3);
 
-        $remainingMonths = $diff->m;
-        $remainingDays = $diff->d;
+            $diff = $now->diff($targetDate);
 
-        return inertia('WachtlijstPage', [
-            'inWachtlijst' => true,
+            $remainingMonths = $diff->m;
+            $remainingDays = $diff->d;
+        }
+
+        return Inertia::render('WachtlijstPage', [
+            'inWachtlijst' => $wachtlijst ? true : false,
             'wachtlijst' => $wachtlijst,
-            'monthsLeft' => $remainingMonths,
-            'daysLeft' => $remainingDays,
-            'addedAt' => $addedAt->translatedFormat('d F Y'),
-            'targetDate' => $targetDate->translatedFormat('d F Y'),
+            'monthsLeft' => $wachtlijst ? $remainingMonths : null,
+            'daysLeft' => $wachtlijst ? $remainingDays : null,
+            'addedAt' => $wachtlijst ? $addedAt->translatedFormat('d F Y') : null,
+            'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
+            'appointment' => $appointment, // Pass the appointment to frontend
             'csrf_token' => csrf_token(),
         ]);
     }
-    public function cancel()
+    public function cancelAfspraak()
     {
         $user = auth()->user();
 
         if (!$user) {
             return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
         }
+        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
 
+        if ($appointment) {
+            $appointment->delete();
+            $user->update(['betaald' => false]);
+            return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd.');
+        }
+
+        return redirect()->route('afspraken')->with('error', 'Er is geen afspraak om te annuleren.');
+    }
+    public function cancelWaitlist()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
+        }
         Wachtlijst::where('user_id', $user->id)->delete();
 
 
@@ -118,6 +136,7 @@ class WachtlijstController extends Controller
             return redirect()->route('afspraken.make')->with('error', 'Dit tijdslot is al bezet. Kies een andere tijd.');
         }
 
+        // Create the appointment
         Afspraak::create([
             'user_id' => $user->id,
             'datum' => $validated['date'],
@@ -125,6 +144,10 @@ class WachtlijstController extends Controller
             'behandeling' => $validated['treatment'],
         ]);
 
-        return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol vastgelegd.');
+        // Remove the user from the waitlist if they are on it
+        Wachtlijst::where('user_id', $user->id)->delete();
+
+        // Redirect to the WachtlijstPage with a success message
+        return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol vastgelegd en u bent uit de wachtlijst verwijderd.');
     }
 }

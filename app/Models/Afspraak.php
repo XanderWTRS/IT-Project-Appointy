@@ -10,6 +10,8 @@ class Afspraak extends Model
     use HasFactory;
 
     protected $table = 'afspraken';
+    
+    protected $primaryKey = 'afspraak_id';
 
     protected $fillable = [
         'user_id',
