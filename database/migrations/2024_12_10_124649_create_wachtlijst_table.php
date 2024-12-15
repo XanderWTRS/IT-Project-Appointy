@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wachtlijst', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('added_at'); 
+            $table->timestamp('added_at');
             $table->text('behandeling');
             $table->timestamps();
         });

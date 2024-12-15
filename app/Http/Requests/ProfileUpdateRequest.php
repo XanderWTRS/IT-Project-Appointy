@@ -27,7 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             'keuze_sms' => ['nullable', 'string', 'max:255'],
             'keuze_email' => ['nullable', 'string', 'max:255'],
             'betaald' => ['nullable', 'boolean'],
-            'password' => ['nullable', 'string', 'min:8'],
+            'new_password' => ['nullable', 'string', 'min:8'],
         ];
     }
 }
