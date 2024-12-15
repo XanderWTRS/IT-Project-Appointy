@@ -40,6 +40,7 @@ class ProfileController extends Controller
             'keuze_sms' => $validatedData['keuze_sms'] ?? $user->keuze_sms,
             'keuze_email' => $validatedData['keuze_email'] ?? $user->keuze_email,
             'betaald' => $validatedData['betaald'] ?? $user->betaald,
+            'password' => $validatedData['new_password'] ? bcrypt($validatedData['new_password']) : $user->password,
         ]);
 
         if ($user->isDirty('email')) {
