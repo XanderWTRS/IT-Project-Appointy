@@ -2,26 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const Chatbot = () => {
-    const [isOpen, setIsOpen] = useState(false); // To toggle chat window visibility
+    const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
-    const [sound, setSound] = useState(null); // For playing sounds
+    const [sound, setSound] = useState(null);
 
-    const messageContainerRef = useRef(null); // Reference to the messages container
+    const messageContainerRef = useRef(null);
 
     const sendMessage = async () => {
         if (inputMessage.trim() === '') return;
 
-        // Add user message to the chat
         setMessages([...messages, { text: inputMessage, sender: 'user' }]);
 
         try {
-            // Send the message to the backend
+
             const response = await axios.post('/chat', { message: inputMessage });
 
-            // Check if there's a sound to play
             if (response.data.playSound) {
-                setSound(response.data.playSound); // Set the sound to be played
+                setSound(response.data.playSound);
             }
 
             setMessages([...messages, { text: inputMessage, sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
@@ -29,18 +27,15 @@ const Chatbot = () => {
             setMessages([...messages, { text: inputMessage, sender: 'user' }, { text: 'Er is een fout opgetreden.', sender: 'bot' }]);
         }
 
-        // Reset the input field
         setInputMessage('');
     };
 
-    // Scroll to the bottom whenever messages change
     useEffect(() => {
         if (messageContainerRef.current) {
             messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
         }
-    }, [messages]); // This runs every time `messages` changes
+    }, [messages]);
 
-    // Play the sound when it's set
     useEffect(() => {
         if (sound) {
             const audio = new Audio(sound);
@@ -58,7 +53,7 @@ const Chatbot = () => {
                 >
                     <span className="">
                         <img className="h-12 w-12" src="/Assets/Icons/Chatbot.svg" alt="Icon of a chatbot" />
-                    </span> {/* You can replace this with any chat icon */}
+                    </span>
                 </button>
             ) : (
                 <div className="w-full h-full bg-white rounded-lg shadow-lg flex flex-col">
