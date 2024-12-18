@@ -112,12 +112,6 @@ Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('d
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
 
-Route::get('/admin/klanten/create', function () {
-    return Inertia::render('Admin/KlantCreatePage');
-})->name('admin.klanten.create');
-
-Route::post('/admin/klanten/store', [KlantenController::class, 'store'])->name('admin.klanten.store');
-
 
 
 
