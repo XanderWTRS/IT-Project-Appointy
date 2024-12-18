@@ -15,6 +15,17 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                swing: 'swing 0.75s ease-in-out',
+            },
+            keyframes: {
+                swing: {
+                    '0%': { transform: 'rotate(0deg)' },
+                    '25%': { transform: 'rotate(-15deg)' },
+                    '50%': { transform: 'rotate(15deg)' },
+                    '100%': { transform: 'rotate(0deg)' },
+                },
+            },
         },
     },
 
