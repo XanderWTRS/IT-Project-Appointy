@@ -1,0 +1,43 @@
+.flex {
+    display: flex;
+}
+
+.flex-1 {
+    margin-left: 250px; /* Match the sidebar width */
+    padding: 20px;
+}
+
+.sidebar {
+    width: 250px; /* Breedte van de sidebar */
+    height: 100vh; /* Volledige hoogte van het scherm */
+    background-color: #f4f4f4; /* Achtergrondkleur */
+    position: fixed; /* Sidebar blijft altijd aan de linkerkant */
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 15px 0;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: #ddd;
+}

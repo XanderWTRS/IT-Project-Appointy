@@ -1,11 +1,17 @@
 import { Head} from '@inertiajs/react';
+import React, { useState } from 'react';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import BehandelingenCard from '/resources/js/Components/BehandelingCard';
 import BackToTop from '/resources/js/Components/BackToTop';
 import Chatbot from '/resources/js/Components/Chatbot';
+import FlipCard from '/resources/js/Components/FlipCard';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
+    const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    const [showAll, setShowAll] = useState(false);
+
+    const visibleCards = showAll ? teamIds : teamIds.slice(0, 4);
     return (
         <>
             <Head title="Home" />
@@ -79,11 +85,33 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </section>
 
                     {/* Team Section */}
-                    <section id='team' className="container mx-auto justify-between items-center py-4 px-6" style={{ height: '75vh' }}>
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
-                        Team
-                        <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
-                    </h1>
+                    <section
+                        id="team"
+                        className={`container mx-auto justify-between items-center py-4 px-6 transition-all duration-700 ease-in-out ${
+                            showAll ? 'h-auto' : 'h-[75vh]'
+                        }`}
+                    >
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
+                            Team
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
+                        <div
+                            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-700 ease-in-out`}
+                        >
+                            {visibleCards.map((id) => (
+                                <FlipCard key={id} id={id} />
+                            ))}
+                        </div>
+
+                        {/* Knop voor meer weergeven */}
+                        <div className="flex justify-center mt-6">
+                            <button
+                                className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-300"
+                                onClick={() => setShowAll(!showAll)}
+                            >
+                                {showAll ? 'Minder Weergeven' : 'Meer Weergeven'}
+                            </button>
+                        </div>
                     </section>
 
                     {/* Contact */}
