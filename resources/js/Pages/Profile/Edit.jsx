@@ -13,8 +13,6 @@ import "/resources/css/button.css";
 export default function Edit({ user }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
-    const [showButtonAnimation, setShowButtonAnimation] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const { data, setData, put, processing, errors } = useForm({
         email: user.email || '',
@@ -30,11 +28,6 @@ export default function Edit({ user }) {
     const submit = (e) => {
         e.preventDefault();
         put(route('profile.update'));
-    };
-
-    const showSidebar = () => {
-        setIsSidebarOpen(true);
-        setShowButtonAnimation(true); //animation nog fixen
     };
 
     const handleDeleteAccount = () => {
@@ -57,44 +50,42 @@ export default function Edit({ user }) {
         <>
             <Head title="Profiel" />
 
-            <div className={isSidebarOpen ? "flex" : "w-full"}>
-                {isSidebarOpen && (
-                    <div className="sidebar">
-                        <SidebarUser />
-                    </div>
-                )}
+            {/* Header */}
+            <div className="header">
+                <Header auth={user} />
+            </div>
 
-                <div className={isSidebarOpen ? "flex-1" : "w-full"}>
-                    {!isSidebarOpen && (
-                        <button
-                            onClick={showSidebar}
-                            className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full
-                            focus:outline-none hover:scale-110 transform transition-transform"
-                            style={{ top: "4.5rem", left: "1rem" }}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
-                        </button>
-                    )}
-
-                    <div className="header">
-                        <Header auth={user} />
+            <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
+                <div className="flex gap-8">
+                    {/* Sidebar */}
+                    <div className="w-1/4 bg-gray-100 p-4 rounded-md shadow-md h-full">
+                        <ul className="space-y-4">
+                            <li>
+                                <a href="#" className="block px-4 py-2 text-gray-700 font-semibold hover:bg-blue-500 hover:text-white rounded">
+                                    Profiel
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="block px-4 py-2 text-gray-700 font-semibold hover:bg-blue-500 hover:text-white rounded">
+                                    Afspraken
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="block px-4 py-2 text-gray-700 font-semibold hover:bg-blue-500 hover:text-white rounded">
+                                    Meldingen
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <div className="bg-white p-8 shadow sm:rounded-lg max-w-7xl mx-auto">
+
+                    {/* Main Content */}
+                    <div className="w-3/4">
+                        {/* Title */}
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Profiel Aanpassen</h2>
+
+                        {/* Form */}
                         <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Voornaam */}
                             <div>
                                 <label htmlFor="voornaam" className="block text-sm font-medium text-gray-700">
                                     Voornaam
@@ -109,6 +100,7 @@ export default function Edit({ user }) {
                                 {errors.voornaam && <p className="text-red-500 text-sm">{errors.voornaam}</p>}
                             </div>
 
+                            {/* Achternaam */}
                             <div>
                                 <label htmlFor="naam" className="block text-sm font-medium text-gray-700">
                                     Achternaam
@@ -123,6 +115,7 @@ export default function Edit({ user }) {
                                 {errors.naam && <p className="text-red-500 text-sm">{errors.naam}</p>}
                             </div>
 
+                            {/* E-mail */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                     E-mail
@@ -137,6 +130,7 @@ export default function Edit({ user }) {
                                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                             </div>
 
+                            {/* GSM-nummer */}
                             <div>
                                 <label htmlFor="gsm_nummer" className="block text-sm font-medium text-gray-700">
                                     GSM-nummer
@@ -151,7 +145,8 @@ export default function Edit({ user }) {
                                 {errors.gsm_nummer && <p className="text-red-500 text-sm">{errors.gsm_nummer}</p>}
                             </div>
 
-                            <div>
+                            {/* Adres */}
+                            <div className="md:col-span-2">
                                 <label htmlFor="adres" className="block text-sm font-medium text-gray-700">
                                     Adres
                                 </label>
@@ -165,6 +160,7 @@ export default function Edit({ user }) {
                                 {errors.adres && <p className="text-red-500 text-sm">{errors.adres}</p>}
                             </div>
 
+                            {/* Password Update */}
                             <div className="md:col-span-2">
                                 <h3 className="text-xl font-semibold text-gray-700 mb-4">Wachtwoord Aanpassen</h3>
                             </div>
@@ -180,7 +176,6 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('current_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.current_password && <p className="text-red-500 text-sm">{errors.current_password}</p>}
                             </div>
 
                             <div>
@@ -194,7 +189,6 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('new_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.new_password && <p className="text-red-500 text-sm">{errors.new_password}</p>}
                             </div>
 
                             <div>
@@ -208,22 +202,17 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('confirm_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.confirm_password && <p className="text-red-500 text-sm">{errors.confirm_password}</p>}
                             </div>
 
+                            {/* Buttons */}
                             <div className="md:col-span-2 flex justify-between mt-6">
                                 <button
                                     type="submit"
                                     disabled={processing}
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                                    onClick={(e) => {
-                                        setShowConfirmation(true);
-                                        setTimeout(() => setShowConfirmation(false), 1100);
-                                    }}
                                 >
                                     Opslaan
                                 </button>
-
                                 <button
                                     type="button"
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -231,35 +220,13 @@ export default function Edit({ user }) {
                                 >
                                     Account Verwijderen
                                 </button>
-
-                                <button
-                                    type="button"
-                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                                    onClick={() => {
-                                        const form = document.createElement('form');
-                                        form.method = 'POST';
-                                        form.action = route('logout');
-
-                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                                        const input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = '_token';
-                                        input.value = csrfToken;
-                                        form.appendChild(input);
-
-                                        document.body.appendChild(form);
-                                        form.submit();
-                                    }}
-                                >
-                                    Uitloggen
-                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <ConfirmationAnimation show={showConfirmation} />
 
+            <ConfirmationAnimation show={showConfirmation} />
             {showDeletePopUp && (
                 <DeletePopUp
                     onCancel={() => setShowDeletePopUp(false)}
