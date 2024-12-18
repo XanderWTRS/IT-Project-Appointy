@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AfspraakController;
 use App\Http\Controllers\WachtlijstController;
+use App\Http\Controllers\ChatbotController;
 
 
 Route::get('/', function () {
@@ -109,7 +110,7 @@ Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('adm
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
 
-
+Route::post('/chat', [ChatbotController::class, 'handle']);
 
 
 
