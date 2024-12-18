@@ -48,7 +48,7 @@ const Chatbot = () => {
             {/* Chat Icon */}
             {!isOpen ? (
                 <button
-                    className="w-full h-[8vh] bg-white text-blue-500 border-2 border-blue-500 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-500 hover:text-white hover:border-transparent transition-all"
+                    className="w-full h-[8vh] bg-white text-blue-500 border-2 hover:border-blue-500 rounded-full flex items-center justify-center shadow-lg hover:text-white hover:border-transparent transition-all"
                     onClick={() => setIsOpen(true)}
                 >
                     <span className="">

@@ -13,6 +13,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AfspraakController;
 use App\Http\Controllers\WachtlijstController;
 use App\Http\Controllers\ChatbotController;
+use App\Models\Personeel;
 
 
 Route::get('/', function () {
@@ -112,6 +113,15 @@ Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('d
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
 
+Route::get('/personeel/data/{id}', function ($id) {
+    $personeel = Personeel::find($id);
+
+    if (!$personeel) {
+        return response()->json(['message' => 'Personeel niet gevonden'], 404);
+    }
+
+    return response()->json($personeel);
+});
 
 
 
