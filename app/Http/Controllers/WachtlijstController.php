@@ -6,6 +6,8 @@ use App\Models\Wachtlijst;
 use App\Models\Afspraak;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AfspraakConfirmationMail;
 
 class WachtlijstController extends Controller
 {
@@ -137,12 +139,16 @@ class WachtlijstController extends Controller
         }
 
         // Create the appointment
-        Afspraak::create([
+        $appointment = Afspraak::create([
             'user_id' => $user->id,
             'datum' => $validated['date'],
             'tijd' => $validated['time'],
             'behandeling' => $validated['treatment'],
         ]);
+        if($user->keuze_email){
+            Mail::to($user->email)->send(new AfspraakConfirmationMail($user, $appointment));
+        }
+
 
         // Remove the user from the waitlist if they are on it
         Wachtlijst::where('user_id', $user->id)->delete();

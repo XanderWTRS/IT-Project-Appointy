@@ -4,13 +4,17 @@ import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
 import DeletePopUp from '/resources/js/Components/DeletePopUp';
-import Sidebar from '/resources/js/Components/SidebarUser';
-import "/resources/css/bevstig.css";
+import SidebarUser from '/resources/js/Components/SidebarUser';
+
 import "/resources/css/SidebarUser.css";
+import "/resources/css/bevstig.css";
+import "/resources/css/button.css";
 
 export default function Edit({ user }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+    const [showButtonAnimation, setShowButtonAnimation] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const { data, setData, put, processing, errors } = useForm({
         email: user.email || '',
@@ -26,6 +30,11 @@ export default function Edit({ user }) {
     const submit = (e) => {
         e.preventDefault();
         put(route('profile.update'));
+    };
+
+    const showSidebar = () => {
+        setIsSidebarOpen(true);
+        setShowButtonAnimation(true); //animation nog fixen
     };
 
     const handleDeleteAccount = () => {
@@ -47,11 +56,42 @@ export default function Edit({ user }) {
     return (
         <>
             <Head title="Profiel" />
-            <Header auth={user} />
-                <div className="flex">
-                    <Sidebar />
-                    <div className="flex-1">  
-                    <div className="bg-white p-8 shadow sm:rounded-lg">
+            <div className="header">
+                <Header auth={user} />
+            </div>
+            <div className={isSidebarOpen ? "flex" : "w-full"}>
+                {isSidebarOpen && (
+                    <div className="sidebar">
+                        <SidebarUser />
+                    </div>
+                )}
+
+                <div className={isSidebarOpen ? "flex-1" : "w-full"}>
+                    {!isSidebarOpen && (
+                        <button
+                            onClick={showSidebar}
+                            className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full
+                            focus:outline-none hover:scale-110 transform transition-transform"
+                            style={{ top: "4.5rem", left: "1rem" }}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </button>
+                    )}
+
+                    <div className="bg-white p-8 shadow sm:rounded-lg max-w-7xl mx-auto">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Profiel Aanpassen</h2>
                         <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>

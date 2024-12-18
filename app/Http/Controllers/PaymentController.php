@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Wachtlijst;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentSuccessMail;
 
 
 class PaymentController extends Controller
@@ -108,6 +110,9 @@ class PaymentController extends Controller
                         'added_at' => now(),
                         'behandeling' => $transaction->behandeling,
                     ]);
+                    if($transaction->keuze_email){
+                        Mail::to($user->email)->send(new PaymentSuccessMail($user, $transaction));
+                    }
                 }
                 break;
             default:

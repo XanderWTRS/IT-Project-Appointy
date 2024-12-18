@@ -7,3 +7,7 @@
 html {
     scroll-behavior: smooth;
 }
+
+.group:hover .blur-background {
+    filter: blur(4px);
+  }
