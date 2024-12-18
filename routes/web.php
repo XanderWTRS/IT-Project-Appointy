@@ -115,4 +115,8 @@ Route::post('/chat', [ChatbotController::class, 'handle']);
 
 
 
+
+
+
+
 require __DIR__.'/auth.php';
