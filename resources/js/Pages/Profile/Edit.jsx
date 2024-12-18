@@ -56,7 +56,9 @@ export default function Edit({ user }) {
     return (
         <>
             <Head title="Profiel" />
-
+            <div className="header">
+                <Header auth={user} />
+            </div>
             <div className={isSidebarOpen ? "flex" : "w-full"}>
                 {isSidebarOpen && (
                     <div className="sidebar">
@@ -89,9 +91,6 @@ export default function Edit({ user }) {
                         </button>
                     )}
 
-                    <div className="header">
-                        <Header auth={user} />
-                    </div>
                     <div className="bg-white p-8 shadow sm:rounded-lg max-w-7xl mx-auto">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Profiel Aanpassen</h2>
                         <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
