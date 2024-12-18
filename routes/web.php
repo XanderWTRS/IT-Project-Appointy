@@ -83,7 +83,6 @@ Route::get('/paradontologie', function () {
     return Inertia::render('ParadontologiePage');
 })->name('paradontologie');
 
-
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/klanten', function () {
         return Inertia::render('Admin/KlantenPage');
@@ -123,6 +122,12 @@ Route::get('/personeel/data/{id}', function ($id) {
     return response()->json($personeel);
 });
 
+Route::get('/afspraakregelement', function () {
+    return Inertia::render('AfspraakRegelement');
+})->name('afspraakregelement');
 
+Route::get('/privacypolicy', function () {
+    return Inertia::render('PrivacyPolicy');
+})->name('privacypolicy');
 
 require __DIR__.'/auth.php';
