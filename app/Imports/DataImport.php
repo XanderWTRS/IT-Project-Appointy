@@ -7,13 +7,20 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 
 class DataImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
+        
         try {
+            if (User::where('rijksregister_nr', $row['rijksregister_nr'])->exists()) {
+                throw ValidationException::withMessages([
+                    'rijksregister_nr' => "Duplicate rijksregister_nr found: {$row['rijksregister_nr']}",
+                ]);
+            }
             $user = User::create([
                 'voornaam' => $row['voornaam'],
                 'naam' => $row['naam'],
@@ -31,9 +38,11 @@ class DataImport implements ToModel, WithHeadingRow
             ]);
             Log::info('User saved: ' . $user->id);
             return $user;
+        } catch (ValidationException $e) {
+            throw $e; 
         } catch (\Exception $e) {
             Log::error('Failed to save user: ' . $e->getMessage());
-            return null; // Skip the row if save fails
+            return null;
         }
     }
     public function rules(): array

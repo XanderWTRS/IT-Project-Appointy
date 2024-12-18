@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
+import ConfirmationAnimation from "/resources/js/Components/ConfirmationAnimation";
 import "/resources/css/bevstig.css";
 
 const Excel = () => {
-  const [showConfirmation, setShowConfirmation] = useState(false); // Add useState
+  const [showConfirmation, setShowConfirmation] = useState(false); // For success confirmation
+  const [errorMessage, setErrorMessage] = useState(null); // For error messages
 
   const handleFileUpload = async (file) => {
     if (!file) return;
@@ -21,12 +22,18 @@ const Excel = () => {
       });
 
       if (response.status === 200) {
+        setErrorMessage(null); // Clear any previous errors
         setShowConfirmation(true); 
         setTimeout(() => setShowConfirmation(false), 1100);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert(`Failed to upload Excel file: ${error.response?.data?.message || "Unknown error"}`);
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message || "An error occurred. Values are null or duplicate.");
+      } else {
+        setErrorMessage("Unknown error occurred. Please try again.");
+      }
+      setShowConfirmation(false);
     }
   };
 
@@ -61,6 +68,7 @@ const Excel = () => {
           onChange={(e) => handleFileUpload(e.target.files[0])}
         />
       </label>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <ConfirmationAnimation show={showConfirmation} />
     </StyledWrapper>
   );
@@ -111,6 +119,12 @@ const StyledWrapper = styled.div`
 
   .container-btn-file:hover::before {
     width: 100%;
+  }
+
+  .error-message {
+    margin-top: 10px;
+    color: red;
+    font-size: 0.9em;
   }
 `;
 
