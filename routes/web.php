@@ -112,6 +112,8 @@ Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('d
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
 
+Route::get('/admin/afspraken/{id}/edit', [AfspraakController::class, 'edit'])->name('admin.afspraken.edit');
+Route::post('/admin/afspraken/{id}/update', [AfspraakController::class, 'update'])->name('admin.afspraken.update');
 
 
 
