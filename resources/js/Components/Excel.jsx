@@ -1,7 +1,35 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
+import "/resources/css/bevstig.css";
 
 const Excel = () => {
+  const [showConfirmation, setShowConfirmation] = useState(false); // Add useState
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/upload-excel", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        setShowConfirmation(true); 
+        setTimeout(() => setShowConfirmation(false), 1100);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert(`Failed to upload Excel file: ${error.response?.data?.message || "Unknown error"}`);
+    }
+  };
+
   return (
     <StyledWrapper>
       <label className="container-btn-file">
@@ -26,8 +54,14 @@ const Excel = () => {
           20L44 20L44 22L36 22ZM36 27L44 27L44 29L36 29ZM36 35L44 35L44 37L36 37Z" />
         </svg>
         Upload File
-        <input className="file" type="file" />
+        <input
+          className="file"
+          type="file"
+          accept=".xlsx,.xls,.csv"
+          onChange={(e) => handleFileUpload(e.target.files[0])}
+        />
       </label>
+      <ConfirmationAnimation show={showConfirmation} />
     </StyledWrapper>
   );
 };
