@@ -102,6 +102,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::get('/afspraken', [AfspraakController::class, 'index'])->name('afspraken');
+    Route::get('/personeel', function () {
+        return Inertia::render('Admin/PersoneelPage');
+    })->name('personeel');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -114,6 +117,10 @@ Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('d
 Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
+
+Route::get('/admin/afspraken/{id}/edit', [AfspraakController::class, 'edit'])->name('admin.afspraken.edit');
+Route::post('/admin/afspraken/{id}/update', [AfspraakController::class, 'update'])->name('admin.afspraken.update');
+
 
 Route::get('/personeel/data/{id}', function ($id) {
     $personeel = Personeel::find($id);
@@ -133,6 +140,8 @@ Route::get('/privacypolicy', function () {
     return Inertia::render('PrivacyPolicy');
 })->name('privacypolicy');
 
+
 Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
+
 
 require __DIR__.'/auth.php';
