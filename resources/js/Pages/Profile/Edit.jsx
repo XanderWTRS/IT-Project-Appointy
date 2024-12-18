@@ -4,9 +4,9 @@ import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
 import DeletePopUp from '/resources/js/Components/DeletePopUp';
-import Sidebar from '/resources/js/Components/SidebarUser';
+
 import "/resources/css/bevstig.css";
-import "/resources/css/SidebarUser.css";
+
 
 export default function Edit({ user }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -49,7 +49,7 @@ export default function Edit({ user }) {
             <Head title="Profiel" />
             <Header auth={user} />
                 <div className="flex">
-                    <Sidebar />
+                   
                     <div className="flex-1">  
                     <div className="bg-white p-8 shadow sm:rounded-lg">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Profiel Aanpassen</h2>
