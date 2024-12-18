@@ -24,7 +24,7 @@ const Sidebar = () => {
                 {/* Meldingen -> No named route given in web.php. If you have one, use it here.
                     Otherwise, link to a placeholder or remove this link. */}
                 <li>
-                    <Link href="#notifications">
+                    <Link href={route('meldingen')}>
                         Meldingen
                     </Link>
                 </li>

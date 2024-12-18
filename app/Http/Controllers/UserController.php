@@ -45,5 +45,21 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
+    public function updateNotifications(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'keuze_sms' => 'required|boolean',
+            'keuze_email' => 'required|boolean',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update([
+            'keuze_sms' => $validatedData['keuze_sms'],
+            'keuze_email' => $validatedData['keuze_email'],
+        ]);
+
+        return redirect()->back()->with('success', 'Meldingsvoorkeuren succesvol bijgewerkt.');
+    }
+
     
 }

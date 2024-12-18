@@ -133,4 +133,6 @@ Route::get('/privacypolicy', function () {
     return Inertia::render('PrivacyPolicy');
 })->name('privacypolicy');
 
+Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
+
 require __DIR__.'/auth.php';
