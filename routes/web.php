@@ -12,7 +12,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AfspraakController;
 use App\Http\Controllers\WachtlijstController;
+use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\ChatbotController;
+use App\Models\Personeel;
 
 
 Route::get('/', function () {
@@ -82,7 +84,6 @@ Route::get('/paradontologie', function () {
     return Inertia::render('ParadontologiePage');
 })->name('paradontologie');
 
-
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/klanten', function () {
         return Inertia::render('Admin/KlantenPage');
@@ -101,6 +102,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::get('/afspraken', [AfspraakController::class, 'index'])->name('afspraken');
+    Route::get('/personeel', function () {
+        return Inertia::render('Admin/PersoneelPage');
+    })->name('personeel');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -110,11 +114,30 @@ Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('adm
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
 
+Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
+
 Route::post('/chat', [ChatbotController::class, 'handle']);
 
 Route::get('/admin/afspraken/{id}/edit', [AfspraakController::class, 'edit'])->name('admin.afspraken.edit');
 Route::post('/admin/afspraken/{id}/update', [AfspraakController::class, 'update'])->name('admin.afspraken.update');
 
 
+Route::get('/personeel/data/{id}', function ($id) {
+    $personeel = Personeel::find($id);
+
+    if (!$personeel) {
+        return response()->json(['message' => 'Personeel niet gevonden'], 404);
+    }
+
+    return response()->json($personeel);
+});
+
+Route::get('/afspraakregelement', function () {
+    return Inertia::render('AfspraakRegelement');
+})->name('afspraakregelement');
+
+Route::get('/privacypolicy', function () {
+    return Inertia::render('PrivacyPolicy');
+})->name('privacypolicy');
 
 require __DIR__.'/auth.php';
