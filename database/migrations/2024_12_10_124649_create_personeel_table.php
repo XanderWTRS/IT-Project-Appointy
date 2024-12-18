@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('personeel', function (Blueprint $table) {
             $table->id();
-            $table->string('voornaam', 255); 
-            $table->string('naam', 255); 
-            $table->string('functie', 255); 
-            $table->text('bio')->nullable(); 
-            $table->timestamps(); 
-        });
+            $table->string('voornaam', 255);
+            $table->string('naam', 255);
+            $table->string('functie', 255);
+            $table->text('bio');
+            $table->string('foto', 255); // Kolom voor foto's
+            $table->timestamps();
+        });;
     }
 
     /**

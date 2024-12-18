@@ -138,6 +138,7 @@ const UserDetailsPage = ({ user }) => {
                     </button>
                 </div>
             </form>
+            
 
             <ConfirmationAnimation show={showConfirmation} />
 

@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Head, useForm } from '@inertiajs/react';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimation';
 import DeletePopUp from '/resources/js/Components/DeletePopUp';
 import SidebarUser from '/resources/js/Components/SidebarUser';
+
 import "/resources/css/SidebarUser.css";
 import "/resources/css/bevstig.css";
 import "/resources/css/button.css";
@@ -56,7 +57,6 @@ export default function Edit({ user }) {
         <>
             <Head title="Profiel" />
 
-            {/* Indien sidebar open is, toon deze in een flex layout. Anders vul heel de breedte. */}
             <div className={isSidebarOpen ? "flex" : "w-full"}>
                 {isSidebarOpen && (
                     <div className="sidebar">
@@ -71,7 +71,6 @@ export default function Edit({ user }) {
                             className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full
                             focus:outline-none hover:scale-110 transform transition-transform"
                             style={{ top: "4.5rem", left: "1rem" }}
-                            
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

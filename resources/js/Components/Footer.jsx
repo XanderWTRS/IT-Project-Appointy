@@ -43,8 +43,8 @@ const Footer = () => {
                 <div>
                     <h3 className="font-bold text-lg mb-4">Handige links</h3>
                     <ul className="space-y-2">
-                        <li><Link href="#" className="hover:text-blue-600">Team</Link></li>
-                        <li><Link href="#" className="hover:text-blue-600">Contact</Link></li>
+                        <li><Link href="/#team" className="hover:text-blue-600">Team</Link></li>
+                        <li><Link href="/#contact" className="hover:text-blue-600">Contact</Link></li>
                         <li><Link href="#" className="hover:text-blue-600">Afspraak maken</Link></li>
                         <li><Link href="#" className="hover:text-blue-600">Privacy Policy</Link></li>
                     </ul>

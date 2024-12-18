@@ -47,7 +47,7 @@ const BackToTop = () => {
 
 const StyledWrapper = styled.div`
     position: fixed;
-    bottom: 50px;
+    bottom: 16px;
     left: 20px;
     z-index: 999;
 
