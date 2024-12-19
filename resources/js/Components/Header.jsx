@@ -73,8 +73,8 @@ const Header = ({ authUser }) => {
                     {/* Appointment Button */}
                     <div className="flex items-center space-x-4">
                         <a
-                            href="/payment"
-                            className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 rounded-3xl"
+                            href="/afspraak-selectie"
+                            className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 -ml-14 rounded-3xl"
                         >
                             Afspraak Maken
                         </a>

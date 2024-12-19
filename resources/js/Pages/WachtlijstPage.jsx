@@ -4,6 +4,7 @@ import { usePage, Head } from "@inertiajs/react";
 import CancelModal from "/resources/js/Components/CancelModal";
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
+import SidebarUser from "/resources/js/Components/SidebarUser";
 
 export default function WachtlijstPage() {
     const { props } = usePage();
@@ -20,10 +21,9 @@ export default function WachtlijstPage() {
     } = props;
 
     const [isModalOpen, setModalOpen] = useState(false);
-    const [modalType, setModalType] = useState(""); // Tracks which modal is open: "waitlist" or "appointment"
+    const [modalType, setModalType] = useState("");
     const [visible, setVisible] = useState(true);
 
-    // Determine if the target date has passed
     const targetDateHasPassed = targetDate
         ? new Date(targetDate) <= new Date()
         : false;
@@ -52,161 +52,168 @@ export default function WachtlijstPage() {
 
     return (
         <div className="bg-white text-gray-900">
-            <Head title="lijst"/>
+            <Head title="Afspraken"/>
             <Header />
-            <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg relative mb-8">
-                <h1 className="text-3xl font-bold mb-6">Afspraken</h1>
 
-                {/* Flash Messages */}
-                {flash.success && visible && (
-                    <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
-                        {flash.success}
-                    </div>
-                )}
-                {flash.error && visible && (
-                    <div className="bg-red-100 text-red-700 p-4 rounded mb-6">
-                        {flash.error}
-                    </div>
-                )}
+            <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
+            <div className="flex gap-8">
+                <SidebarUser />
+                <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
+                    <h1 className="text-3xl font-bold mb-6">Afspraken</h1>
 
-                {appointment ? (
-                    // Display Appointment Details
-                    <div className="bg-gray-100 p-6 rounded-lg mb-6">
-                        <h2 className="text-2xl font-semibold mb-4">Uw Afspraak</h2>
-                        <p className="text-gray-800">
-                            <strong>Datum:</strong> {appointment.datum}
-                        </p>
-                        <p className="text-gray-800">
-                            <strong>Tijd:</strong> {appointment.tijd}
-                        </p>
-                        <p className="text-gray-800">
-                            <strong>Behandeling:</strong> {appointment.behandeling}
-                        </p>
-                        <div className="mt-6 flex space-x-4">
-                            {/* Cancel Appointment Button */}
-                            <form
-                                id="cancel-appointment-form"
-                                action={route("afspraken.cancelAfspraak")}
-                                method="post"
-                            >
-                                <input type="hidden" name="_token" value={csrf_token} />
-                                <button
-                                    type="button"
-                                    className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition"
-                                    onClick={() => handleOpenModal("appointment")}
-                                >
-                                    Afspraak annuleren
-                                </button>
-                            </form>
+                    {/* Flash Messages */}
+                    {flash.success && visible && (
+                        <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
+                            {flash.success}
                         </div>
-                    </div>
-                ) : inWachtlijst ? (
-                    // Display Waitlist Information
-                    <>
-                        <p className="text-lg mb-6">
-                            {targetDateHasPassed ? (
-                                <span>
-                                    U kan een afspraak maken door op de onderstaande knop te
-                                    drukken.
-                                </span>
-                            ) : (
-                                <span>
-                                    U moet nog{" "}
-                                    <strong className="text-blue-600">{monthsLeft}</strong>{" "}
-                                    maand(en) en{" "}
-                                    <strong className="text-blue-600">{daysLeft}</strong>{" "}
-                                    dag(en) wachten voordat u een afspraak kunt maken.
-                                </span>
-                            )}
-                        </p>
+                    )}
+                    {flash.error && visible && (
+                        <div className="bg-red-100 text-red-700 p-4 rounded mb-6">
+                            {flash.error}
+                        </div>
+                    )}
 
+                    {appointment ? (
+                        // Display Appointment Details
                         <div className="bg-gray-100 p-6 rounded-lg mb-6">
-                            <h2 className="text-2xl font-semibold mb-4">
-                                U staat in de wachtlijst
-                            </h2>
+                            <h2 className="text-2xl font-semibold mb-4">Uw Afspraak</h2>
                             <p className="text-gray-800">
-                                <strong>Behandeling:</strong>{" "}
-                                {wachtlijst?.behandeling || "Geen"}
+                                <strong>Datum:</strong> {appointment.datum}
                             </p>
                             <p className="text-gray-800">
-                                <strong>Toegevoegd aan wachtlijst op:</strong> {addedAt}
+                                <strong>Tijd:</strong> {appointment.tijd}
                             </p>
                             <p className="text-gray-800">
-                                <strong>Afspraak mogelijk vanaf:</strong> {targetDate}
+                                <strong>Behandeling:</strong> {appointment.behandeling}
                             </p>
-                        </div>
-
-                        <div className="flex space-x-4">
-                            {/* Maak Afspraak Button */}
-                            <button
-                                className={`px-6 py-3 font-semibold rounded-lg shadow transition ${
-                                    targetDateHasPassed
-                                        ? "bg-green-500 text-white hover:bg-green-600"
-                                        : "bg-gray-400 text-white cursor-not-allowed"
-                                }`}
-                                onClick={() => {
-                                    if (targetDateHasPassed) {
-                                        window.location.href = "/afspraken/make";
-                                    }
-                                }}
-                                disabled={!targetDateHasPassed}
-                            >
-                                Maak afspraak
-                            </button>
-
-                            {/* Cancel Waitlist Button */}
-                            <form
-                                id="cancel-waitlist-form"
-                                action={route("afspraken.cancelWachtlijst")}
-                                method="post"
-                            >
-                                <input type="hidden" name="_token" value={csrf_token} />
-                                <button
-                                    type="button"
-                                    className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition"
-                                    onClick={() => handleOpenModal("waitlist")}
+                            <div className="mt-6 flex space-x-4">
+                                {/* Cancel Appointment Button */}
+                                <form
+                                    id="cancel-appointment-form"
+                                    action={route("afspraken.cancelAfspraak")}
+                                    method="post"
                                 >
-                                    Wachtlijst annuleren
-                                </button>
-                            </form>
+                                    <input type="hidden" name="_token" value={csrf_token} />
+                                    <button
+                                        type="button"
+                                        className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition"
+                                        onClick={() => handleOpenModal("appointment")}
+                                    >
+                                        Afspraak annuleren
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    </>
-                ) : (
-                    // Display Not in Waitlist Message
-                    <div className="text-center">
-                        <p className="text-lg mb-6">
-                            U bent nog niet in de wachtlijst. Klik op de onderstaande knop om
-                            een plaats in de wachtlijst te reserveren.
-                        </p>
-                        <button
-                            className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
-                            onClick={() => {
-                                window.location.href = "/payment";
-                            }}
-                        >
-                            Voeg toe aan Wachtlijst
-                        </button>
-                    </div>
-                )}
+                    ) : inWachtlijst ? (
+                        // Display Waitlist Information
+                        <>
+                            <p className="text-lg mb-6">
+                                {targetDateHasPassed ? (
+                                    <span>
+                                        U kan een afspraak maken door op de onderstaande knop te
+                                        drukken.
+                                    </span>
+                                ) : (
+                                    <span>
+                                        U moet nog{" "}
+                                        <strong className="text-blue-600">{monthsLeft}</strong>{" "}
+                                        maand(en) en{" "}
+                                        <strong className="text-blue-600">{daysLeft}</strong>{" "}
+                                        dag(en) wachten voordat u een afspraak kunt maken.
+                                    </span>
+                                )}
+                            </p>
 
-                {/* Confirmation Modal */}
-                <CancelModal
-                    isOpen={isModalOpen}
-                    onClose={() => setModalOpen(false)}
-                    onConfirm={handleConfirmCancel}
-                    title={
-                        modalType === "waitlist"
-                            ? "Bent u zeker dat u uit de wachtlijst wilt?"
-                            : "Bent u zeker dat u uw afspraak wilt annuleren?"
-                    }
-                    message={
-                        modalType === "waitlist"
-                            ? "Als u annuleert, zult u niet meer in de wachtlijst staan en moet u opnieuw toegevoegd worden aan de wachtlijst om in de toekomst een afspraak te kunnen maken. U zult uw voorstorting terugkrijgen. Deze zal binnen 5 werkdagen op uw rekening staan."
-                            : "Als u annuleert, zal uw afspraak worden geannuleerd. U kunt een nieuwe afspraak maken via de planner."
-                    }
-                />
+                            <div className="bg-gray-100 p-6 rounded-lg mb-6">
+                                <h2 className="text-2xl font-semibold mb-4">
+                                    U staat in de wachtlijst
+                                </h2>
+                                <p className="text-gray-800">
+                                    <strong>Behandeling:</strong>{" "}
+                                    {wachtlijst?.behandeling || "Geen"}
+                                </p>
+                                <p className="text-gray-800">
+                                    <strong>Toegevoegd aan wachtlijst op:</strong> {addedAt}
+                                </p>
+                                <p className="text-gray-800">
+                                    <strong>Afspraak mogelijk vanaf:</strong> {targetDate}
+                                </p>
+                            </div>
 
+                            <div className="flex space-x-4">
+                                {/* Maak Afspraak Button */}
+                                <button
+                                    className={`px-6 py-3 font-semibold rounded-lg shadow transition ${
+                                        targetDateHasPassed
+                                            ? "bg-green-500 text-white hover:bg-green-600"
+                                            : "bg-gray-400 text-white cursor-not-allowed"
+                                    }`}
+                                    onClick={() => {
+                                        if (targetDateHasPassed) {
+                                            window.location.href = "/afspraken/make";
+                                        }
+                                    }}
+                                    disabled={!targetDateHasPassed}
+                                >
+                                    Maak afspraak
+                                </button>
+
+                                {/* Cancel Waitlist Button */}
+                                <form
+                                    id="cancel-waitlist-form"
+                                    action={route("afspraken.cancelWachtlijst")}
+                                    method="post"
+                                >
+                                    <input type="hidden" name="_token" value={csrf_token} />
+                                    <button
+                                        type="button"
+                                        className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600 transition"
+                                        onClick={() => handleOpenModal("waitlist")}
+                                    >
+                                        Wachtlijst annuleren
+                                    </button>
+                                </form>
+                            </div>
+                        </>
+                    ) : (
+                        // Display Not in Waitlist Message
+                        <div className="text-center">
+                            <p className="text-lg mb-6">
+                                U bent nog niet in de wachtlijst. Klik op de onderstaande knop om
+                                een plaats in de wachtlijst te reserveren.
+                            </p>
+                            <button
+                                className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow hover:bg-blue-600 transition"
+                                onClick={() => {
+                                    window.location.href = "/payment";
+                                }}
+                            >
+                                Voeg toe aan Wachtlijst
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Confirmation Modal */}
+                    <CancelModal
+                        isOpen={isModalOpen}
+                        onClose={() => setModalOpen(false)}
+                        onConfirm={handleConfirmCancel}
+                        title={
+                            modalType === "waitlist"
+                                ? "Bent u zeker dat u uit de wachtlijst wilt?"
+                                : "Bent u zeker dat u uw afspraak wilt annuleren?"
+                        }
+                        message={
+                            modalType === "waitlist"
+                                ? "Als u annuleert, zult u niet meer in de wachtlijst staan en moet u opnieuw toegevoegd worden aan de wachtlijst om in de toekomst een afspraak te kunnen maken. U zult uw voorstorting terugkrijgen. Deze zal binnen 5 werkdagen op uw rekening staan."
+                                : "Als u annuleert, zal uw afspraak worden geannuleerd. U kunt een nieuwe afspraak maken via de planner."
+                        }
+                    />
+
+                </div>
             </div>
+            </div>
+
             <Footer />
         </div>
     );
