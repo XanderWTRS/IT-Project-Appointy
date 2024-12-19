@@ -107,7 +107,10 @@ export default function NotificationsPage({ auth, notificationSettings }) {
                     <SidebarUser />
 
                     <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
-                        <h2 className="text-3xl font-bold mb-6 text-gray-800">Meldingen</h2>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                            Meldingen
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
                         <p className="text-gray-600 mb-4">
                             Selecteer hoe u meldingen wilt ontvangen: via SMS, e-mail of beide.
                         </p>

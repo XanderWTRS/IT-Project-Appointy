@@ -59,7 +59,10 @@ export default function WachtlijstPage() {
             <div className="flex gap-8">
                 <SidebarUser />
                 <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
-                    <h1 className="text-3xl font-bold mb-6">Afspraken</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                        Afspraken
+                        <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                    </h1>
 
                     {/* Flash Messages */}
                     {flash.success && visible && (
