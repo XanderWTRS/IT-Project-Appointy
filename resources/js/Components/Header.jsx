@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
 const Header = ({ authUser }) => {
-    const userIsLoggedIn = Boolean(authUser);
+    const { auth } = usePage().props; // Access the shared auth data
+    const authUser1 = auth?.user; // Extract the logged-in user
+    const userIsLoggedIn = Boolean(authUser1);
+
+    console.log('authUser:', authUser1);
 
     return (
         <header className="bg-white shadow">
@@ -127,33 +132,38 @@ const Header = ({ authUser }) => {
                                 <img src="/Assets/Icons/Profile.svg" alt="Profile Icon" className="h-6 w-6" />
                                 <span className="hover:underline">Profiel</span>
                             </a>
-                            <a href="/afspraken" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
-                                <img src="/Assets/Icons/Letter.svg" alt="Appointments Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Afspraken</span>
-                            </a>
+                            {userIsLoggedIn && (
+                                <>
+                                    <a href="/afspraken" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                        <img src="/Assets/Icons/Letter.svg" alt="Appointments Icon" className="h-5 w-5" />
+                                        <span className="hover:underline">Afspraken</span>
+                                    </a>
 
-                            <a href="/meldingen" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
-                                <img src="/Assets/Icons/Clock.svg" alt="Notifications Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Meldingen</span>
-                            </a>
-                            <form id="logout-form" method="POST" action="/logout" style={{ display: 'none' }}>
-                                <input
-                                    type="hidden"
-                                    name="_token"
-                                    value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
-                                />
-                            </form>
-                            <a
-                                href="#"
-                                onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById('logout-form').submit();
-                                }}
-                                className="flex items-center px-4 py-2 text-gray-700 space-x-2"
-                            >
-                            <img src="/Assets/Icons/logout.svg" alt="Logout Icon" className="h-5 w-5" />
-                            <span className="hover:underline">Logout</span>
-                            </a>
+                                    <a href="/meldingen" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                        <img src="/Assets/Icons/Clock.svg" alt="Notifications Icon" className="h-5 w-5" />
+                                        <span className="hover:underline">Meldingen</span>
+                                    </a>
+                                    <form id="logout-form" method="POST" action="/logout" style={{ display: 'none' }}>
+                                        <input
+                                            type="hidden"
+                                            name="_token"
+                                            value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+                                        />
+                                    </form>
+                                    <a
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            document.getElementById('logout-form').submit();
+                                        }}
+                                        className="flex items-center px-4 py-2 text-gray-700 space-x-2"
+                                    >
+                                        <img src="/Assets/Icons/logout.svg" alt="Logout Icon" className="h-5 w-5" />
+                                        <span className="hover:underline">Logout</span>
+                                    </a>
+                                </>
+                            )}
+
                         </div>
                     </div>
                 </div>
