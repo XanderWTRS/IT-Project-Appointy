@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Head } from "@inertiajs/react";
 import Header from "/resources/js/Components/Header";
 import Footer from "/resources/js/Components/Footer";
+import SidebarUser from "/resources/js/Components/SidebarUser";
 
 export default function NotificationsPage({ auth, notificationSettings }) {
     const [isSMSActive, setIsSMSActive] = useState(notificationSettings.smsActive);
@@ -103,49 +104,7 @@ export default function NotificationsPage({ auth, notificationSettings }) {
 
             <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
                 <div className="flex gap-8">
-                    <div className="w-1/4 bg-white p-4 rounded-md shadow-md h-full">
-                        <ul className="space-y-4">
-                            <li>
-                                <a
-                                    href="/profile/edit"
-                                    className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center"
-                                >
-                                    <img
-                                        src="/Assets/Icons/Profile.svg"
-                                        alt="icon of the profile"
-                                        className="w-8 h-8 rounded-full inline-block mr-4"
-                                    />
-                                    <span className="relative">Profiel</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/afspraken"
-                                    className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center"
-                                >
-                                    <img
-                                        src="/Assets/Icons/Calendar.svg"
-                                        alt="icon of the profile"
-                                        className="w-8 h-8 inline-block mr-4"
-                                    />
-                                    <span className="relative">Afspraken</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center group"
-                                >
-                                    <img
-                                        src="/Assets/Icons/Bell.svg"
-                                        alt="icon of the bell"
-                                        className="w-8 h-8 rounded-full inline-block mr-4"
-                                    />
-                                    <span className="relative">Meldingen</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <SidebarUser />
 
                     <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
                         <h2 className="text-3xl font-bold mb-6 text-gray-800">Meldingen</h2>
