@@ -146,7 +146,7 @@ Route::get('/privacypolicy', function () {
 })->name('privacypolicy');
 
 
-
+Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
 
 
 require __DIR__.'/auth.php';
