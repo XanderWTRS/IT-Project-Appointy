@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import InputError from '/resources/js/Components/InputError';
 import InputLabel from '/resources/js/Components/InputLabel';
 import PrimaryButton from '/resources/js/Components/PrimaryButton';
@@ -5,7 +6,6 @@ import TextInput from '/resources/js/Components/TextInput';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { useState } from 'react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -25,18 +25,54 @@ export default function Register() {
     });
 
     const [checkboxError, setCheckboxError] = useState('');
+    const [customErrors, setCustomErrors] = useState({});
+
+    const validateBelgianPhoneNumber = (number) => {
+        const regex = /^(?:\+32|0)(4\d{8}|[1-9]\d{8})$/; 
+        return regex.test(number);
+    };
+
+    const calculateAge = (dob) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    };
 
     const submit = (e) => {
         e.preventDefault();
 
-        // Validatie: Controleer of ten minste één checkbox is aangevinkt
+        let validationErrors = {};
+
+        // Check if user is at least 18 years old
+        if (!data.geboortedatum || calculateAge(data.geboortedatum) < 18) {
+            validationErrors.geboortedatum = 'Je moet minstens 18 jaar oud zijn.';
+        }
+
+        // Validate Belgian phone number
+        if (!validateBelgianPhoneNumber(data.gsm_nummer)) {
+            validationErrors.gsm_nummer = 'Geef een geldig Belgisch telefoonnummer op.';
+        }
+
+        // Check if at least one communication option is selected
         if (!data.keuze_sms && !data.keuze_email) {
             setCheckboxError('Je moet minstens één communicatieoptie selecteren (SMS of Email).');
             return;
+        } else {
+            setCheckboxError('');
         }
 
-        // Reset eventuele fouten en verzend het formulier
-        setCheckboxError('');
+        if (Object.keys(validationErrors).length > 0) {
+            setCustomErrors(validationErrors);
+            return;
+        }
+
+        // Reset custom errors and submit the form
+        setCustomErrors({});
         post(route('register'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
@@ -107,7 +143,7 @@ export default function Register() {
                                 onChange={(e) => setData('geboortedatum', e.target.value)}
                                 required
                             />
-                            <InputError message={errors.geboortedatum} className="mt-2" />
+                            <InputError message={errors.geboortedatum || customErrors.geboortedatum} className="mt-2" />
                         </div>
 
                         <div>
@@ -159,10 +195,9 @@ export default function Register() {
                                 onChange={(e) => setData('gsm_nummer', e.target.value)}
                                 required
                             />
-                            <InputError message={errors.gsm_nummer} className="mt-2" />
+                            <InputError message={errors.gsm_nummer || customErrors.gsm_nummer} className="mt-2" />
                         </div>
                     </div>
-
 
                     <div className="mt-6 grid grid-cols-2 gap-6">
                         <div>

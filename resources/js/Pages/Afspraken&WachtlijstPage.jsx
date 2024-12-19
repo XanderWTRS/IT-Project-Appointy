@@ -4,6 +4,7 @@ import { usePage, Head } from "@inertiajs/react";
 import CancelModal from "/resources/js/Components/CancelModal";
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
+import SidebarUser from "/resources/js/Components/SidebarUser";
 
 export default function WachtlijstPage() {
     const { props } = usePage();
@@ -51,21 +52,29 @@ export default function WachtlijstPage() {
 
     return (
         <div className="bg-white text-gray-900">
-            <Head title="lijst"/>
+            <Head title="Afspraken"/>
             <Header />
-            <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg relative mb-8">
-                <h1 className="text-3xl font-bold mb-6">Afspraken</h1>
 
-                {flash.success && visible && (
-                    <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
-                        {flash.success}
-                    </div>
-                )}
-                {flash.error && visible && (
-                    <div className="bg-red-100 text-red-700 p-4 rounded mb-6">
-                        {flash.error}
-                    </div>
-                )}
+            <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
+            <div className="flex gap-8">
+                <SidebarUser />
+                <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                        Afspraken
+                        <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                    </h1>
+
+                    {/* Flash Messages */}
+                    {flash.success && visible && (
+                        <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
+                            {flash.success}
+                        </div>
+                    )}
+                    {flash.error && visible && (
+                        <div className="bg-red-100 text-red-700 p-4 rounded mb-6">
+                            {flash.error}
+                        </div>
+                    )}
 
                 {appointment ? (
                     <div className="bg-gray-100 p-6 rounded-lg mb-6">
@@ -115,21 +124,21 @@ export default function WachtlijstPage() {
                             )}
                         </p>
 
-                        <div className="bg-gray-100 p-6 rounded-lg mb-6">
-                            <h2 className="text-2xl font-semibold mb-4">
-                                U staat in de wachtlijst
-                            </h2>
-                            <p className="text-gray-800">
-                                <strong>Behandeling:</strong>{" "}
-                                {wachtlijst?.behandeling || "Geen"}
-                            </p>
-                            <p className="text-gray-800">
-                                <strong>Toegevoegd aan wachtlijst op:</strong> {addedAt}
-                            </p>
-                            <p className="text-gray-800">
-                                <strong>Afspraak mogelijk vanaf:</strong> {targetDate}
-                            </p>
-                        </div>
+                            <div className="bg-gray-100 p-6 rounded-lg mb-6">
+                                <h2 className="text-2xl font-semibold mb-4">
+                                    U staat in de wachtlijst
+                                </h2>
+                                <p className="text-gray-800">
+                                    <strong>Behandeling:</strong>{" "}
+                                    {wachtlijst?.behandeling || "Geen"}
+                                </p>
+                                <p className="text-gray-800">
+                                    <strong>Toegevoegd aan wachtlijst op:</strong> {addedAt}
+                                </p>
+                                <p className="text-gray-800">
+                                    <strong>Afspraak mogelijk vanaf:</strong> {targetDate}
+                                </p>
+                            </div>
 
                         <div className="flex space-x-4">
                             <button
@@ -180,24 +189,27 @@ export default function WachtlijstPage() {
                     </div>
                 )}
 
-                {/* Confirmation Modal */}
-                <CancelModal
-                    isOpen={isModalOpen}
-                    onClose={() => setModalOpen(false)}
-                    onConfirm={handleConfirmCancel}
-                    title={
-                        modalType === "waitlist"
-                            ? "Bent u zeker dat u uit de wachtlijst wilt?"
-                            : "Bent u zeker dat u uw afspraak wilt annuleren?"
-                    }
-                    message={
-                        modalType === "waitlist"
-                            ? "Als u annuleert, zult u niet meer in de wachtlijst staan en moet u opnieuw toegevoegd worden aan de wachtlijst om in de toekomst een afspraak te kunnen maken. U zult uw voorstorting terugkrijgen. Deze zal binnen 5 werkdagen op uw rekening staan."
-                            : "Als u annuleert, zal uw afspraak worden geannuleerd. U kunt een nieuwe afspraak maken via de planner."
-                    }
-                />
+                    {/* Confirmation Modal */}
+                    <CancelModal
+                        isOpen={isModalOpen}
+                        onClose={() => setModalOpen(false)}
+                        onConfirm={handleConfirmCancel}
+                        title={
+                            modalType === "waitlist"
+                                ? "Bent u zeker dat u uit de wachtlijst wilt?"
+                                : "Bent u zeker dat u uw afspraak wilt annuleren?"
+                        }
+                        message={
+                            modalType === "waitlist"
+                                ? "Als u annuleert, zult u niet meer in de wachtlijst staan en moet u opnieuw toegevoegd worden aan de wachtlijst om in de toekomst een afspraak te kunnen maken. U zult uw voorstorting terugkrijgen. Deze zal binnen 5 werkdagen op uw rekening staan."
+                                : "Als u annuleert, zal uw afspraak worden geannuleerd. U kunt een nieuwe afspraak maken via de planner."
+                        }
+                    />
 
+                </div>
             </div>
+            </div>
+
             <Footer />
         </div>
     );

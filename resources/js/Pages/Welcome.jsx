@@ -36,7 +36,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             Tandheelkunde - Orthodontie - Endodontie - Parodontologie
                         </p>
                         <a
-                            href="/payment"
+                            href="/afspraak-selectie"
                             className="bg-blue-600 text-white py-3 px-6 rounded-3xl hover:bg-blue-500"
                         >
                             Afspraak Maken
