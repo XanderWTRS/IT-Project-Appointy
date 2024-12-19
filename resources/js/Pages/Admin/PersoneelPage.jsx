@@ -4,7 +4,7 @@ import AdminLayout from "../../Layouts/AdminLayout";
 import FlipCard from '/resources/js/Components/FlipCard';
 
 const PersoneelPage = () => {
-  const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+  const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
   const [showAll, setShowAll] = useState(true);
 
   const visibleCards = showAll ? teamIds : teamIds.slice(0, 4);
