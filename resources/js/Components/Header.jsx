@@ -130,10 +130,10 @@ const Header = ({ authUser }) => {
 
                     {/* Profile with Dropdown */}
                     <div className="relative group">
-                        <button className="flex items-center space-x-2 ml-4">
+                        <button className="flex items-center space-x-2 ml-4 relative hover:text-blue-600 after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
                             <img src="/Assets/Icons/Profile.svg" alt="Profile Icon" className="h-10" />
                         </button>
-                        <div className="absolute left-0 top-full w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1">
+                        <div className="absolute left-0 top-[calc(100%+4px)] w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1">
                             <a
                                 href={userIsLoggedIn ? "/profile/edit" : "/register"}
                                 className="flex items-center px-4 py-2 text-gray-700 space-x-2"
