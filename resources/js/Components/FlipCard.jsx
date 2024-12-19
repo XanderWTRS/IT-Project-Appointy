@@ -15,7 +15,7 @@ const FlipCard = ({ id }) => {
   }, [id]);
 
   if (!personeelData) {
-    return <div>Laden...</div>;
+    return <div></div>;
   }
 
   return (
