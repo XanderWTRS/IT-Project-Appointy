@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@inertiajs/react';
 
 const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <header className="bg-white shadow">
             <div className="container mx-auto flex justify-between items-center py-4 px-6">
@@ -14,8 +20,17 @@ const Header = () => {
                     />
                 </div>
 
+                {/* Hamburger Menu for small screens */}
+                <button
+                    onClick={toggleMenu}
+                    className="md:hidden flex items-center space-x-2 p-2"
+                >
+                    <span className="block w-6 h-0.5 bg-gray-800"></span>
+                    <span className="block w-6 h-0.5 bg-gray-800 mt-1"></span>
+                </button>
+
                 {/* Navigation */}
-                <nav className="flex space-x-6 text-gray-800 text-lg">
+                <nav className={`flex space-x-6 text-gray-800 text-lg md:flex ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
                     <Link
                         href="/"
                         className="relative hover:text-blue-600 after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full"
@@ -100,20 +115,14 @@ const Header = () => {
                 </nav>
 
                 <div className="flex items-center">
-                    {/* Appointment Button */}
+                    {/* Profile Button always visible */}
                     <div className="flex items-center space-x-4">
-                        <a
-                            href="/payment"
-                            className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 -ml-14 rounded-3xl"
-                        >
-                            Afspraak Maken
-                        </a>
+                        <Link href="/register">
+                            <button className="flex items-center space-x-2 ml-4">
+                                <img src="/Assets/Icons/Profile.svg" alt="Button Icon" className="h-10" />
+                            </button>
+                        </Link>
                     </div>
-                    <Link href="/register">
-                        <button className="flex items-center space-x-2 ml-4">
-                            <img src="/Assets/Icons/Profile.svg" alt="Button Icon" className="h-10" />
-                        </button>
-                    </Link>
                 </div>
             </div>
         </header>
