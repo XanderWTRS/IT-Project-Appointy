@@ -37,7 +37,7 @@ class PersoneelController extends Controller
             // Save the file in the public/Assets/Team-Liedent folder
             $fileName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $filePath = $request->file('foto')->move(public_path('Assets/Team-Liedent'), $fileName);
-            $validated['foto'] = 'Assets/Team-Liedent/' . $fileName; // Save the relative path
+            $validated['foto'] = '' . $fileName; // Save the relative path
         }
 
         // Save to the database
