@@ -77,7 +77,7 @@ export default function Edit({ user }) {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center group">
+                                <a href="/meldingen" className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center group">
                                     <img src="/Assets/Icons/Bell.svg" alt="icon of the bell" className="w-8 h-8 rounded-full inline-block mr-4 transition-transform duration-500 group-hover:animate-swing"/>
                                     <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 after:origin-center group-hover:after:left-0 group-hover:after:w-full">
                                         Meldingen

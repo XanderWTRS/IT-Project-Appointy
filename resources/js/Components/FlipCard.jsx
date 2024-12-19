@@ -5,7 +5,6 @@ const FlipCard = ({ id }) => {
   const [personeelData, setPersoneelData] = useState(null);
 
   useEffect(() => {
-    // Ophalen van gegevens op basis van ID
     fetch(`/personeel/data/${id}`)
       .then((response) => {
         if (!response.ok) throw new Error("Data niet gevonden");
