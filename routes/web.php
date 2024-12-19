@@ -156,7 +156,7 @@ Route::get('/privacypolicy', function () {
 
 
 Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
-Route::post('/notifications/update', [UserController::class, 'updateMeldingen']);
+Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])->name('notifications.update');
 
 Route::get('/afspraak-selectie', function () {
     return Inertia::render('AfspraakOptiePage');
