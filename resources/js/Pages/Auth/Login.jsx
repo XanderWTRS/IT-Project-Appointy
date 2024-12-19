@@ -22,32 +22,26 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = async (e) => {
         e.preventDefault();
-
+    
         setProcessing(true);
         setErrors({});
-
+    
         try {
-            // Verstuur de login-aanvraag via axios
             const response = await axios.post(route('login'), data);
-
-            // Als de respons succesvol is, toon de animatie
-            if (response.status === 200) {
-                setShowConfirmation(true);
-
-                setTimeout(() => {
-                    setShowConfirmation(false);
-                    window.location.href = route('home'); // Navigeer naar de homepagina
-                }, 1100);
+    
+            if (response.status === 200 && response.data.redirect) {
+                // Redirect based on the server response
+                window.location.href = response.data.redirect;
             }
         } catch (error) {
-            // Fouten opvangen en weergeven
             if (error.response && error.response.data.errors) {
-                setErrors(error.response.data.errors);
+                setErrors(error.response.data.errors); // Display validation errors
             }
         } finally {
             setProcessing(false);
         }
     };
+    
 
     return (
         <div className="w-full h-screen bg-gray-50 flex flex-col">

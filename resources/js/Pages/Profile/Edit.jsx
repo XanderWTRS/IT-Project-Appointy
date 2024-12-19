@@ -217,17 +217,17 @@ export default function Edit({ user }) {
                             </div>
 
                             {/* Buttons */}
-                            <div className="md:col-span-2 flex justify-between mt-6">
+                            <div className="button-wrapper col-span-2 flex justify-end gap-4 mt-6">
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    className="button bevestigen"
                                 >
                                     Opslaan
                                 </button>
                                 <button
                                     type="button"
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    className="button verwijderen"
                                     onClick={() => setShowDeletePopUp(true)}
                                 >
                                     Account Verwijderen
