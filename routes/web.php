@@ -15,6 +15,7 @@ use App\Http\Controllers\WachtlijstController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\ChatbotController;
 use App\Models\Personeel;
+use App\Http\Controllers\PersoneelController;
 
 
 Route::get('/', function () {
@@ -105,6 +106,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/personeel', function () {
         return Inertia::render('Admin/PersoneelPage');
     })->name('personeel');
+    Route::get('/add-personeel', function () {
+        return Inertia::render('Admin/AddPersoneelPage');
+    })->name('add-personeel');
+    Route::get('/edit-personeel', function () {
+        return Inertia::render('Admin/EditPersoneelPage');
+    })->name('edit-personeel');
+
+    Route::post('/add-personeel', [PersoneelController::class, 'store'])->name('personeel.store');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
