@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -24,12 +26,17 @@ class UserController extends Controller
 
     public function updateMeldingen(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
-        if ($request->type === 'sms') {
-            $user->keuze_sms = $request->value;
-        } elseif ($request->type === 'email') {
-            $user->keuze_email = $request->value;
+        $data = $request->validate([
+            'type' => 'required|in:sms,email',
+            'value' => 'required|boolean',
+        ]);
+
+        if ($data['type'] === 'sms') {
+            $user->keuze_sms = $data['value'];
+        } else {
+            $user->keuze_email = $data['value'];
         }
 
         $user->save();

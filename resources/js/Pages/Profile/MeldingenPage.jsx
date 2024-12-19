@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { Head } from "@inertiajs/react";
 import Header from "/resources/js/Components/Header";
 import Footer from "/resources/js/Components/Footer";
@@ -7,23 +8,56 @@ import SidebarUser from "/resources/js/Components/SidebarUser";
 export default function NotificationsPage({ auth, notificationSettings }) {
     const [isSMSActive, setIsSMSActive] = useState(notificationSettings.smsActive);
     const [isEmailActive, setIsEmailActive] = useState(notificationSettings.emailActive);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const updateNotification = async (type, newValue) => {
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post('/notifications/update', {
+                type: type,
+                value: newValue
+            });
+            
+            if (response.data && response.data.success) {
+                // Als succesvol, werk lokale state bij
+                if (type === 'sms') {
+                    setIsSMSActive(newValue);
+                } else if (type === 'email') {
+                    setIsEmailActive(newValue);
+                }
+            } else {
+                alert('Er ging iets mis bij het opslaan van uw voorkeuren.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Er ging iets mis bij de communicatie met de server.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const toggleSMS = () => {
+        // Check of je deze kan togglen:
+        // Als SMS actief is en Email niet actief is, kun je SMS niet uitzetten (je hebt dan geen actieve meldingen meer).
         if (isSMSActive && !isEmailActive) {
             alert("U moet minimaal één notificatiemethode aanhouden.");
             return;
         }
 
-        setIsSMSActive((prev) => !prev);
+        const newValue = !isSMSActive;
+        updateNotification('sms', newValue);
     };
 
     const toggleEmail = () => {
+        // Zelfde logica voor Email:
         if (isEmailActive && !isSMSActive) {
             alert("U moet minimaal één notificatiemethode aanhouden.");
             return;
         }
 
-        setIsEmailActive((prev) => !prev);
+        const newValue = !isEmailActive;
+        updateNotification('email', newValue);
     };
 
     return (
@@ -115,12 +149,18 @@ export default function NotificationsPage({ auth, notificationSettings }) {
                             Selecteer hoe u meldingen wilt ontvangen: via SMS, e-mail of beide.
                         </p>
 
+                        {isLoading && (
+                            <div className="mb-4">
+                                <p className="text-blue-600">Bezig met opslaan...</p>
+                            </div>
+                        )}
+
                         <div className="space-y-4">
                             <div
                                 className={`toggle-container ${
                                     isSMSActive ? "active" : "inactive"
                                 }`}
-                                onClick={toggleSMS}
+                                onClick={!isLoading ? toggleSMS : undefined}
                             >
                                 <div className="toggle-content">
                                     <img
@@ -144,7 +184,7 @@ export default function NotificationsPage({ auth, notificationSettings }) {
                                 className={`toggle-container ${
                                     isEmailActive ? "active" : "inactive"
                                 }`}
-                                onClick={toggleEmail}
+                                onClick={!isLoading ? toggleEmail : undefined}
                             >
                                 <div className="toggle-content">
                                     <img
