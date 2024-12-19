@@ -22,13 +22,13 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = async (e) => {
         e.preventDefault();
-    
+
         setProcessing(true);
         setErrors({});
-    
+
         try {
             const response = await axios.post(route('login'), data);
-    
+
             if (response.status === 200 && response.data.redirect) {
                 // Redirect based on the server response
                 window.location.href = response.data.redirect;
@@ -41,7 +41,7 @@ export default function Login({ status, canResetPassword }) {
             setProcessing(false);
         }
     };
-    
+
 
     return (
         <div className="w-full h-screen bg-gray-50 flex flex-col">
@@ -52,7 +52,10 @@ export default function Login({ status, canResetPassword }) {
                     onSubmit={submit}
                     className="w-full max-w-4xl px-8 py-10 bg-gray-100 shadow-md rounded-md"
                 >
-                    <h1 className="text-3xl font-semibold text-center mb-10">Log in</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                            Log in
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
 
                     {status && (
                         <div className="mb-4 text-sm font-medium text-green-600">
@@ -106,9 +109,17 @@ export default function Login({ status, canResetPassword }) {
                                 href={route('password.request')}
                                 className="text-sm text-gray-600 underline hover:text-gray-900"
                             >
-                                Forgot your password?
+                                Bent u uw wachtwoord vergeten?
                             </Link>
                         )}
+
+                        <Link
+                            href={route('register')}
+                            className="text-sm text-gray-600 underline hover:text-gray-900"
+                        >
+                            Heeft u nog geen account? Registreer nu!
+                        </Link>
+
                         <PrimaryButton className="ml-4" disabled={processing}>
                             Log in
                         </PrimaryButton>

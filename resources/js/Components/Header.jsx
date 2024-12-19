@@ -108,9 +108,9 @@ const Header = ({ authUser }) => {
                 </nav>
 
                 {/* Profile & Logout */}
-                <div className="flex items-center relative group z-50">
+                <div className="flex items-center relative z-50">
                     {/* Appointment Button */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center">
                         <Link
                             href="/afspraak-selectie"
                             className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 -ml-14 rounded-3xl"
@@ -120,11 +120,11 @@ const Header = ({ authUser }) => {
                     </div>
 
                     {/* Profile with Dropdown */}
-                    <div className="relative group">
-                        <button className="flex items-center space-x-2 ml-4 relative hover:text-blue-600 after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                    <div className="relative group ml-4">
+                        <button className="flex items-center space-x-2 relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
                             <img src="/Assets/Icons/Profile.svg" alt="Profile Icon" className="h-10" />
                         </button>
-                        <div className="absolute left-0 top-[calc(100%+4px)] w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1">
+                        <div className="absolute left-0 top-[calc(100%+4px)] w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1 -ml-36">
                             <a
                                 href={userIsLoggedIn ? "/profile/edit" : "/register"}
                                 className="flex items-center px-4 py-2 text-gray-700 space-x-2"
@@ -138,7 +138,6 @@ const Header = ({ authUser }) => {
                                         <img src="/Assets/Icons/Letter.svg" alt="Appointments Icon" className="h-5 w-5" />
                                         <span className="hover:underline">Afspraken</span>
                                     </a>
-
                                     <a href="/meldingen" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                         <img src="/Assets/Icons/Clock.svg" alt="Notifications Icon" className="h-5 w-5" />
                                         <span className="hover:underline">Meldingen</span>
@@ -163,10 +162,10 @@ const Header = ({ authUser }) => {
                                     </a>
                                 </>
                             )}
-
                         </div>
                     </div>
                 </div>
+
             </div>
         </header>
     );
