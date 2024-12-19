@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import SearchBar from "../../Components/SearchBar";
+import Edit from "../../Components/Edit";
 import { Link } from "@inertiajs/react";
 
 const AfsprakenPage = ({ afspraken, filters }) => {
@@ -50,7 +51,7 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                                 <th className="px-4 py-3 text-left font-bold">Gebruiker (ID - Naam)</th>
                                 <th className="px-4 py-3 text-left font-bold">Datum</th>
                                 <th className="px-4 py-3 text-left font-bold">Behandeling</th>
-                                <th className="px-4 py-3 text-left font-bold">Acties</th>
+                                <th className="px-4 py-3 ">Acties</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,13 +72,13 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                                         </td>
                                         <td className="px-4 py-2 text-gray-700">{afspraak.datum}</td>
                                         <td className="px-4 py-2 text-gray-700">{afspraak.behandeling}</td>
-                                        <td className="px-4 py-2 text-gray-700">
-                                            <Link
-                                                href={route("admin.afspraken.edit", afspraak.afspraak_id)}
-                                                className="text-blue-500 hover:underline"
-                                            >
-                                                Edit
-                                            </Link>
+                                        <td
+                                            className="px-4 py-2 text-gray-700 text-center"
+                                            style={{ width: "180px" }}
+                                        >
+                                            <div className="flex justify-center items-center">
+                                                <Edit href={route("admin.afspraken.edit", afspraak.afspraak_id)} />
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

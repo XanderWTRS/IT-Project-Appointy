@@ -65,11 +65,11 @@ const KlantenPage = ({ klanten }) => {
                   <td className="p-4 border-b text-gray-800">
                     {klant.rijksregister_nr || "Onbekend"}
                   </td>
-                   <td className="p-2 border border-gray-300 text-center" style={{ width: "180px" }}>
-                    <div className="flex justify-center items-center">
-                      <Edit userId={klant.id} />
-                    </div>
-                  </td>
+                  <td className="p-2 border border-gray-300 text-center" style={{ width: "180px" }}>
+  <div className="flex justify-center items-center">
+    <Edit userId={klant.id} />
+  </div>
+</td>
                 </tr>
               ))
             ) : (

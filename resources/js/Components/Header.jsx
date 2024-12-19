@@ -8,13 +8,15 @@ const Header = ({ authUser }) => {
         <header className="bg-white shadow">
             <div className="container mx-auto flex justify-between items-center py-4 px-6">
                 {/* Logo */}
-                <div className="flex items-center">
-                    <img
-                        src="/Assets/IMG/logo_liedent.png"
-                        alt="Liedent Logo"
-                        className="h-14"
-                    />
-                </div>
+                <Link href='/'>
+                    <div className="flex items-center">
+                        <img
+                            src="/Assets/IMG/logo_liedent.png"
+                            alt="Liedent Logo"
+                            className="h-14"
+                        />
+                    </div>
+                </Link>
 
                 {/* Navigation */}
                 <nav className="flex space-x-6 text-gray-800 text-lg">
@@ -34,22 +36,30 @@ const Header = ({ authUser }) => {
                             Behandelingen
                         </a>
                         <div className="absolute left-0 top-full w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1">
-                            <a href="/tandheelkunde" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                            <Link href="/tandheelkunde" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                 <img src="/Assets/Icons/tandheelkunde.png" alt="Tandheelkunde Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Tandheelkunde</span>
-                            </a>
-                            <a href="/orthodontie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Tandheelkunde
+                                </span>
+                            </Link>
+                            <Link href="/orthodontie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                 <img src="/Assets/Icons/orthodontie.png" alt="Orthodontie Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Orthodontie</span>
-                            </a>
-                            <a href="/endodontie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Orthodontie
+                                </span>
+                            </Link>
+                            <Link href="/endodontie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                 <img src="/Assets/Icons/endondontie.png" alt="Endodontie Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Endodontie</span>
-                            </a>
-                            <a href="/paradontologie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Endodontie
+                                </span>
+                            </Link>
+                            <Link href="/paradontologie" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                 <img src="/Assets/Icons/paradontologie.png" alt="Parodontologie Icon" className="h-5 w-5" />
-                                <span className="hover:underline">Parodontologie</span>
-                            </a>
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Parodontologie
+                                </span>
+                            </Link>
                         </div>
                     </div>
 
@@ -96,12 +106,12 @@ const Header = ({ authUser }) => {
                 <div className="flex items-center relative group z-50">
                     {/* Appointment Button */}
                     <div className="flex items-center space-x-4">
-                        <a
+                        <Link
                             href="/afspraak-selectie"
                             className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 -ml-14 rounded-3xl"
                         >
                             Afspraak Maken
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Profile with Dropdown */}
