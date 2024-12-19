@@ -8,12 +8,11 @@ use Illuminate\Http\Request;
 
 class AfspraakController extends Controller
 {
-    // Methode voor het tonen van de afspraken
     public function index(Request $request)
     {
         $search = $request->query('search', '');
 
-        $afspraken = Afspraak::with('user') // Laad de user-relatie
+        $afspraken = Afspraak::with('user')
             ->when($search, function ($query, $search) {
                 $query->where('datum', 'like', '%' . $search . '%')
                       ->orWhere('behandeling', 'like', '%' . $search . '%')
@@ -32,7 +31,7 @@ class AfspraakController extends Controller
         ]);
     }
 
-    // Methode voor het laden van de edit-pagina
+
     public function edit($id)
     {
         $afspraak = Afspraak::findOrFail($id);
@@ -48,7 +47,6 @@ class AfspraakController extends Controller
         ]);
     }
 
-    // Methode voor het bijwerken van een afspraak
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -65,5 +63,22 @@ class AfspraakController extends Controller
         ]);
 
         return redirect()->route('admin.afspraken')->with('success', 'Afspraak bijgewerkt.');
+    }
+    public function cancelAfspraak()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
+        }
+        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
+
+        if ($appointment) {
+            $appointment->delete();
+            $user->update(['betaald' => false]);
+            return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd.');
+        }
+
+        return redirect()->route('afspraken')->with('error', 'Er is geen afspraak om te annuleren.');
     }
 }

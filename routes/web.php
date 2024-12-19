@@ -56,11 +56,11 @@ Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('pa
 
 Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afspraken');
 Route::post('/afspraken/annuleerWachtlijst', [WachtlijstController::class, 'cancelWaitlist'])->name('afspraken.cancelWachtlijst');
-Route::post('/afspraken/annuleerAfspraak', [WachtlijstController::class, 'cancelAfspraak'])->name('afspraken.cancelAfspraak');
+Route::post('/afspraken/annuleerAfspraak', [AfspraakController::class, 'cancelAfspraak'])->name('afspraken.cancelAfspraak');
 
 
 Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
-Route::post('/afspraak/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');
+Route::post('/afspraken/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');
 
 
 

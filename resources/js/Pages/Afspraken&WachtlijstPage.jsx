@@ -20,10 +20,9 @@ export default function WachtlijstPage() {
     } = props;
 
     const [isModalOpen, setModalOpen] = useState(false);
-    const [modalType, setModalType] = useState(""); // Tracks which modal is open: "waitlist" or "appointment"
+    const [modalType, setModalType] = useState("");
     const [visible, setVisible] = useState(true);
 
-    // Determine if the target date has passed
     const targetDateHasPassed = targetDate
         ? new Date(targetDate) <= new Date()
         : false;
@@ -57,7 +56,6 @@ export default function WachtlijstPage() {
             <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg relative mb-8">
                 <h1 className="text-3xl font-bold mb-6">Afspraken</h1>
 
-                {/* Flash Messages */}
                 {flash.success && visible && (
                     <div className="bg-green-100 text-green-700 p-4 rounded mb-6">
                         {flash.success}
@@ -70,7 +68,6 @@ export default function WachtlijstPage() {
                 )}
 
                 {appointment ? (
-                    // Display Appointment Details
                     <div className="bg-gray-100 p-6 rounded-lg mb-6">
                         <h2 className="text-2xl font-semibold mb-4">Uw Afspraak</h2>
                         <p className="text-gray-800">
@@ -83,7 +80,6 @@ export default function WachtlijstPage() {
                             <strong>Behandeling:</strong> {appointment.behandeling}
                         </p>
                         <div className="mt-6 flex space-x-4">
-                            {/* Cancel Appointment Button */}
                             <form
                                 id="cancel-appointment-form"
                                 action={route("afspraken.cancelAfspraak")}
@@ -101,7 +97,6 @@ export default function WachtlijstPage() {
                         </div>
                     </div>
                 ) : inWachtlijst ? (
-                    // Display Waitlist Information
                     <>
                         <p className="text-lg mb-6">
                             {targetDateHasPassed ? (
@@ -137,7 +132,6 @@ export default function WachtlijstPage() {
                         </div>
 
                         <div className="flex space-x-4">
-                            {/* Maak Afspraak Button */}
                             <button
                                 className={`px-6 py-3 font-semibold rounded-lg shadow transition ${
                                     targetDateHasPassed
@@ -153,8 +147,6 @@ export default function WachtlijstPage() {
                             >
                                 Maak afspraak
                             </button>
-
-                            {/* Cancel Waitlist Button */}
                             <form
                                 id="cancel-waitlist-form"
                                 action={route("afspraken.cancelWachtlijst")}
@@ -172,7 +164,6 @@ export default function WachtlijstPage() {
                         </div>
                     </>
                 ) : (
-                    // Display Not in Waitlist Message
                     <div className="text-center">
                         <p className="text-lg mb-6">
                             U bent nog niet in de wachtlijst. Klik op de onderstaande knop om
