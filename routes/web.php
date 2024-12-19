@@ -158,6 +158,8 @@ Route::get('/privacypolicy', function () {
 Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
 Route::post('/notifications/update', [UserController::class, 'updateMeldingen']);
 
-
+Route::get('/afspraak-selectie', function () {
+    return Inertia::render('AfspraakOptiePage');
+})->name('afspraak-selectie');
 
 require __DIR__.'/auth.php';
