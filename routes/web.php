@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Middleware\AdminMiddleware;
 
 use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\UserController;
@@ -18,6 +20,10 @@ use App\Models\Personeel;
 
 
 Route::get('/', function () {
+    if (Auth::check() && Auth::user()->is_admin) {
+        return redirect()->route('admin.klanten'); // Redirect admins to their dashboard
+    }
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -95,12 +101,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         })->name('nieuwe-pagina');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->group(function () {
     Route::get('/klanten', [KlantenController::class, 'index'])->name('klanten');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::get('/afspraken', [AfspraakController::class, 'index'])->name('afspraken');
     Route::get('/personeel', function () {
         return Inertia::render('Admin/PersoneelPage');
