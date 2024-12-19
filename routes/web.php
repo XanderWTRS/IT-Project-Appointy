@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Middleware\AdminMiddleware;
 
 use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\UserController;
@@ -15,9 +17,14 @@ use App\Http\Controllers\WachtlijstController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\ChatbotController;
 use App\Models\Personeel;
+use App\Http\Controllers\PersoneelController;
 
 
 Route::get('/', function () {
+    if (Auth::check() && Auth::user()->is_admin) {
+        return redirect()->route('admin.klanten'); // Redirect admins to their dashboard
+    }
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -95,16 +102,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
         })->name('nieuwe-pagina');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->group(function () {
     Route::get('/klanten', [KlantenController::class, 'index'])->name('klanten');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::get('/afspraken', [AfspraakController::class, 'index'])->name('afspraken');
     Route::get('/personeel', function () {
         return Inertia::render('Admin/PersoneelPage');
     })->name('personeel');
+    Route::get('/add-personeel', function () {
+        return Inertia::render('Admin/AddPersoneelPage');
+    })->name('add-personeel');
+    Route::get('/edit-personeel', function () {
+        return Inertia::render('Admin/EditPersoneelPage');
+    })->name('edit-personeel');
+
+    Route::post('/add-personeel', [PersoneelController::class, 'store'])->name('personeel.store');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -117,6 +131,10 @@ Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('d
 Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
+
+Route::get('/admin/afspraken/{id}/edit', [AfspraakController::class, 'edit'])->name('admin.afspraken.edit');
+Route::post('/admin/afspraken/{id}/update', [AfspraakController::class, 'update'])->name('admin.afspraken.update');
+
 
 Route::get('/personeel/data/{id}', function ($id) {
     $personeel = Personeel::find($id);
@@ -135,5 +153,13 @@ Route::get('/afspraakregelement', function () {
 Route::get('/privacypolicy', function () {
     return Inertia::render('PrivacyPolicy');
 })->name('privacypolicy');
+
+
+Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
+Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])->name('notifications.update');
+
+Route::get('/afspraak-selectie', function () {
+    return Inertia::render('AfspraakOptiePage');
+})->name('afspraak-selectie');
 
 require __DIR__.'/auth.php';

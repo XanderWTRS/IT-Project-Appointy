@@ -154,7 +154,7 @@ export default function AppointmentCalendar({ csrf_token, appointments }) {
         <div className="bg-white text-gray-900">
             <Head title="afspraak"/>
             <Header />
-            <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg mb-8">
+            <div className="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg my-40">
                 <h1 className="text-3xl font-bold mb-6">Afspraak vastleggen</h1>
                 <form
                     action={route("afspraak.store")}

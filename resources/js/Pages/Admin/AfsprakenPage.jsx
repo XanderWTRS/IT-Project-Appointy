@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import SearchBar from "../../Components/SearchBar";
+import Edit from "../../Components/Edit";
+import { Link } from "@inertiajs/react";
 
 const AfsprakenPage = ({ afspraken, filters }) => {
     const [search, setSearch] = useState(filters.search || "");
@@ -28,12 +30,11 @@ const AfsprakenPage = ({ afspraken, filters }) => {
             <hr
                 className="border-blue-500 mb-6"
                 style={{
-                    width: "20%", // Pas de breedte hier aan
-                    borderWidth: "3px", // Dikte van de balk aanpassen
+                    width: "20%",
+                    borderWidth: "3px",
                 }}
             />
 
-            {/* SearchBar Component */}
             <div className="mb-6">
                 <SearchBar
                     value={search}
@@ -42,7 +43,6 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                 />
             </div>
 
-            {/* Container voor afsprakenoverzicht */}
             <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="overflow-x-auto">
                     <table className="min-w-full">
@@ -51,6 +51,7 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                                 <th className="px-4 py-3 text-left font-bold">Gebruiker (ID - Naam)</th>
                                 <th className="px-4 py-3 text-left font-bold">Datum</th>
                                 <th className="px-4 py-3 text-left font-bold">Behandeling</th>
+                                <th className="px-4 py-3 ">Acties</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,21 +65,28 @@ const AfsprakenPage = ({ afspraken, filters }) => {
                                                 : "bg-gray-50 hover:bg-gray-100"
                                         }
                                     >
-                                      <td className="px-4 py-2 text-gray-700">
-                                    {afspraak.user
-                                        ? `${afspraak.user.voornaam} ${afspraak.user.naam}`
-                                        : `Onbekende gebruiker`}
-                                </td>
-
+                                        <td className="px-4 py-2 text-gray-700">
+                                            {afspraak.user
+                                                ? `${afspraak.user.voornaam} ${afspraak.user.naam}`
+                                                : `Onbekende gebruiker`}
+                                        </td>
                                         <td className="px-4 py-2 text-gray-700">{afspraak.datum}</td>
                                         <td className="px-4 py-2 text-gray-700">{afspraak.behandeling}</td>
+                                        <td
+                                            className="px-4 py-2 text-gray-700 text-center"
+                                            style={{ width: "180px" }}
+                                        >
+                                            <div className="flex justify-center items-center">
+                                                <Edit href={route("admin.afspraken.edit", afspraak.afspraak_id)} />
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
                                     <td
                                         className="px-4 py-2 text-center text-gray-500"
-                                        colSpan={3}
+                                        colSpan={4}
                                     >
                                         Geen afspraken gevonden.
                                     </td>

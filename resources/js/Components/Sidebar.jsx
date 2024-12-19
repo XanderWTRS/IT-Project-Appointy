@@ -57,7 +57,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     Klant toevoegen
                 </a>
                 <a
-                    href="/personeel"
+                    href="/admin/personeel"
                     className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
                 >
                     Personeel

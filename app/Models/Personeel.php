@@ -9,15 +9,8 @@ class Personeel extends Model
 {
     use HasFactory;
 
-    protected $table = 'personeel'; // Koppel het model aan de 'personeel' tabel
+    protected $table = 'personeel'; // Zorg dat de tabelnaam overeenkomt met je migratie
 
-    protected $fillable = [
-        'voornaam',
-        'naam',
-        'functie',
-        'bio',
-        'foto',
-        'created_at',
-        'updated_at',
-    ];
+    // Velden die je mag invullen
+    protected $fillable = ['voornaam', 'naam', 'functie', 'bio', 'foto', 'created_at', 'updated_at'];
 }

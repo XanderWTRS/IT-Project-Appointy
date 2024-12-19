@@ -6,15 +6,12 @@ import ConfirmationAnimation from '/resources/js/Components/ConfirmationAnimatio
 import DeletePopUp from '/resources/js/Components/DeletePopUp';
 import SidebarUser from '/resources/js/Components/SidebarUser';
 
-import "/resources/css/SidebarUser.css";
 import "/resources/css/bevstig.css";
 import "/resources/css/button.css";
 
 export default function Edit({ user }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
-    const [showButtonAnimation, setShowButtonAnimation] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const { data, setData, put, processing, errors } = useForm({
         email: user.email || '',
@@ -30,11 +27,6 @@ export default function Edit({ user }) {
     const submit = (e) => {
         e.preventDefault();
         put(route('profile.update'));
-    };
-
-    const showSidebar = () => {
-        setIsSidebarOpen(true);
-        setShowButtonAnimation(true); //animation nog fixen
     };
 
     const handleDeleteAccount = () => {
@@ -56,44 +48,27 @@ export default function Edit({ user }) {
     return (
         <>
             <Head title="Profiel" />
+
+            {/* Header */}
             <div className="header">
                 <Header auth={user} />
             </div>
-            <div className={isSidebarOpen ? "flex" : "w-full"}>
-                {isSidebarOpen && (
-                    <div className="sidebar">
-                        <SidebarUser />
-                    </div>
-                )}
 
-                <div className={isSidebarOpen ? "flex-1" : "w-full"}>
-                    {!isSidebarOpen && (
-                        <button
-                            onClick={showSidebar}
-                            className="p-3 fixed left-4 z-50 bg-blue-500 text-white shadow-lg rounded-full
-                            focus:outline-none hover:scale-110 transform transition-transform"
-                            style={{ top: "4.5rem", left: "1rem" }}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
-                        </button>
-                    )}
+            <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
+                <div className="flex gap-8">
+                    <SidebarUser />
 
-                    <div className="bg-white p-8 shadow sm:rounded-lg max-w-7xl mx-auto">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Profiel Aanpassen</h2>
+                    {/* Main Content */}
+                    <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
+                        {/* Title */}
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                            Profiel Aanpassen
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
+
+                        {/* Form */}
                         <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Voornaam */}
                             <div>
                                 <label htmlFor="voornaam" className="block text-sm font-medium text-gray-700">
                                     Voornaam
@@ -108,6 +83,7 @@ export default function Edit({ user }) {
                                 {errors.voornaam && <p className="text-red-500 text-sm">{errors.voornaam}</p>}
                             </div>
 
+                            {/* Achternaam */}
                             <div>
                                 <label htmlFor="naam" className="block text-sm font-medium text-gray-700">
                                     Achternaam
@@ -122,6 +98,7 @@ export default function Edit({ user }) {
                                 {errors.naam && <p className="text-red-500 text-sm">{errors.naam}</p>}
                             </div>
 
+                            {/* E-mail */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                     E-mail
@@ -136,6 +113,7 @@ export default function Edit({ user }) {
                                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                             </div>
 
+                            {/* GSM-nummer */}
                             <div>
                                 <label htmlFor="gsm_nummer" className="block text-sm font-medium text-gray-700">
                                     GSM-nummer
@@ -150,7 +128,8 @@ export default function Edit({ user }) {
                                 {errors.gsm_nummer && <p className="text-red-500 text-sm">{errors.gsm_nummer}</p>}
                             </div>
 
-                            <div>
+                            {/* Adres */}
+                            <div className="md:col-span-2">
                                 <label htmlFor="adres" className="block text-sm font-medium text-gray-700">
                                     Adres
                                 </label>
@@ -164,6 +143,7 @@ export default function Edit({ user }) {
                                 {errors.adres && <p className="text-red-500 text-sm">{errors.adres}</p>}
                             </div>
 
+                            {/* Password Update */}
                             <div className="md:col-span-2">
                                 <h3 className="text-xl font-semibold text-gray-700 mb-4">Wachtwoord Aanpassen</h3>
                             </div>
@@ -179,7 +159,6 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('current_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.current_password && <p className="text-red-500 text-sm">{errors.current_password}</p>}
                             </div>
 
                             <div>
@@ -193,7 +172,6 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('new_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.new_password && <p className="text-red-500 text-sm">{errors.new_password}</p>}
                             </div>
 
                             <div>
@@ -207,58 +185,31 @@ export default function Edit({ user }) {
                                     onChange={(e) => setData('confirm_password', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.confirm_password && <p className="text-red-500 text-sm">{errors.confirm_password}</p>}
                             </div>
 
-                            <div className="md:col-span-2 flex justify-between mt-6">
+                            {/* Buttons */}
+                            <div className="button-wrapper col-span-2 flex justify-end gap-4 mt-6">
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                                    onClick={(e) => {
-                                        setShowConfirmation(true);
-                                        setTimeout(() => setShowConfirmation(false), 1100);
-                                    }}
+                                    className="button bevestigen"
                                 >
                                     Opslaan
                                 </button>
-
                                 <button
                                     type="button"
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    className="button verwijderen"
                                     onClick={() => setShowDeletePopUp(true)}
                                 >
                                     Account Verwijderen
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                                    onClick={() => {
-                                        const form = document.createElement('form');
-                                        form.method = 'POST';
-                                        form.action = route('logout');
-
-                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                                        const input = document.createElement('input');
-                                        input.type = 'hidden';
-                                        input.name = '_token';
-                                        input.value = csrfToken;
-                                        form.appendChild(input);
-
-                                        document.body.appendChild(form);
-                                        form.submit();
-                                    }}
-                                >
-                                    Uitloggen
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <ConfirmationAnimation show={showConfirmation} />
 
+            <ConfirmationAnimation show={showConfirmation} />
             {showDeletePopUp && (
                 <DeletePopUp
                     onCancel={() => setShowDeletePopUp(false)}

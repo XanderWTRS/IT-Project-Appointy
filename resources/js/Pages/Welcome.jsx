@@ -8,7 +8,7 @@ import Chatbot from '/resources/js/Components/Chatbot';
 import FlipCard from '/resources/js/Components/FlipCard';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
-    const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
     const [showAll, setShowAll] = useState(false);
 
     const visibleCards = showAll ? teamIds : teamIds.slice(0, 4);
@@ -32,7 +32,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             Tandheelkunde - Orthodontie - Endodontie - Parodontologie
                         </p>
                         <a
-                            href="/payment"
+                            href="/afspraak-selectie"
                             className="bg-blue-600 text-white py-3 px-6 rounded-3xl hover:bg-blue-500 transition"
                         >
                             Afspraak Maken
