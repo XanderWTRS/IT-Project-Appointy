@@ -142,6 +142,8 @@ Route::get('/privacypolicy', function () {
 
 
 Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
+Route::post('/notifications/update', [UserController::class, 'updateMeldingen']);
+
 
 
 require __DIR__.'/auth.php';

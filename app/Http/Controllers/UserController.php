@@ -8,6 +8,35 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $user = auth()->user();
+        $settings = [
+            'smsActive' => $user->keuze_sms,
+            'emailActive' => $user->keuze_email, 
+        ];
+
+        return Inertia::render('Profile/MeldingenPage', [
+            'auth' => $user,
+            'notificationSettings' => $settings,
+        ]);
+    }
+
+    public function updateMeldingen(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($request->type === 'sms') {
+            $user->keuze_sms = $request->value;
+        } elseif ($request->type === 'email') {
+            $user->keuze_email = $request->value;
+        }
+
+        $user->save();
+
+        return response()->json(['success' => true]);
+    }
+
     public function edit($id)
     {
         $user = User::findOrFail($id);
