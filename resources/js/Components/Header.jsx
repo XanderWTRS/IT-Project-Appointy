@@ -60,12 +60,36 @@ const Header = ({ authUser }) => {
                         Team
                     </a>
 
-                    <a
-                        href="/#contact"
-                        className="relative hover:text-blue-600 after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full"
-                    >
-                        Contact
-                    </a>
+                    {/* Dropdown for Contact */}
+                    <div className="relative group z-50">
+                        <a
+                            href="/#contact"
+                            className="relative hover:text-blue-600 after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full"
+                        >
+                            Contact
+                        </a>
+                        {/* Dropdown Menu */}
+                        <div className="absolute left-0 top-full w-48 bg-white border rounded-md shadow-lg hidden group-hover:block pb-1">
+                            <a href="/#contact" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <img src='/Assets/Icons/GSM.svg' alt="Contact Icon" className="h-6 w-6 -ml-2.5" />
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Contact
+                                </span>
+                            </a>
+                            <a href="/#contacteer-ons" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <img src='/Assets/Icons/Letter.svg' alt="Brief Icon" className="h-5 w-5 -ml-2" />
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Contacteer ons
+                                </span>
+                            </a>
+                            <a href="/#wachtdienst" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
+                                <img src='/Assets/Icons/Clock.svg' alt="Klok Icon" className="h-5 w-5 -ml-2" />
+                                <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-600 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
+                                    Wachtdienst
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 </nav>
 
                 {/* Profile & Logout */}
