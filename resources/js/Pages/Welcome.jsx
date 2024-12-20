@@ -102,15 +102,26 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     className={`container mx-auto py-8 px-4 md:px-8`}
     style={{ marginBottom: '2rem' }} // Add spacing at the bottom
 >
+    {/* Section Title */}
     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-8">
         Team
         <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
     </h1>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+    
+    {/* Cards Container */}
+    <div 
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+        style={{
+            justifyItems: 'center', // Centreert de cards horizontaal
+        }}
+    >
+        {/* Dynamisch Renderen van FlipCards */}
         {visibleCards.map((id) => (
             <FlipCard key={id} id={id} />
         ))}
     </div>
+
+    {/* Show More / Less Button */}
     <div className="flex justify-center mt-6">
         <button
             className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-300"
@@ -119,6 +130,25 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             {showAll ? 'Minder Weergeven' : 'Meer Weergeven'}
         </button>
     </div>
+
+    {/* Nieuwe functie: Teamsectie-informatie */}
+    <div className="mt-8 text-center">
+        <p className="text-gray-600 text-sm md:text-base">
+            Onze experts staan klaar om u te helpen. Elk lid van ons team brengt unieke vaardigheden en ervaring mee om aan uw behoeften te voldoen.
+        </p>
+    </div>
+
+    {/* Styling uitleg toevoegen */}
+    <style jsx>{`
+        @media (max-width: 640px) {
+            #team h1 {
+                text-align: center; /* Centreert de titel op kleine schermen */
+            }
+            #team .grid {
+                padding: 0 10px; /* Zorgt voor padding rond de grid */
+            }
+        }
+    `}</style>
 </section>
 
 {/* Contact Section */}
