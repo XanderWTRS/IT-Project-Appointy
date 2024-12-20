@@ -7,38 +7,43 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Afspraak;
+use App\Models\wachtlijst;
 use App\Services\TwilioService;
 
-
-use App\Mail\AppointmentReminderMail;
 use Illuminate\Support\Facades\Mail;
 
 
+use App\Mail\CanMakeAppointmentMail;
 
-class SendAppointmentNotification implements ShouldQueue
+
+
+
+class SendCanMakeAppointmentNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $appointment;
+    protected $Waitlist;
 
-    public function __construct(Afspraak $appointment)
+    public function __construct(Wachtlijst $Waitlist)
     {
-        $this->appointment = $appointment;
+        $this->Waitlist = $Waitlist;
     }
 
+    /**
+     * Execute the job.
+     */
     public function handle(TwilioService $twilio)
     {
-        $user = $this->appointment->user;
+        $user = $this->Waitlist->user;
 
         if ($user->keuze_gsm) {
             $twilio->sendSms(
                 $user->gsm_nummer,
-                "Herinnering: Uw afspraak is op {$this->appointment->datum} om {$this->appointment->tijd} voor de behandeling: {$this->appointment->behandeling}."
+                "Herinnering: U kan een afspraak maken bij appointy."
             );
         }
         if($user->keuze_email){
-            Mail::to($user->email)->send(new AppointmentReminderMail($user, $this->appointment));
+            Mail::to($user->email)->send(new CanMakeAppointmentMail($user, $this->Waitlist));
         }
     }
 }

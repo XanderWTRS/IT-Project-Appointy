@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('appointments:notify')->dailyAt('08:00');
+Schedule::command('CanMakeAppointment:notify')->dailyAt('08:00');

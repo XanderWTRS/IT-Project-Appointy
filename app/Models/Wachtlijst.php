@@ -16,12 +16,13 @@ class Wachtlijst extends Model
     protected $fillable = [
         'user_id',
         'added_at',
+        'can_make_appointment_at',
         'behandeling',
     ];
 
-    // Define the attribute casting
     protected $casts = [
-        'added_at' => 'datetime',
+        'added_at' => 'date',
+        'can_make_appointment_at' => 'date',
     ];
     public function user()
     {
