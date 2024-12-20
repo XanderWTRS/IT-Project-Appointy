@@ -28,8 +28,9 @@ const Header = ({ authUser }) => {
                         />
                     </div>
                 </Link>
-                                {/* Hamburger Menu for small screens */}
-                                <button
+
+                {/* Hamburger Menu for small screens */}
+                <button
                     onClick={toggleMenu}
                     className="md:hidden flex items-center space-x-2 p-2"
                 >
@@ -123,11 +124,11 @@ const Header = ({ authUser }) => {
 
                 {/* Profile & Logout */}
                 <div className="flex items-center relative z-50">
-                    {/* Appointment Button */}
-                    <div className="flex items-center">
+                    {/* Appointment Button - Hidden on small screens */}
+                    <div className="hidden md:flex items-center">
                         <Link
                             href="/afspraak-selectie"
-                            className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 -ml-14 rounded-3xl"
+                            className="bg-blue-600 text-white py-2 px-4 hover:bg-blue-500 rounded-3xl"
                         >
                             Afspraak Maken
                         </Link>
