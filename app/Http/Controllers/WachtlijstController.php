@@ -13,41 +13,54 @@ use App\Services\TwilioService;
 class WachtlijstController extends Controller
 {
     public function wachtlijst()
-    {
-        $user = auth()->user();
+{
+    $user = auth()->user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+    if (!$user) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
 
-        $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
-        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
+    $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
+    $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
 
-        Carbon::setLocale('nl');
+    Carbon::setLocale('nl');
 
-        if ($wachtlijst) {
-            $addedAt = Carbon::parse($wachtlijst->added_at);
-            $now = Carbon::now();
+    $remainingMonths = null;
+    $remainingDays = null;
+    $addedAt = null;
+    $targetDate = null;
 
-            $targetDate = $addedAt->copy()->addMonths(3);
+    if ($wachtlijst) {
+        // Bereken de positie van de gebruiker in de wachtlijst
+        $positie = Wachtlijst::where('id', '<=', $wachtlijst->id)->count();
 
+        // Stel dat wekelijks 4 afspraken worden vrijgegeven
+        $wekenTotBeschikbaar = ceil($positie / 4);
+
+        // Bereken de datum waarop de gebruiker een afspraak kan maken
+        $addedAt = Carbon::parse($wachtlijst->created_at); // Wachtlijst startdatum
+        $targetDate = $addedAt->copy()->addWeeks($wekenTotBeschikbaar); // Verwachte beschikbare datum
+        $now = Carbon::now();
+
+        // Bereken resterende tijd in maanden en dagen
+        if ($targetDate->greaterThan($now)) {
             $diff = $now->diff($targetDate);
-
             $remainingMonths = $diff->m;
             $remainingDays = $diff->d;
         }
-
-        return Inertia::render('Afspraken&WachtlijstPage', [
-            'inWachtlijst' => $wachtlijst ? true : false,
-            'wachtlijst' => $wachtlijst,
-            'monthsLeft' => $wachtlijst ? $remainingMonths : null,
-            'daysLeft' => $wachtlijst ? $remainingDays : null,
-            'addedAt' => $wachtlijst ? $addedAt->translatedFormat('d F Y') : null,
-            'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
-            'appointment' => $appointment,
-            'csrf_token' => csrf_token(),
-        ]);
     }
+
+    return Inertia::render('Afspraken&WachtlijstPage', [
+        'inWachtlijst' => $wachtlijst ? true : false,
+        'wachtlijst' => $wachtlijst,
+        'monthsLeft' => $remainingMonths,
+        'daysLeft' => $remainingDays,
+        'addedAt' => $wachtlijst ? $addedAt->translatedFormat('d F Y') : null,
+        'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
+        'appointment' => $appointment,
+        'csrf_token' => csrf_token(),
+    ]);
+}
 
 
     public function cancelWaitlist()

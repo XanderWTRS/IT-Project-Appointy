@@ -198,93 +198,112 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 </section>
 
 
-                   {/* ContactUs Section */}
+ {/* ContactUs Section */}
 <section
     id="contacteer-ons"
     className="container mx-auto py-4 px-6"
-    style={{ minHeight: '75vh', marginBottom: '1rem' }} // Ensures no overlap
+    style={{ minHeight: '75vh', marginBottom: '1rem' }}
 >
     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
         Contacteer ons
         <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
     </h1>
 
-    {/* Contact Form */}
-    <div className="grid grid-cols-1 gap-6" style={{ width: '75vw' }}>
-        {/* Name and Surname */}
-        <div className="flex flex-col md:flex-row gap-4">
-            <input
-                type="text"
-                placeholder="Naam"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-            <input
-                type="text"
-                placeholder="Achternaam"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-        </div>
-
-        {/* Street and Postcode */}
-        <div className="flex flex-col md:flex-row gap-4">
-            <input
-                type="text"
-                placeholder="Straat"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-            <input
-                type="text"
-                placeholder="Postcode"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-        </div>
-
-        {/* Municipality and Phone */}
-        <div className="flex flex-col md:flex-row gap-4">
-            <input
-                type="text"
-                placeholder="Gemeente"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-            <input
-                type="text"
-                placeholder="Telefoon"
-                className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            />
-        </div>
-
-        {/* Email */}
+{/* Contact Form */}
+<form method="POST" action="/contact" className="grid grid-cols-1 gap-6" style={{ width: '75vw' }}>
+    <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').content} />
+    
+    {/* Name and Surname */}
+    <div className="flex flex-col md:flex-row gap-4">
         <input
-            type="email"
-            placeholder="E-mail"
+            type="text"
+            name="naam"
+            placeholder="Naam"
+            required
             className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
         />
-
-        {/* Question */}
-        <textarea
-            placeholder="Uw vraag"
+        <input
+            type="text"
+            name="achternaam"
+            placeholder="Achternaam"
+            required
             className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-            rows="5"
-        ></textarea>
-
-        {/* Privacy Checkbox and Submit Button */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 -mt-4">
-            <div className="flex items-center gap-2">
-                <input type="checkbox" id="privacy" className="mr-2" />
-                <label htmlFor="privacy" className="text-sm text-gray-600">
-                    Ik heb de privacy policy gelezen en ga akkoord
-                </label>
-            </div>
-
-            {/* Submit Button */}
-            <button
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-                style={{ width: '400px' }}
-            >
-                Verstuur vraag
-            </button>
-        </div>
+        />
     </div>
+
+    {/* Street and Postcode */}
+    <div className="flex flex-col md:flex-row gap-4">
+        <input
+            type="text"
+            name="straat"
+            placeholder="Straat"
+            required
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        />
+        <input
+            type="text"
+            name="postcode"
+            placeholder="Postcode"
+            required
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        />
+    </div>
+
+    {/* Municipality and Phone */}
+    <div className="flex flex-col md:flex-row gap-4">
+        <input
+            type="text"
+            name="gemeente"
+            placeholder="Gemeente"
+            required
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        />
+        <input
+            type="text"
+            name="telefoon"
+            placeholder="Telefoon"
+            required
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        />
+    </div>
+
+    {/* Email */}
+    <input
+        type="email"
+        name="email"
+        placeholder="E-mail"
+        required
+        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+    />
+
+    {/* Question */}
+    <textarea
+        name="vraag"
+        placeholder="Uw vraag"
+        required
+        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        rows="5"
+    ></textarea>
+
+    {/* Privacy Checkbox and Submit Button */}
+    <div className="flex flex-col md:flex-row items-center justify-between gap-4 -mt-4">
+        <div className="flex items-center gap-2">
+            <input type="checkbox" id="privacy" name="privacy_policy" required className="mr-2" />
+            <label htmlFor="privacy" className="text-sm text-gray-600">
+                Ik heb de privacy policy gelezen en ga akkoord
+            </label>
+        </div>
+
+        {/* Submit Button */}
+        <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            style={{ width: '400px' }}
+        >
+            Verstuur vraag
+        </button>
+    </div>
+</form>
 </section>
 
 {/* Wachtdienst Section */}

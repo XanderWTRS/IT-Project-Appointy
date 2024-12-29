@@ -18,6 +18,7 @@ use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\ChatbotController;
 use App\Models\Personeel;
 use App\Http\Controllers\PersoneelController;
+use App\Http\Controllers\ContactController;
 
 
 Route::get('/', function () {
@@ -161,5 +162,8 @@ Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])
 Route::get('/afspraak-selectie', function () {
     return Inertia::render('AfspraakOptiePage');
 })->name('afspraak-selectie');
+
+Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.send');
+
 
 require __DIR__.'/auth.php';

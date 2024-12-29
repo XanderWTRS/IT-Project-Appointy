@@ -109,7 +109,6 @@ class PaymentController extends Controller
                     Wachtlijst::create([
                         'user_id' => $transaction->user_id,
                         'added_at' => now(),
-                        'can_make_appointment_at' => now()->addMonths(3),
                         'behandeling' => $transaction->behandeling,
                     ]);
                     if($transaction->keuze_email){
