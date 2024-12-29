@@ -19,7 +19,6 @@ use App\Http\Controllers\ChatbotController;
 use App\Models\Personeel;
 use App\Http\Controllers\PersoneelController;
 
-
 Route::get('/', function () {
     if (Auth::check() && Auth::user()->is_admin) {
         return redirect()->route('admin.klanten'); // Redirect admins to their dashboard
@@ -42,15 +41,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::middleware('auth')->group(function () {
+// User profile
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
+    Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
+    Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])->name('notifications.update');
 });
 
 
 
-
+// Payment
 Route::middleware('auth')->group(function () {
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::get('/payment/success', [PaymentController::class, 'succes'])->name('payment.succes');
@@ -75,6 +79,7 @@ Route::get('/klanten', function () {
     return Inertia::render('KlantenPage');
 })->name('klanten');
 
+// Behandelingen
 Route::get('/tandheelkunde', function () {
     return Inertia::render('TandheelkundePage');
 })->name('tandheelkunde');
@@ -119,16 +124,10 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     })->name('edit-personeel');
 
     Route::post('/add-personeel', [PersoneelController::class, 'store'])->name('personeel.store');
+    Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
-
-
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-Route::post('/delete-account/{id}', [UserController::class, 'destroy'])->name('delete-account');
-
-Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
 
@@ -153,10 +152,6 @@ Route::get('/afspraakregelement', function () {
 Route::get('/privacypolicy', function () {
     return Inertia::render('PrivacyPolicy');
 })->name('privacypolicy');
-
-
-Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
-Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])->name('notifications.update');
 
 Route::get('/afspraak-selectie', function () {
     return Inertia::render('AfspraakOptiePage');

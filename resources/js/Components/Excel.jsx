@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ConfirmationAnimation from "/resources/js/Components/ConfirmationAnimation";
 import "/resources/css/bevstig.css";
 
 const Excel = () => {
+  const [showExcelImage, setShowExcelImage] = useState(false);
+  const fileInputRef = useRef(null);
   const [showConfirmation, setShowConfirmation] = useState(false); // For success confirmation
   const [errorMessage, setErrorMessage] = useState(null); // For error messages
 
@@ -36,10 +38,15 @@ const Excel = () => {
       setShowConfirmation(false);
     }
   };
+  const triggerFileUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); 
+    }
+  };
 
   return (
     <StyledWrapper>
-      <label className="container-btn-file">
+      <label className="container-btn-file" onClick={() => setShowExcelImage(true)}>
         <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 50 50">
           <path d="M28.8125 .03125L.8125 5.34375C.339844 
           5.433594 0 5.863281 0 6.34375L0 43.65625C0 
@@ -61,15 +68,31 @@ const Excel = () => {
           20L44 20L44 22L36 22ZM36 27L44 27L44 29L36 29ZM36 35L44 35L44 37L36 37Z" />
         </svg>
         Upload File
-        <input
-          className="file"
-          type="file"
-          accept=".xlsx,.xls,.csv"
-          onChange={(e) => handleFileUpload(e.target.files[0])}
-        />
       </label>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".xlsx,.xls,.csv"
+        style={{ display: "none" }}
+        onChange={(e) => handleFileUpload(e.target.files[0])}
+      />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <ConfirmationAnimation show={showConfirmation} />
+      {showExcelImage && (
+        <Modal>
+          <div className="modal-content">
+            <img src="/Assets/IMG/Excel-Image.png" alt="Excel-Image" />
+            <p>Dit is hoe het excel bestand eruit moet zien!</p>
+            <button 
+              onClick={() => {
+                setShowExcelImage(false);
+                triggerFileUpload();
+              }}
+              >Okay, Got It!
+            </button>
+          </div>
+        </Modal>
+      )}
     </StyledWrapper>
   );
 };
@@ -125,6 +148,46 @@ const StyledWrapper = styled.div`
     margin-top: 10px;
     color: red;
     font-size: 0.9em;
+  }
+`;
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+    background: #fff;
+    padding: 2em;
+    border-radius: 0.5em;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+  }
+
+  button {
+    background-color: #307750;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 250ms;
+
+    &:hover {
+      background-color: #469b61;
+    }
   }
 `;
 

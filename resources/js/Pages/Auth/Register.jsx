@@ -28,7 +28,7 @@ export default function Register() {
     const [customErrors, setCustomErrors] = useState({});
 
     const validateBelgianPhoneNumber = (number) => {
-        const regex = /^(?:\+32|0)(4\d{8}|[1-9]\d{8})$/; 
+        const regex = /^(?:\+32|0)(4\d{8}|[1-10]\d{8})$/; 
         return regex.test(number);
     };
 
