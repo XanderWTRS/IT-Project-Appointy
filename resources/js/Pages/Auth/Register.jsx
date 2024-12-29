@@ -28,7 +28,7 @@ export default function Register() {
     const [customErrors, setCustomErrors] = useState({});
 
     const validateBelgianPhoneNumber = (number) => {
-        const regex = /^(?:\+32|0)(4\d{8}|[1-10]\d{8})$/; 
+        const regex = /^(?:\+32|0)(4\d{8}|[1-9]\d{8})$/;
         return regex.test(number);
     };
 
@@ -79,15 +79,19 @@ export default function Register() {
     };
 
     return (
-        <div className="w-full h-screen bg-gray-50 flex flex-col">
-            <Header />
-            <div className="flex flex-col justify-center items-center flex-grow bg-white">
-                <Head title="Nieuw account" />
+        <>
+        <Head title="Nieuw account" />
+        <Header />
+        <div className="w-full h-screen white flex flex-col">
+            <div className="flex flex-col justify-center items-center flex-grow bg-white mt-10 mb-20">
                 <form
                     onSubmit={submit}
                     className="w-full max-w-4xl px-8 py-10 bg-gray-100 shadow-md rounded-md"
                 >
-                    <h1 className="text-3xl font-semibold text-center mb-10">Nieuw account</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                            Nieuw Account
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <InputLabel htmlFor="voornaam" value="Voornaam" />
@@ -201,7 +205,7 @@ export default function Register() {
 
                     <div className="mt-6 grid grid-cols-2 gap-6">
                         <div>
-                            <InputLabel htmlFor="password" value="Password" />
+                            <InputLabel htmlFor="password" value="Wachtwoord" />
                             <TextInput
                                 id="password"
                                 type="password"
@@ -279,5 +283,6 @@ export default function Register() {
             </div>
             <Footer />
         </div>
+        </>
     );
 }

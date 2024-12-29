@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('wachtlijst', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('added_at');
+            $table->date('added_at');
             $table->text('behandeling');
+            $table->date('can_make_appointment_at')->nullable();
             $table->timestamps();
         });
     }

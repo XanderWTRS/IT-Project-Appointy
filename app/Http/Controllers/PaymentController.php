@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Wachtlijst;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentSuccessMail;
+use App\Services\TwilioService;
 
 
 class PaymentController extends Controller
@@ -76,7 +77,7 @@ class PaymentController extends Controller
         return redirect()->route('afspraken')->with('error', 'Betaling geannuleerd!');
     }
 
-    public function webhook(Request $request)
+    public function webhook(Request $request,TwilioService $twilio)
     {
         $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
         $payload = $request->getContent();
@@ -113,7 +114,10 @@ class PaymentController extends Controller
                     if($transaction->keuze_email){
                         Mail::to($user->email)->send(new PaymentSuccessMail($user, $transaction));
                     }
-                }
+                    if($transaction->keuze_sms){
+                        $twilio->sendSms($user->gsm_nummer, 'Appointy betaling gelukt u zit in de wachtlijst na 3 maanden kan je er in of wanneer een plaats vrijkomt wordt u gecontacteerd.');
+                    }
+            }
                 break;
             default:
                 Log::info('Unhandled event type', ['type' => $event->type]);

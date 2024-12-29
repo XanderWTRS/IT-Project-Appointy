@@ -6,7 +6,7 @@ import '../../css/BrutalistButton.css';
 const Footer = () => {
     return (
         <footer className="text-white bg-gray-800 pt-4">
-            <div className="max-w-6xl grid grid-cols-1 md:grid-cols-3 text-left" style={{ marginLeft: '20rem' , gap: '15.75rem'}}>
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
                 {/* Column 1 */}
                 <div>
                     <h3 className="font-bold text-lg mb-4">Liedent</h3>
@@ -35,7 +35,6 @@ const Footer = () => {
                         <li><Link href={route('orthodontie')} className="hover:text-blue-600">Orthodontie</Link></li>
                         <li><Link href={route('endodontie')} className="hover:text-blue-600">Endodontie</Link></li>
                         <li><Link href={route('paradontologie')} className="hover:text-blue-600">Paradontologie</Link></li>
-
                     </ul>
                 </div>
 
@@ -57,8 +56,8 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-2 pb-2 pt-4 text-center text-sm flex" style={{flexDirection: 'column', alignItems: 'center'}}>
-                <BrutalistButton/>
+            <div className="mt-4 pb-4 text-center text-sm flex flex-col items-center">
+                <BrutalistButton />
                 &copy; {new Date().getFullYear()} Liedent. All rights reserved.
             </div>
         </footer>

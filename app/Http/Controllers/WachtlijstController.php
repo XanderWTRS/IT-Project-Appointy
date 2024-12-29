@@ -7,65 +7,62 @@ use App\Models\Afspraak;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AfspraakConfirmationMail;
+use App\Mail\AppointmentConfirmationMail;
+use App\Services\TwilioService;
 
 class WachtlijstController extends Controller
 {
     public function wachtlijst()
-    {
-        $user = auth()->user();
+{
+    $user = auth()->user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+    if (!$user) {
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
 
-        $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
+    $wachtlijst = Wachtlijst::where('user_id', $user->id)->first();
+    $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
 
-        // Fetch the user's latest appointment
-        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
+    Carbon::setLocale('nl');
 
-        Carbon::setLocale('nl');
+    $remainingMonths = null;
+    $remainingDays = null;
+    $addedAt = null;
+    $targetDate = null;
 
-        if ($wachtlijst) {
-            $addedAt = Carbon::parse($wachtlijst->added_at);
-            $now = Carbon::now();
+    if ($wachtlijst) {
+        // Bereken de positie van de gebruiker in de wachtlijst
+        $positie = Wachtlijst::where('id', '<=', $wachtlijst->id)->count();
 
-            $targetDate = $addedAt->copy()->addMonths(3);
+        // Stel dat wekelijks 4 afspraken worden vrijgegeven
+        $wekenTotBeschikbaar = ceil($positie / 4);
 
+        // Bereken de datum waarop de gebruiker een afspraak kan maken
+        $addedAt = Carbon::parse($wachtlijst->created_at); // Wachtlijst startdatum
+        $targetDate = $addedAt->copy()->addWeeks($wekenTotBeschikbaar); // Verwachte beschikbare datum
+        $now = Carbon::now();
+
+        // Bereken resterende tijd in maanden en dagen
+        if ($targetDate->greaterThan($now)) {
             $diff = $now->diff($targetDate);
-
             $remainingMonths = $diff->m;
             $remainingDays = $diff->d;
         }
-
-        return Inertia::render('WachtlijstPage', [
-            'inWachtlijst' => $wachtlijst ? true : false,
-            'wachtlijst' => $wachtlijst,
-            'monthsLeft' => $wachtlijst ? $remainingMonths : null,
-            'daysLeft' => $wachtlijst ? $remainingDays : null,
-            'addedAt' => $wachtlijst ? $addedAt->translatedFormat('d F Y') : null,
-            'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
-            'appointment' => $appointment, // Pass the appointment to frontend
-            'csrf_token' => csrf_token(),
-        ]);
     }
-    public function cancelAfspraak()
-    {
-        $user = auth()->user();
 
-        if (!$user) {
-            return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
-        }
-        $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
+    return Inertia::render('Afspraken&WachtlijstPage', [
+        'inWachtlijst' => $wachtlijst ? true : false,
+        'wachtlijst' => $wachtlijst,
+        'monthsLeft' => $remainingMonths,
+        'daysLeft' => $remainingDays,
+        'addedAt' => $wachtlijst ? $addedAt->translatedFormat('d F Y') : null,
+        'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
+        'appointment' => $appointment,
+        'csrf_token' => csrf_token(),
+    ]);
+}
 
-        if ($appointment) {
-            $appointment->delete();
-            $user->update(['betaald' => false]);
-            return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd.');
-        }
 
-        return redirect()->route('afspraken')->with('error', 'Er is geen afspraak om te annuleren.');
-    }
     public function cancelWaitlist()
     {
         $user = auth()->user();
@@ -89,11 +86,11 @@ class WachtlijstController extends Controller
             return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
         }
 
-        // Define the date range: from today to six months ahead
+
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->addMonths(6)->endOfDay();
 
-        // Fetch all appointments within the next 6 months
+
         $takenAppointments = Afspraak::whereBetween('datum', [$startDate->toDateString(), $endDate->toDateString()])
             ->get()
             ->groupBy('datum')
@@ -105,11 +102,11 @@ class WachtlijstController extends Controller
         return inertia('AfspraakPage', [
             'csrf_token' => csrf_token(),
             'appointments' => $takenAppointments,
-            'current_date' => $startDate->toDateString(), // Pass current date to frontend
+            'current_date' => $startDate->toDateString(),
         ]);
     }
 
-    public function storeAfspraak(Request $request)
+    public function storeAfspraak(Request $request,TwilioService $twilio)
     {
         $user = auth()->user();
 
@@ -123,7 +120,6 @@ class WachtlijstController extends Controller
             'treatment' => 'required|string',
         ]);
 
-        // Ensure the date is within the next 6 months
         $maxDate = Carbon::now()->addMonths(6)->toDateString();
         if ($validated['date'] > $maxDate) {
             return redirect()->route('afspraken.make')->with('error', 'U kunt geen afspraken maken meer dan 6 maanden in de toekomst.');
@@ -138,7 +134,6 @@ class WachtlijstController extends Controller
             return redirect()->route('afspraken.make')->with('error', 'Dit tijdslot is al bezet. Kies een andere tijd.');
         }
 
-        // Create the appointment
         $appointment = Afspraak::create([
             'user_id' => $user->id,
             'datum' => $validated['date'],
@@ -146,14 +141,14 @@ class WachtlijstController extends Controller
             'behandeling' => $validated['treatment'],
         ]);
         if($user->keuze_email){
-            Mail::to($user->email)->send(new AfspraakConfirmationMail($user, $appointment));
+            Mail::to($user->email)->send(new AppointmentConfirmationMail($user, $appointment));
+        }
+        if($user->keuze_sms){
+            $twilio->sendSms($user->gsm_nummer, 'Afpraak is vastgelegd op '.$appointment->datum.' om '.$appointment->tijd.' voor de behandeling: '.$appointment->behandeling);
         }
 
-
-        // Remove the user from the waitlist if they are on it
         Wachtlijst::where('user_id', $user->id)->delete();
 
-        // Redirect to the WachtlijstPage with a success message
         return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol vastgelegd en u bent uit de wachtlijst verwijderd.');
     }
 }

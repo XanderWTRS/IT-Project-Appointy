@@ -6,26 +6,26 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PaymentSuccessMail extends Mailable
+class AppointmentConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $transaction;
+    public $appointment;
 
-    public function __construct($user, $transaction)
+    public function __construct($user, $appointment)
     {
         $this->user = $user;
-        $this->transaction = $transaction;
+        $this->appointment = $appointment;
     }
 
     public function build()
     {
-        return $this->subject('Betaling Succesvol - Bevestiging Afspraak')
-            ->view('emails.payment_success')
+        return $this->subject('Afspraak Bevestiging')
+            ->view('emails.afspraak_confirmation')
             ->with([
                 'user' => $this->user,
-                'transaction' => $this->transaction,
+                'appointment' => $this->appointment,
             ]);
     }
 }
