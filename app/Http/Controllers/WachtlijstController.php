@@ -59,6 +59,7 @@ class WachtlijstController extends Controller
         'targetDate' => $wachtlijst ? $targetDate->translatedFormat('d F Y') : null,
         'appointment' => $appointment,
         'csrf_token' => csrf_token(),
+        'hasBoete' => $user->boete,
     ]);
 }
 

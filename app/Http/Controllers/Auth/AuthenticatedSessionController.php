@@ -38,9 +38,13 @@ class AuthenticatedSessionController extends Controller
             // Return admin redirect as JSON
             return response()->json(['redirect' => route('admin.klanten')], 200);
         }
+        
     
         // Return user redirect as JSON
-        return response()->json(['redirect' => route('home')], 200);
+        return response()->json([
+            'redirect' => route('home'),
+            'boete' => $user->boete,
+        ], 200);
     }
     
     

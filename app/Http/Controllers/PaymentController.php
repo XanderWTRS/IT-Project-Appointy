@@ -68,9 +68,51 @@ class PaymentController extends Controller
         return redirect($session->url);
     }
 
+    public function payFine(Request $request)
+    {
+        $user = auth()->user();
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        
+        $session = $stripe->checkout->sessions->create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => 'Boete',
+                ],
+                'unit_amount' => 5000,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => route('successBoete', ['id' => $user->id], true,),
+        'cancel_url' => route('payment.cancel', [], true),
+        ]);
+        
+        Transaction::create([
+            'status' => 'pending',
+            'user_id' => $user->id,
+            'session_id' => $session->id,
+            'behandeling' => null,
+            'amount' => 5000,
+        ]);
+        
+        return redirect($session->url);
+    }
+
     public function succes()
     {
         return redirect()->route('afspraken')->with('success', 'Betaling in orde!');
+    }
+    public function successBoete($id)
+    {
+        Log::info('Boete payment success for user ID:', ['id' => $id]);
+        $user = User::findOrFail($id);
+        Log::info('User found:', ['user' => $user]);
+        $user->boete = false;
+        $user->save();
+        return redirect()->route('afspraken');
     }
     public function cancel()
     {
@@ -106,6 +148,12 @@ class PaymentController extends Controller
                         'keuze_email' => $transaction->keuze_email,
                         'keuze_sms' => $transaction->keuze_sms,
                     ]);
+
+                    if ($transaction->behandeling === null) {
+                        $user->boete = false;
+                        $user->save();
+                    }
+
                     Wachtlijst::create([
                         'user_id' => $transaction->user_id,
                         'added_at' => now(),

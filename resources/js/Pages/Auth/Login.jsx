@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 export default function Login({ status, canResetPassword }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showBoetePopup, setShowBoetePopup] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -28,8 +29,10 @@ export default function Login({ status, canResetPassword }) {
 
         try {
             const response = await axios.post(route('login'), data);
-
-            if (response.status === 200 && response.data.redirect) {
+            
+            if (response.data.boete)
+                setShowBoetePopup(true);
+            else if (response.status === 200 && response.data.redirect) {
                 // Redirect based on the server response
                 window.location.href = response.data.redirect;
             }
@@ -40,6 +43,11 @@ export default function Login({ status, canResetPassword }) {
         } finally {
             setProcessing(false);
         }
+    };
+
+    const closeBoetePopup = () => {
+        setShowBoetePopup(false);
+        window.location.href = route('home');
     };
 
 
@@ -60,6 +68,32 @@ export default function Login({ status, canResetPassword }) {
                     {status && (
                         <div className="mb-4 text-sm font-medium text-green-600">
                             {status}
+                        </div>
+                    )}
+                    {showBoetePopup && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                            <div className="bg-white rounded-xl p-8 shadow-2xl w-96">
+                                <h2 className="text-2xl font-bold text-red-600 mb-4">
+                                    ⚠️ Onbetaalde Boete
+                                </h2>
+                                <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+                                    U heeft een openstaande boete. Klik op de onderstaande knop om deze te betalen.
+                                </p>
+                                <div className="flex items-center justify-between space-x-4">
+                                    <a
+                                        href={route('payment.payFine')}
+                                        className="flex-grow bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center shadow hover:from-blue-600 hover:to-blue-700 transition-all"
+                                    >
+                                        Betaal Nu
+                                    </a>
+                                    <button
+                                        onClick={closeBoetePopup}
+                                        className="text-gray-500 underline hover:text-gray-700 transition"
+                                    >
+                                        Sluiten
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     )}
 

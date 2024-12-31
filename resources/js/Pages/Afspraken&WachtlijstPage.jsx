@@ -17,7 +17,8 @@ export default function WachtlijstPage() {
         targetDate,
         appointment,
         flash,
-        csrf_token
+        csrf_token,
+        hasBoete
     } = props;
 
     const [isModalOpen, setModalOpen] = useState(false);
@@ -187,6 +188,7 @@ export default function WachtlijstPage() {
                             Voeg toe aan Wachtlijst
                         </button>
                     </div>
+                    
                 )}
 
                     {/* Confirmation Modal */}
@@ -206,6 +208,32 @@ export default function WachtlijstPage() {
                         }
                     />
 
+                    <div className="mb-8">
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
+                            Boetes
+                            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                        </h1>
+
+                        {hasBoete ? (
+                            <div className="p-6 bg-red-100 border border-red-300 rounded-lg text-red-800">
+                                <p className="text-lg mb-4">
+                                    U heeft een openstaande boete.
+                                </p>
+                                <a
+                                    href={route("payment.payFine")}
+                                    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow hover:bg-red-600"
+                                >
+                                    Betaal Boete
+                                </a>
+                            </div>
+                        ) : (
+                            <div className="p-6 bg-green-100 border border-green-300 rounded-lg text-green-800">
+                                <p className="text-lg">
+                                    U heeft geen openstaande boetes.
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
             </div>

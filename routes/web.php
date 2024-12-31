@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/success', [PaymentController::class, 'succes'])->name('payment.succes');
     Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
     Route::post('/payment/paypositionwaitlist', [PaymentController::class, 'paypositionwaitlist'])->name('payment.paypositionwaitlist');
+
+    Route::get('pay-boete/{id}/success', [PaymentController::class, 'successBoete'])->name('successBoete');
+    Route::get('/pay-boete', [PaymentController::class, 'payFine'])->name('payment.payFine');
 });
 
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
