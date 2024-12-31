@@ -151,7 +151,7 @@ const Header = ({ authUser }) => {
                                 <>
                                     <a href="/afspraken" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                         <img src="/Assets/Icons/Letter.svg" alt="Appointments Icon" className="h-5 w-5" />
-                                        <span className="hover:underline">Afspraken</span>
+                                        <span className="hover:underline">Afspraken & Boetes</span>
                                     </a>
                                     <a href="/meldingen" className="flex items-center px-4 py-2 text-gray-700 space-x-2">
                                         <img src="/Assets/Icons/Clock.svg" alt="Notifications Icon" className="h-5 w-5" />

@@ -77,7 +77,7 @@ export default function Login({ status, canResetPassword }) {
                                     ⚠️ Onbetaalde Boete
                                 </h2>
                                 <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-                                    U heeft een openstaande boete. Klik op de onderstaande knop om deze te betalen.
+                                    U heeft een openstaande boete. Klik op de onderstaande knop om deze te betalen. Of betaal ze achteraf via uw profiel (Afspraken & Boetes).
                                 </p>
                                 <div className="flex items-center justify-between space-x-4">
                                     <a
