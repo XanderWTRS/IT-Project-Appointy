@@ -28,7 +28,7 @@ const Footer = () => {
                 </div>
 
                 {/* Column 2 */}
-                <div>
+                <div className='ml-28'>
                     <h3 className="font-bold text-lg mb-4">Behandelingen</h3>
                     <ul className="space-y-2">
                         <li><Link href={route('tandheelkunde')} className="hover:text-blue-600">Tandheelkunde</Link></li>
@@ -39,7 +39,7 @@ const Footer = () => {
                 </div>
 
                 {/* Column 3 */}
-                <div>
+                <div className='ml-28'>
                     <h3 className="font-bold text-lg mb-4">Handige links</h3>
                     <ul className="space-y-2">
                         <li><Link href="/#team" className="hover:text-blue-600">Team</Link></li>

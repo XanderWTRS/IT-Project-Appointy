@@ -66,11 +66,11 @@ const KlantenPage = ({ klanten }) => {
                     {klant.rijksregister_nr || "Onbekend"}
                   </td>
                   <td className="p-2 border border-gray-300 text-center" style={{ width: "180px" }}>
-  <div className="flex justify-center items-center">
-    <Edit userId={klant.id} />
-  </div>
-</td>
-                </tr>
+                    <div className="flex justify-center items-center">
+                        <Edit userId={klant.id} />
+                    </div>
+            </td>
+            </tr>
               ))
             ) : (
               <tr>

@@ -17,7 +17,7 @@ const SidebarUser = () => {
                     <a href="/afspraken" className="relative px-4 py-2 text-gray-700 font-semibold rounded flex items-center">
                         <img src="/Assets/Icons/Calendar.svg" alt="icon of the profile" className="w-8 h-8 inline-block mr-4" />
                         <span className="relative after:content-[''] after:absolute after:left-1/2 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 after:origin-center hover:after:left-0 hover:after:w-full">
-                            Afspraken & Boetes
+                            Afspraken
                         </span>
                     </a>
                 </li>

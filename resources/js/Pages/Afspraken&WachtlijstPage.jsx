@@ -188,7 +188,7 @@ export default function WachtlijstPage() {
                             Voeg toe aan Wachtlijst
                         </button>
                     </div>
-                    
+
                 )}
 
                     {/* Confirmation Modal */}
@@ -208,7 +208,7 @@ export default function WachtlijstPage() {
                         }
                     />
 
-                    <div className="mb-8">
+                    <div className="mb-8 mt-20">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">
                             Boetes
                             <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>

@@ -43,14 +43,14 @@ const Chatbot = () => {
     }, [sound]);
 
     return (
-        <div className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ${isOpen ? 'w-[60vw] lg:w-[50vw]' : 'w-[20vw] md:w-[4vw]'}`}>
+        <div className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ${isOpen ? 'w-[60vw] lg:w-[20vw]' : 'w-[20vw] md:w-[4vw]'}`}>
             {/* Chat Icon */}
             {!isOpen ? (
                 <button
-                    className="w-full h-[8vh] sm:h-[10vh] bg-white text-blue-500 border-2 hover:border-blue-500 rounded-full flex items-center justify-center shadow-lg hover:text-white hover:border-transparent transition-all"
+                    className="w-full h-[8vh] sm:h-[8vh] bg-white text-blue-500 border-2 hover:border-blue-500 rounded-full flex items-center justify-center shadow-lg hover:text-white hover:border-transparent transition-all"
                     onClick={() => setIsOpen(true)}
                 >
-                    <img className="h-12 w-12 sm:h-16 sm:w-16" src="/Assets/Icons/Chatbot.svg" alt="Icon of a chatbot" />
+                    <img className="h-12 w-12 sm:h-12 sm:w-12" src="/Assets/Icons/Chatbot.svg" alt="Icon of a chatbot" />
                 </button>
             ) : (
                 <div className="w-full h-full bg-white rounded-lg shadow-lg flex flex-col">
@@ -68,7 +68,7 @@ const Chatbot = () => {
                     <div
                         ref={messageContainerRef}
                         className="flex-1 overflow-y-auto p-3"
-                        style={{ minHeight: '30vh', maxHeight: '40vh' }}
+                        style={{ minHeight: '40vh', maxHeight: '40vh' }}
                     >
                         {messages.map((msg, index) => (
                             <div
