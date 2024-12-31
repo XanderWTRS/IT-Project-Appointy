@@ -6,27 +6,27 @@ import "/resources/css/animatie.css";
 
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [showButtonAnimation, setShowButtonAnimation] = useState(false); 
+    const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const sidebarRef = useRef(null);
 
     const toggleSidebar = () => {
         if (isSidebarOpen) {
             setIsSidebarOpen(false);
-            setShowButtonAnimation(true); 
+            setShowButtonAnimation(true);
         } else {
-            setShowButtonAnimation(true); 
-            setTimeout(() => {  
+            setShowButtonAnimation(true);
+            setTimeout(() => {
                 setIsSidebarOpen(true);
-                setShowButtonAnimation(false); 
-            }, 180); 
+                setShowButtonAnimation(false);
+            }, 180);
         }
     };
-    
+
     useEffect(() => {
         if (!isSidebarOpen) {
             const timer = setTimeout(() => {
-                setShowButtonAnimation(false); 
-            }, 1500); 
+                setShowButtonAnimation(false);
+            }, 1500);
             return () => clearTimeout(timer);
         }
     }, [isSidebarOpen]);
@@ -57,7 +57,7 @@ const AdminLayout = ({ children }) => {
                     "Content-Type": "application/json",
                 },
             });
-    
+
             if (response.ok) {
                 // Stuur gebruiker naar de loginpagina
                 window.location.href = "/login";
@@ -68,8 +68,8 @@ const AdminLayout = ({ children }) => {
             console.error("An error occurred during logout:", error);
         }
     };
-    
-    
+
+
 
     return (
         <div className="flex h-screen bg-blue-50 relative">
@@ -118,7 +118,7 @@ const AdminLayout = ({ children }) => {
                     <div className="flex justify-between items-center px-6 py-4">
                         {/* Title */}
                         <h1 className="text-lg font-bold text-gray-700">
-                            Dashboard
+                            Liedent Dashboard
                         </h1>
 
                         {/* Logout Button */}

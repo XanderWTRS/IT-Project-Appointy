@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             {/* Navigatielinks */}
             <nav>
                 <a
-                    href="/dashboard"
+                    href="/admin/klanten"
                     className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
                 >
                     Dashboard
