@@ -50,6 +50,20 @@ const UserDetailsPage = ({ user }) => {
         setShowDeletePopUp(false);
     };
 
+    const handleBoete = async () => {
+        try {
+            const response = await axios.patch(`/admin/users/${user.id}/toggle-boete`);
+            if (response.data) {
+                setFormData({ ...formData, boete: response.data.boete });
+                setShowConfirmation(true);
+                setTimeout(() => setShowConfirmation(false), 1100);
+            }
+        } catch (error) {
+            console.error("Error bij het bijwerken van de boete status:", error);
+            alert("Er is iets misgegaan. Probeer het opnieuw.");
+        }
+    };
+
     return (
         <AdminLayout>
             <h1 className="text-2xl font-bold mb-6">Gebruiker details</h1>
@@ -124,7 +138,7 @@ const UserDetailsPage = ({ user }) => {
                     </button>
                     <button
                         type="button"
-                        onClick={() => console.log("Placeholder Boete")}
+                        onClick={handleBoete}
                         className="button boete"
                     >
                         Boete

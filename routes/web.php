@@ -129,6 +129,9 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
+Route::patch('/admin/users/{id}/toggle-boete', [UserController::class, 'toggleBoete']);
+
+
 
 Route::post('/chat', [ChatbotController::class, 'handle']);
 

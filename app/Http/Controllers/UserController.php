@@ -97,5 +97,12 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Meldingsvoorkeuren succesvol bijgewerkt.');
     }
 
-    
+    public function toggleBoete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->boete = !$user->boete;
+        $user->save();
+
+        return response()->json(['boete' => $user->boete]);
+    }
 }
