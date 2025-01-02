@@ -9,10 +9,8 @@ class Wachtlijst extends Model
 {
     use HasFactory;
 
-    // Define the table name (in case it doesn't follow Laravel's naming convention)
     protected $table = 'wachtlijst';
 
-    // The attributes that are mass assignable
     protected $fillable = [
         'user_id',
         'added_at',

@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class PersoneelController extends Controller
 {
-    /**
-     * Toon een lijst van alle personeel.
-     */
     public function index()
     {
         $personeel = Personeel::all();
@@ -19,12 +16,8 @@ class PersoneelController extends Controller
         ]);
     }
 
-    /**
-     * Sla nieuw personeel op in de database.
-     */
     public function store(Request $request)
     {
-        // Validate incoming data
         $validated = $request->validate([
             'voornaam' => 'required|string|max:255',
             'naam' => 'required|string|max:255',
@@ -34,20 +27,22 @@ class PersoneelController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            // Save the file in the public/Assets/Team-Liedent folder
             $fileName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $filePath = $request->file('foto')->move(public_path('Assets/Team-Liedent'), $fileName);
-            $validated['foto'] = '' . $fileName; // Save the relative path
+            $validated['foto'] = '' . $fileName;
         }
-
-        // Save to the database
         Personeel::create($validated);
-
         return response()->json(['message' => 'Personeelslid succesvol toegevoegd'], 201);
     }
     public function getTeamIds()
     {
         $ids = Personeel::pluck('id');
         return response()->json($ids);
+    }
+    public function destroy($id)
+    {
+        $personeel = Personeel::findOrFail($id);
+        $personeel->delete();
+        return response()->json(['message' => 'Personeelslid succesvol verwijderd'], 200);
     }
 }
