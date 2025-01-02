@@ -82,4 +82,15 @@ class PersoneelController extends Controller
     $personeel->update($validated);
     return redirect()->route('admin.personeel')->with('success', 'Personeelslid succesvol bijgewerkt');
 }
+
+
+public function edit($id)
+{
+    $personeel = Personeel::findOrFail($id);
+
+    return Inertia::render('Admin/EditPersoneelPage', [
+        'personeel' => $personeel,
+    ]);
+}
+
 }

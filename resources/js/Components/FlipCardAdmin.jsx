@@ -22,8 +22,10 @@ const FlipCardAdmin = ({ id }) => {
   }
 
   const handleEdit = () => {
+    console.log(`/admin/edit-personeel/${id}`); // Log de URL
     window.location.href = `/admin/edit-personeel/${id}`;
-  };
+};
+
 
   const handleDelete = () => {
     setShowDeletePopUp(true);

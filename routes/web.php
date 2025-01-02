@@ -130,9 +130,10 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
 
     Route::patch('/personeel/{id}', [PersoneelController::class, 'update'])->name('personeel.update');
     Route::delete('/personeel/{id}', [PersoneelController::class, 'destroy'])->name('personeel.destroy');
-    Route::get('/admin/edit-personeel/{id}', function ($id) {
-        return Inertia::render('Admin/EditPersoneelPage', ['id' => $id]);
-    })->name('admin.edit-personeel');
+   
+
+    Route::get('/edit-personeel/{id}', [PersoneelController::class, 'edit'])->name('admin.edit-personeel');
+
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
