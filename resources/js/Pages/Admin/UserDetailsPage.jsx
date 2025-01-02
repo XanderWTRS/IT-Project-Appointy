@@ -19,13 +19,16 @@ const UserDetailsPage = ({ user }) => {
         try {
             const response = await axios.patch(`/admin/users/${user.id}`, formData);
             setShowConfirmation(true);
-            setTimeout(() => setShowConfirmation(false), 1100);
+            setTimeout(() => {
+                setShowConfirmation(false);
+                window.location.href = "/admin/klanten"; 
+            }, 1100);
         } catch (error) {
             console.error("Error bij het bijwerken van de gebruiker:", error);
             alert("Er is iets misgegaan. Probeer het opnieuw.");
         }
     };
-
+    
     const handleDeleteClick = () => {
         setShowDeletePopUp(true);
     };

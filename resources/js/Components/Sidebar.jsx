@@ -1,6 +1,11 @@
 import React from "react";
+import { usePage } from "@inertiajs/react";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+    const { url } = usePage(); // Verkrijg de huidige URL van Inertia
+
+    const isActive = (path) => url.startsWith(path);
+
     return (
         <div
             className={`sidebar bg-blue-500 text-white w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform ${
@@ -30,44 +35,40 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 </button>
             </div>
 
-            {/* Navigatielinks */}
             <nav>
                 <a
-                    href="/admin/klanten"
-                    className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
+                    href="/"
+                    className={`block py-2.5 px-4 rounded transition duration-200 ${
+                        isActive("/") ? "bg-blue-700" : "hover:bg-blue-600"
+                    }`}
                 >
                     Dashboard
                 </a>
                 <a
                     href="/admin/klanten"
-                    className="block py-2.5 px-4 rounded bg-blue-600"
+                    className={`block py-2.5 px-4 rounded transition duration-200 ${
+                        isActive("/admin/klanten") ? "bg-blue-700" : "hover:bg-blue-600"
+                    }`}
                 >
                     Klanten
                 </a>
                 <a
                     href="/admin/afspraken"
-                    className="block py-2.5 px-4 rounded bg-blue-600"
+                    className={`block py-2.5 px-4 rounded transition duration-200 ${
+                        isActive("/admin/afspraken") ? "bg-blue-700" : "hover:bg-blue-600"
+                    }`}
                 >
                     Afspraken
                 </a>
                 <a
-                    href="/klant-toevoegen"
-                    className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
-                >
-                    Klant toevoegen
-                </a>
-                <a
                     href="/admin/personeel"
-                    className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
+                    className={`block py-2.5 px-4 rounded transition duration-200 ${
+                        isActive("/admin/personeel") ? "bg-blue-700" : "hover:bg-blue-600"
+                    }`}
                 >
                     Personeel
                 </a>
-                <a
-                    href="/agenda"
-                    className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600"
-                >
-                    Agenda
-                </a>
+                
             </nav>
         </div>
     );
