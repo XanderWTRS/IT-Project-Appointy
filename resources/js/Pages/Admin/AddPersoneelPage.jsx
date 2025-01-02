@@ -32,7 +32,7 @@ const AddPersoneelPage = () => {
 
       if (response.status === 201) {
         alert('Personeelslid succesvol toegevoegd!');
-        // route or refresh logic here
+        window.location = '/admin/personeel';
       }
     } catch (error) {
       console.error('Fout bij het toevoegen van personeel:', error);

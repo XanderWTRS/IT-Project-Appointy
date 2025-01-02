@@ -45,4 +45,9 @@ class PersoneelController extends Controller
 
         return response()->json(['message' => 'Personeelslid succesvol toegevoegd'], 201);
     }
+    public function getTeamIds()
+    {
+        $ids = Personeel::pluck('id');
+        return response()->json($ids);
+    }
 }

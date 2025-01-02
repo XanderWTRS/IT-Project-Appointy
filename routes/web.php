@@ -128,6 +128,7 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     })->name('edit-personeel');
 
     Route::post('/add-personeel', [PersoneelController::class, 'store'])->name('personeel.store');
+    Route::get('/team-ids', [PersoneelController::class, 'getTeamIds'])->name('admin.team-ids');
     Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
 });
 
@@ -166,5 +167,6 @@ Route::get('/afspraak-selectie', function () {
 
 Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.send');
 
+Route::get('/team-ids', [PersoneelController::class, 'getTeamIds']);
 
 require __DIR__.'/auth.php';

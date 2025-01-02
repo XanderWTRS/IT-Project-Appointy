@@ -1,5 +1,6 @@
 import { Head} from '@inertiajs/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Header from '/resources/js/Components/Header';
 import Footer from '/resources/js/Components/Footer';
 import BehandelingenCard from '/resources/js/Components/BehandelingCard';
@@ -8,8 +9,21 @@ import Chatbot from '/resources/js/Components/Chatbot';
 import FlipCard from '/resources/js/Components/FlipCard';
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
-    const teamIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    const [teamIds, setTeamIds] = useState([]);
     const [showAll, setShowAll] = useState(false);
+
+    useEffect(() => {
+        const fetchTeamIds = async () => {
+            try {
+                const response = await axios.get('/team-ids');
+                setTeamIds(response.data);
+            } catch (error) {
+                console.error('Failed to fetch team IDs:', error);
+            }
+        };
+
+        fetchTeamIds();
+    }, []);
 
     const visibleCards = showAll ? teamIds : teamIds.slice(0, 4);
     return (
