@@ -3,12 +3,12 @@ import AdminLayout from "../../Layouts/AdminLayout";
 
 const EditPersoneelPage = () => {
 
-    return (
-        <AdminLayout>
-        <Head title="Edit-Personeel" />
+  return (
+    <AdminLayout>
+      <Head title="Personeel Bewerken" />
 
-        </AdminLayout>
-    );
+    </AdminLayout>
+  );
 };
 
 export default EditPersoneelPage;

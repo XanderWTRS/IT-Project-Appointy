@@ -123,12 +123,16 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     Route::get('/add-personeel', function () {
         return Inertia::render('Admin/AddPersoneelPage');
     })->name('add-personeel');
-    Route::get('/edit-personeel', function () {
-        return Inertia::render('Admin/EditPersoneelPage');
-    })->name('edit-personeel');
 
     Route::post('/add-personeel', [PersoneelController::class, 'store'])->name('personeel.store');
+    Route::get('/team-ids', [PersoneelController::class, 'getTeamIds'])->name('admin.team-ids');
     Route::post('/upload-excel', [ExcelImportController::class, 'uploadExcel']);
+
+    Route::patch('/personeel/{id}', [PersoneelController::class, 'update'])->name('personeel.update');
+    Route::delete('/personeel/{id}', [PersoneelController::class, 'destroy'])->name('personeel.destroy');
+    Route::get('/admin/edit-personeel/{id}', function ($id) {
+        return Inertia::render('Admin/EditPersoneelPage', ['id' => $id]);
+    })->name('admin.edit-personeel');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -166,5 +170,6 @@ Route::get('/afspraak-selectie', function () {
 
 Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.send');
 
+Route::get('/team-ids', [PersoneelController::class, 'getTeamIds']);
 
 require __DIR__.'/auth.php';
