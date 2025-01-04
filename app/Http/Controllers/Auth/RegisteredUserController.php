@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'naam' => $request->naam,
             'geboortedatum' => $request->geboortedatum,
             'mutualiteit' => $request->mutualiteit,
-            'rijksregister_nr' => $request->rijksregister_nr,
+            'rijksregister_nr' => Hash::make($request->rijksregister_nr),
             'tandarts' => $request->tandarts,
             'gsm_nummer' => $request->gsm_nummer,
             'email' => $request->email,

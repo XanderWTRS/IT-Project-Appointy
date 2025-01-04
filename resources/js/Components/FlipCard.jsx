@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo  } from "react";
 import "/resources/css/FlipCard.css";
 
-const FlipCard = ({ id }) => {
+const FlipCard = memo(({ id }) => {
   const [personeelData, setPersoneelData] = useState(null);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const FlipCard = ({ id }) => {
             alt={`${personeelData.voornaam} ${personeelData.naam}`}
             className="w-full h-4/5 object-cover rounded-t-lg"
             loading="lazy"
+            decoding="asynchronous"
         />
           <div className="p-4 text-center">
             <h2 className="text-lg font-bold">
@@ -46,6 +47,6 @@ const FlipCard = ({ id }) => {
       </div>
     </div>
   );
-};
+});
 
 export default FlipCard;

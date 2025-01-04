@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import "/resources/css/FlipCard.css";
 import axios from "axios";
 import DeletePopUp from "./DeletePopUp";
@@ -17,7 +17,7 @@ const FlipCardAdmin = ({ id }) => {
       })
       .then((data) => setPersoneelData(data))
       .catch((error) => console.error("Fout bij ophalen gegevens:", error));
-  }, [id]);
+  }, []);
 
   if (!personeelData) {
     return <div></div>;
@@ -55,6 +55,7 @@ const FlipCardAdmin = ({ id }) => {
               alt={`${personeelData.voornaam} ${personeelData.naam}`}
               className="w-full h-4/5 object-cover rounded-t-lg"
               loading="lazy"
+              decoding="asynchronous"
             />
             <div className="p-4 text-center">
               <h2 className="text-lg font-bold">
