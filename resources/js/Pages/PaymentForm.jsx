@@ -94,9 +94,9 @@ export default function PaymentForm() {
                                 required
                                 className="mr-2"
                             />
-                            Ik ga akkoord met het {' '}
+                            Ik ga akkoord met het ‎  {' '}
                             <a href="/afspraakregelement" className="text-blue-500 underline" target='_blank' rel='noopener noreferrer'>
-                                afspraak reglement
+                                 afspraak reglement
                             </a>
                         </label>
                         <InputError message={props.errors?.agreedToTerms} />

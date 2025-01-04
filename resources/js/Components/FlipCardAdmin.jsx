@@ -2,6 +2,8 @@ import React, { useEffect, useState, memo } from "react";
 import "/resources/css/FlipCard.css";
 import axios from "axios";
 import DeletePopUp from "./DeletePopUp";
+import DeleteButton from "./DeleteIcon";
+import EditButton from "./EditIcon";
 
 const FlipCardAdmin = ({ id }) => {
   const [personeelData, setPersoneelData] = useState(null);
@@ -64,29 +66,31 @@ const FlipCardAdmin = ({ id }) => {
           </div>
 
           {/* Achterzijde */}
-          <div className="flip-card-back flex flex-col items-center justify-center">
+          <div className="flip-card-back flex flex-col items-center justify-between h-full">
             <div className="px-4">
-              <p className="text-gray-800 mb-4">{personeelData.bio}</p>
+                <p className="text-gray-800 mt-32">{personeelData.bio}</p>
             </div>
-            <div className="flex space-x-4 mt-4">
-              {/* Bewerken-knop */}
-              <button
+            <div className="flex-grow"></div>
+            <div className="flex space-x-8 pb-8">
+                {/* Bewerken-knop */}
+                <button
                 onClick={handleEdit}
                 className="w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center hover:bg-yellow-600 transition"
                 title="Bewerk Personeel"
-              >
-                ✏️
-              </button>
-              {/* Verwijderen-knop */}
-              <button
+                >
+                <EditButton />
+                </button>
+                {/* Verwijderen-knop */}
+                <button
                 onClick={handleDelete}
                 className="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition"
                 title="Verwijder Personeel"
-              >
-                🗑️
-              </button>
+                >
+                <DeleteButton />
+                </button>
             </div>
-          </div>
+            </div>
+
         </div>
       </div>
 

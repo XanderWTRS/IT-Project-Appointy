@@ -73,13 +73,23 @@ class UserController extends Controller
     }
 
     public function destroy($id)
-    {
-        // Zoek en verwijder de gebruiker
+{
+    try {
+        // Attempt to find the user
         $user = User::findOrFail($id);
+
+        // Delete the user
         $user->delete();
 
-        return redirect()->route('home');
+        return response()->json([
+            'message' => 'Gebruiker succesvol verwijderd',
+            'redirect' => route('admin.klanten')
+        ]);
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        // Handle if user is not found
+        return response()->json(['message' => 'User not found'], 404);
     }
+}
 
     public function updateNotifications(Request $request, $id)
     {

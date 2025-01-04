@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SidebarUser = () => {
-    console.log("Sidebar is being rendered");
     return (
         <div className="w-1/4 bg-white p-4 rounded-md shadow-md h-full">
             <ul className="space-y-4">

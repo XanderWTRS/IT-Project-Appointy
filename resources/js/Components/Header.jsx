@@ -7,8 +7,6 @@ const Header = ({ authUser }) => {
     const authUser1 = auth?.user; // Extract the logged-in user
     const userIsLoggedIn = Boolean(authUser1);
 
-    console.log('authUser:', authUser1);
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
