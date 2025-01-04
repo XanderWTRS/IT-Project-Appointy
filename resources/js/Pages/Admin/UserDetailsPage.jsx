@@ -5,6 +5,7 @@ import ConfirmationAnimation from "../../Components/ConfirmationAnimation"; // I
 import axios from "axios";
 import "/resources/css/bevstig.css";
 
+
 const UserDetailsPage = ({ user }) => {
     const [formData, setFormData] = useState(user);
     const [showDeletePopUp, setShowDeletePopUp] = useState(false);
@@ -35,15 +36,22 @@ const UserDetailsPage = ({ user }) => {
 
     const handleConfirmDelete = async () => {
         try {
-            await axios.delete(`/admin/users/${user.id}`);
-            setShowDeletePopUp(false);
-            setShowConfirmation(true);
-            setTimeout(() => {
-                setShowConfirmation(false);
-                window.location.href = "/admin/klanten"; 
-            }, 2000);
+            const response = await axios.delete(`/admin/users/${user.id}`);
+    
+            // Controleer of er een redirect-URL in de response zit
+            if (response.data.redirect) {
+                window.location.href = response.data.redirect;
+            } else {
+                alert("Gebruiker succesvol verwijderd.");
+            }
         } catch (error) {
             console.error("Error bij het verwijderen van de gebruiker:", error);
+    
+            if (error.response?.status === 404) {
+                alert("Gebruiker niet gevonden. Het verwijderen is mislukt.");
+            } else {
+                alert("Kan gebruiker niet verwijderen. Probeer het opnieuw.");
+            }
         }
     };
     
