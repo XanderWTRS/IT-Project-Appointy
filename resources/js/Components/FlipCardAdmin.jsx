@@ -67,10 +67,10 @@ const FlipCardAdmin = ({ id }) => {
           {/* Achterzijde */}
           <div className="flip-card-back flex flex-col items-center justify-between h-full">
             <div className="px-4">
-                <p className="text-gray-800 mb-4">{personeelData.bio}</p>
+                <p className="text-gray-800 mt-32">{personeelData.bio}</p>
             </div>
-            <div className="flex-grow"></div> {/* Voegt ruimte toe boven de knoppen */}
-            <div className="flex space-x-8 pb-8"> {/* Zorgt voor padding onderaan */}
+            <div className="flex-grow"></div>
+            <div className="flex space-x-8 pb-8">
                 {/* Bewerken-knop */}
                 <button
                 onClick={handleEdit}
