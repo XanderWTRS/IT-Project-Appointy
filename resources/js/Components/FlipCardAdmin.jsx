@@ -1,13 +1,15 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import "/resources/css/FlipCard.css";
 import axios from "axios";
 import DeletePopUp from "./DeletePopUp";
 import DeleteButton from "./DeleteIcon";
 import EditButton from "./EditIcon";
+import ConfirmationAnimation from "./ConfirmationAnimation";
 
 const FlipCardAdmin = ({ id }) => {
   const [personeelData, setPersoneelData] = useState(null);
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     fetch(`/personeel/data/${id}`)
@@ -17,17 +19,15 @@ const FlipCardAdmin = ({ id }) => {
       })
       .then((data) => setPersoneelData(data))
       .catch((error) => console.error("Fout bij ophalen gegevens:", error));
-  }, []);
+  }, [id]);
 
   if (!personeelData) {
     return <div></div>;
   }
 
   const handleEdit = () => {
-    console.log(`/admin/edit-personeel/${id}`); // Log de URL
     window.location.href = `/admin/edit-personeel/${id}`;
-};
-
+  };
 
   const handleDelete = () => {
     setShowDeletePopUp(true);
@@ -37,7 +37,12 @@ const FlipCardAdmin = ({ id }) => {
     try {
       await axios.delete(`/admin/personeel/${id}`);
       setShowDeletePopUp(false);
-      window.location.reload();
+      setShowConfirmation(true); 
+
+      setTimeout(() => {
+        setShowConfirmation(false);
+        window.location.reload(); 
+      }, 1500); 
     } catch (error) {
       console.error("Fout bij verwijderen personeel:", error);
       alert("Er is een fout opgetreden bij het verwijderen.");
@@ -55,7 +60,6 @@ const FlipCardAdmin = ({ id }) => {
               alt={`${personeelData.voornaam} ${personeelData.naam}`}
               className="w-full h-4/5 object-cover rounded-t-lg"
               loading="lazy"
-              decoding="asynchronous"
             />
             <div className="p-4 text-center">
               <h2 className="text-lg font-bold">
@@ -68,31 +72,33 @@ const FlipCardAdmin = ({ id }) => {
           {/* Achterzijde */}
           <div className="flip-card-back flex flex-col items-center justify-between h-full">
             <div className="px-4">
-                <p className="text-gray-800 mt-32">{personeelData.bio}</p>
+              <p className="text-gray-800 mt-32">{personeelData.bio}</p>
             </div>
             <div className="flex-grow"></div>
             <div className="flex space-x-8 pb-8">
-                {/* Bewerken-knop */}
-                <button
+              {/* Bewerken-knop */}
+              <button
                 onClick={handleEdit}
                 className="w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center hover:bg-yellow-600 transition"
                 title="Bewerk Personeel"
-                >
+              >
                 <EditButton />
-                </button>
-                {/* Verwijderen-knop */}
-                <button
+              </button>
+              {/* Verwijderen-knop */}
+              <button
                 onClick={handleDelete}
                 className="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition"
                 title="Verwijder Personeel"
-                >
+              >
                 <DeleteButton />
-                </button>
+              </button>
             </div>
-            </div>
-
+          </div>
         </div>
       </div>
+
+      {/* Confirmation Animation */}
+      <ConfirmationAnimation show={showConfirmation} />
 
       {/* DeletePopUp Modal */}
       {showDeletePopUp && (

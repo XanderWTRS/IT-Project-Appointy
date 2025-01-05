@@ -32,18 +32,20 @@ const UserDetailsPage = ({ user }) => {
     
     const handleDeleteClick = () => {
         setShowDeletePopUp(true);
+        
     };
 
     const handleConfirmDelete = async () => {
         try {
-            const response = await axios.delete(`/admin/users/${user.id}`);
-    
-            // Controleer of er een redirect-URL in de response zit
-            if (response.data.redirect) {
-                window.location.href = response.data.redirect;
-            } else {
-                alert("Gebruiker succesvol verwijderd.");
-            }
+            await axios.delete(`/admin/users/${user.id}`);
+            
+            setShowDeletePopUp(false);
+            setShowConfirmation(true);
+
+            setTimeout(() => {
+                setShowConfirmation(false);
+                window.location.href = "/admin/klanten"; 
+            }, 1500);
         } catch (error) {
             console.error("Error bij het verwijderen van de gebruiker:", error);
     
@@ -54,7 +56,6 @@ const UserDetailsPage = ({ user }) => {
             }
         }
     };
-    
     
 
     const handleCancelDelete = () => {

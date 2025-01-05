@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AdminLayout from "../../Layouts/AdminLayout";
 import { Head, useForm } from '@inertiajs/react';
+import ConfirmationAnimation from "../../Components/ConfirmationAnimation";
+import "/resources/css/bevstig.css";
 
 const EditPersoneelPage = ({ personeel }) => {
   const { data, setData, patch, errors } = useForm({
@@ -10,14 +12,35 @@ const EditPersoneelPage = ({ personeel }) => {
     bio: personeel.bio,
   });
 
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
+  
+    console.log("Verzonden data:", data); 
+  
+
+    setShowConfirmation(true);
+  
+
     patch(`/admin/personeel/${personeel.id}`, {
-      preserveScroll: true,
-      onSuccess: () => alert('Personeelslid succesvol bijgewerkt!'),
+      preserveScroll: true, 
+      onSuccess: () => {
+        console.log("PATCH succesvol, wijzigingen doorgevoerd.");
+       
+        setTimeout(() => {
+          setShowConfirmation(false);
+          window.location.href = "/admin/personeel";
+        }, 1500);
+      },
+      onError: (errors) => {
+        console.error("PATCH fouten:", errors); 
+        alert("Er is een fout opgetreden. Controleer uw invoer.");
+        setShowConfirmation(false); 
+      },
     });
   };
-
+  
   return (
     <AdminLayout>
       <Head title="Personeel Bewerken" />
@@ -81,6 +104,9 @@ const EditPersoneelPage = ({ personeel }) => {
           </div>
         </form>
       </div>
+
+      {/* Confirmation Animation */}
+      <ConfirmationAnimation show={showConfirmation} />
     </AdminLayout>
   );
 };
