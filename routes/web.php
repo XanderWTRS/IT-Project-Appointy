@@ -72,7 +72,7 @@ Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('pa
 Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afspraken');
 Route::post('/afspraken/annuleerWachtlijst', [WachtlijstController::class, 'cancelWaitlist'])->name('afspraken.cancelWachtlijst');
 Route::post('/afspraken/annuleerAfspraak', [AfspraakController::class, 'cancelAfspraak'])->name('afspraken.cancelAfspraak');
-
+Route::get('/release-users', [WachtlijstController::class, 'releaseUsers'])->name('release.users');
 
 Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
 Route::post('/afspraken/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');
