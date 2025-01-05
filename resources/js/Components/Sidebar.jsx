@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
             <nav>
                 <a
-                    href="/admin/klanten"
+                    href="/admin/dashboard"
                     className={`block py-2.5 px-4 rounded transition duration-200 `}
                 >
                     Dashboard
@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 >
                     Personeel
                 </a>
-                
+
             </nav>
         </div>
     );

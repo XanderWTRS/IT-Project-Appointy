@@ -17,7 +17,11 @@ class UserSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
+            $gsmNummer = $faker->boolean
+                ? '+324' . $faker->numberBetween(10000000, 99999999)
+                : '04' . $faker->numberBetween(10000000, 99999999);
+
             User::create([
                 'voornaam' => $faker->firstName,
                 'naam' => $faker->lastName,
@@ -25,9 +29,9 @@ class UserSeeder extends Seeder
                 'mutualiteit' => $faker->randomElement(['Partena', 'CM', 'LM', 'OZ', 'Bond Moyson']),
                 'rijksregister_nr' => $faker->regexify('[0-9]{11}'),
                 'tandarts' => 'Dr. ' . $faker->lastName,
-                'gsm_nummer' => $faker->phoneNumber,
+                'gsm_nummer' => $gsmNummer,
                 'email' => $faker->unique()->safeEmail,
-                'password' => Hash::make('password123'), // Standaard wachtwoord
+                'password' => Hash::make('password123'),
                 'datum_registratie' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'keuze_sms' => $faker->boolean,
                 'keuze_email' => $faker->boolean,

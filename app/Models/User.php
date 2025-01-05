@@ -59,4 +59,8 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+    public function afspraken()
+    {
+        return $this->hasMany(Afspraak::class);
+    }
 }

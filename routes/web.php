@@ -19,6 +19,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Models\Personeel;
 use App\Http\Controllers\PersoneelController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if (Auth::check() && Auth::user()->is_admin) {
@@ -52,8 +53,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/meldingen', [UserController::class, 'index'])->name('meldingen');
     Route::post('/notifications/update', [UserController::class, 'updateMeldingen'])->name('notifications.update');
 });
-
-
 
 // Payment
 Route::middleware('auth')->group(function () {
@@ -130,10 +129,11 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
 
     Route::patch('/personeel/{id}', [PersoneelController::class, 'update'])->name('personeel.update');
     Route::delete('/personeel/{id}', [PersoneelController::class, 'destroy'])->name('personeel.destroy');
-   
+
 
     Route::get('/edit-personeel/{id}', [PersoneelController::class, 'edit'])->name('admin.edit-personeel');
 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.UserDetailsPage');
@@ -172,5 +172,7 @@ Route::get('/afspraak-selectie', function () {
 Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.send');
 
 Route::get('/team-ids', [PersoneelController::class, 'getTeamIds']);
+
+
 
 require __DIR__.'/auth.php';
