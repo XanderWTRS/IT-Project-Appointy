@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -35,6 +36,15 @@ class User extends Authenticatable
         'boete',
     ];
 
+    public function setRijksregisterNrAttribute($value)
+    {
+        $this->attributes['rijksregister_nr'] = encryptCompact($value);
+    }
+
+    public function getRijksregisterNrAttribute($value)
+    {
+        return decryptCompact($value);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

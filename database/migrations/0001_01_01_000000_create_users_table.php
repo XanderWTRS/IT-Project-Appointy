@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,20 +14,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('voornaam', 255); 
-            $table->string('naam', 255); 
+            $table->string('voornaam', 255);
+            $table->string('naam', 255);
             $table->date('geboortedatum');
             $table->string('mutualiteit', 255)->nullable();
-            $table->string('rijksregister_nr', 11)->unique();
-            $table->string('tandarts', 255)->nullable(); 
+            $table->string('rijksregister_nr', 255)->unique();
+            $table->string('tandarts', 255)->nullable();
             $table->string('gsm_nummer', 15);
-            $table->string('email')->unique(); 
-            $table->string('password'); 
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamp('datum_registratie')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->boolean('keuze_sms')->default(false); 
-            $table->boolean('keuze_email')->default(false); 
+            $table->boolean('keuze_sms')->default(false);
+            $table->boolean('keuze_email')->default(false);
             $table->boolean('betaald')->default(false);
-            $table->rememberToken(); 
+            $table->rememberToken();
             $table->timestamps();
         });
 
