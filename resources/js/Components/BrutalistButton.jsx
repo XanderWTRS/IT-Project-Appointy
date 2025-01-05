@@ -5,7 +5,7 @@ const BrutalistButton = ({ text = 'MXS', subtext = 'Get it from' }) => {
   const logoPath = '/Assets/MaxelixSolutions/LOGO-icon.png';
 
   return (
-    <button className="brutalist-button">
+    <button className="brutalist-button" onClick={() => window.open('https://www.linkedin.com/in/xander-wauters-046868253/')}>
       <div className="ms-logo">
         <img src={logoPath} alt="Logo" className="ms-logo-image" />
       </div>

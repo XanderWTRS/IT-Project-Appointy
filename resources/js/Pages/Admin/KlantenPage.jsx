@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Head } from "@inertiajs/react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import Excel from "/resources/js/Components/Excel";
 import SearchBar from "/resources/js/Components/SearchBar";
@@ -28,6 +29,7 @@ const KlantenPage = ({ klanten }) => {
 
   return (
     <AdminLayout>
+        <Head title="Klanten" />
       <div className="flex justify-between items-center mb-6">
         {/* Title with Blue Line */}
         <div>

@@ -31,23 +31,23 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-    
+
         $user = Auth::user();
-    
+
         if ($user->is_admin) {
             // Return admin redirect as JSON
-            return response()->json(['redirect' => route('admin.klanten')], 200);
+            return response()->json(['redirect' => route('admin.admin.dashboard')], 200);
         }
-        
-    
+
+
         // Return user redirect as JSON
         return response()->json([
             'redirect' => route('home'),
             'boete' => $user->boete,
         ], 200);
     }
-    
-    
+
+
 
     /**
      * Destroy an authenticated session.

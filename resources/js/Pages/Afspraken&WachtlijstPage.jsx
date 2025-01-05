@@ -56,8 +56,8 @@ export default function WachtlijstPage() {
             <Head title="Afspraken"/>
             <Header />
 
-            <div className="bg-white p-8 max-w-7xl mx-auto mt-8">
-            <div className="flex gap-8">
+            <div className="bg-white p-8 max-w-7xl mx-auto mt-8 min-h-[80vh]">
+            <div className="flex gap-8 ">
                 <SidebarUser />
                 <div className="w-3/4 mb-8 shadow-md rounded-md p-8 bg-white -ml-4">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 -mt-4">

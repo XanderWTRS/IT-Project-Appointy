@@ -23,7 +23,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if (Auth::check() && Auth::user()->is_admin) {
-        return redirect()->route('admin.klanten'); // Redirect admins to their dashboard
+        return redirect()->route('admin.admin.dashboard'); // Redirect admins to their dashboard
     }
 
     return Inertia::render('Welcome', [
