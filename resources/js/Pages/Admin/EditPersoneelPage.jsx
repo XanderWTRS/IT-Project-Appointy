@@ -13,39 +13,41 @@ const EditPersoneelPage = ({ personeel }) => {
   });
 
   const [showConfirmation, setShowConfirmation] = useState(false);
-  
+
   const handleSubmit = (e) => {
-    e.preventDefault(); 
-  
-    console.log("Verzonden data:", data); 
-  
+    e.preventDefault();
+
+    console.log("Verzonden data:", data);
+
 
     setShowConfirmation(true);
-  
+
 
     patch(`/admin/personeel/${personeel.id}`, {
-      preserveScroll: true, 
+      preserveScroll: true,
       onSuccess: () => {
         console.log("PATCH succesvol, wijzigingen doorgevoerd.");
-       
+
         setTimeout(() => {
           setShowConfirmation(false);
           window.location.href = "/admin/personeel";
         }, 1500);
       },
       onError: (errors) => {
-        console.error("PATCH fouten:", errors); 
+        console.error("PATCH fouten:", errors);
         alert("Er is een fout opgetreden. Controleer uw invoer.");
-        setShowConfirmation(false); 
+        setShowConfirmation(false);
       },
     });
   };
-  
+
   return (
     <AdminLayout>
       <Head title="Personeel Bewerken" />
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Personeel Bewerken</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-8 -mt-2">
+        Personeel bewerken
+        <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span></h1>
         <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6">
           <div className="mb-4">
             <label className="block text-gray-700">Voornaam:</label>
@@ -94,7 +96,14 @@ const EditPersoneelPage = ({ personeel }) => {
               className="w-40 h-40 object-cover rounded"
             />
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-4">
+            <button
+                type="button"
+                onClick={() => window.history.back()}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+            >
+                Annuleren
+            </button>
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
