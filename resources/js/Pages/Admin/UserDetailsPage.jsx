@@ -66,6 +66,7 @@ const UserDetailsPage = ({ user }) => {
             const response = await axios.patch(`/admin/users/${user.id}/toggle-boete`);
             if (response.data) {
                 setFormData({ ...formData, boete: response.data.boete });
+                
                 setShowConfirmation(true);
                 setTimeout(() => setShowConfirmation(false), 1100);
             }

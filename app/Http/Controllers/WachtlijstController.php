@@ -124,7 +124,6 @@ public function cancelWaitlist()
             return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
         }
 
-
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->addMonths(6)->endOfDay();
 

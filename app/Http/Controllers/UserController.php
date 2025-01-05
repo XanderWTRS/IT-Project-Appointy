@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use App\Models\Afspraak;
 
 
 class UserController extends Controller
@@ -109,10 +111,25 @@ class UserController extends Controller
 
     public function toggleBoete($id)
     {
-        $user = User::findOrFail($id);
-        $user->boete = !$user->boete;
-        $user->save();
-
-        return response()->json(['boete' => $user->boete]);
+        try {
+            Log::info("Toggling boete for user with ID: {$id}");
+    
+            $user = User::findOrFail($id);
+            $user->boete = !$user->boete;
+            $user->save();
+    
+            Log::info("Boete status toggled. New status: {$user->boete}");
+    
+            if ($user->boete) {
+                Log::info("Deleting appointments for user ID: {$id}");
+                Afspraak::where('user_id', $user->id)->delete();
+                Log::info("Appointments deleted successfully.");
+            }
+    
+            return response()->json(['boete' => $user->boete]);
+        } catch (\Exception $e) {
+            Log::error("Error toggling boete for user ID: {$id}", ['exception' => $e]);
+            return response()->json(['error' => 'An error occurred while toggling boete.'], 500);
+        }
     }
 }
