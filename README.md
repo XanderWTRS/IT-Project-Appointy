@@ -1,66 +1,204 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# IT Project - Dental Practice Management Software
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+1. [Overview](#overview)
+2. [Team Members](#team-members)
+3. [Project Overview](#project-overview)
+4. [Problem Statement](#problem-statement)
+5. [Solution Overview](#solution-overview)
+6. [Key Objectives & Goals](#key-objectives--goals)
+7. [Technology Stack](#technology-stack)
+8. [Installation Process](#installation-process)
+9. [Usage](#usage)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Our project is a software application designed to streamline the management of first-time appointments and administrative tasks in dental practices. It provides an intuitive experience for both patients and staff, improving efficiency and satisfaction.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Team Members
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Xander Wauters**: Product Owner, Scrum Master, Frontend Developer  
+  *Focused on team coordination and delivering seamless user interfaces.*
+- **Jorn De Smet**: UX Designer, Backend Developer  
+  *Passionate about creating intuitive user experiences and building reliable systems.*
+- **Lars Paridaens**: UX Designer, Database Developer, Backend Developer  
+  *Skilled in crafting user-centric designs and ensuring robust data structures.*
+- **Lucas Moons**: Security Manager, Database Developer  
+  *Dedicated to safeguarding systems and optimizing database efficiency.*
+- **Matteo Sprimont**: Head of Planning, Full Stack Developer  
+  *Excels at developing scalable solutions across the tech stack.*
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Project Overview
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+This software application targets dental practices to simplify appointment scheduling and management. Key functionalities include waitlist management, automated reminders, a Q&A feature, and fine tracking.
 
-### Premium Partners
+### Target Audience
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Dental Practices**: Seeking to streamline new patient appointment management.
+- **Patients**: Needing an easy and intuitive way to book their first appointment.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Problem Statement
 
-## Code of Conduct
+Dental practices often struggle with:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Missed appointments**: Leading to wasted time and revenue loss.
+- **Outdated systems**: Making scheduling complex and unintuitive.
+- **Inefficient communication**: Requiring excessive staff intervention.
+- **No proper fine or payment tracking**: Complicating financial management.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Solution Overview
+
+Our software focuses on simplifying first-time appointment scheduling for dental practices. 
+
+### Key Features
+
+- **Waitlist Management**: Automatically notify patients when slots become available.
+- **Reminders System**: Automated alerts for upcoming appointments.
+- **Q&A Feature**: Chatbot or FAQ for patient inquiries.
+- **Fine Management**: Track and process no-show fines with Stripe integration.
+- **Database Management**: Securely store patient data.
+- **Website Redesign**: Modernized design for better usability using React.js.
+
+---
+
+## Key Objectives & Goals
+
+1. Enhance the usability of the practice’s website.
+2. Enable users to join a waitlist and receive timely notifications.
+3. Provide admin tools for managing users, issuing fines, and monitoring operations.
+
+---
+
+## Technology Stack
+
+- **Frontend**: React.js
+- **Backend**: Laravel, PHP
+- **Database**: MySQL
+- **Payment Integration**: Stripe
+- **Development Tools**: Visual Studio Code, AWS, Figma, Trello, Canvas
+
+---
+
+## Installation Process
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/XanderWTRS/IT-Project.git
+   ```
+
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install && npm run dev
+   ```
+3. Install additional PHP libraries for functionality:
+   ```bash
+   composer require stripe/stripe-php twilio/sdk
+   ```
+
+4. Set up `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Generate the application key:
+   ```bash
+   php artisan key:generate
+   ```
+
+6. Link storage:
+   ```bash
+   php artisan storage:link
+   ```
+
+7. Configure database and email service in `.env`:
+
+   - Create a MySQL database locally (e.g., `dental_management`).
+   - Update `.env` with your database and email service details.
+
+---
+
+## Usage
+
+1. Run migrations and seed the database:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+2. Start the development server:
+   ```bash
+   php artisan serve
+   ```
+
+3. Access the application in your browser:
+   [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+### Admin Access
+
+- **Email**: `admin@ehb.be`
+- **Password**: `Password!321`
+
+### Public Access
+
+Users can register or log in to access profile and appointment features.
+
+---
+## Environment Configuration
+
+The `.env` file is crucial for the configuration of the application. Below are the essential keys required:
+
+1. **Stripe Keys**:
+   - `STRIPE_KEY`: Public key for Stripe integration.
+   - `STRIPE_SECRET`: Secret key for processing payments.
+
+2. **Twilio Keys** (for notifications and communication):
+   - `TWILIO_SID`: Twilio Account SID.
+   - `TWILIO_AUTH_TOKEN`: Twilio Auth Token.
+   - `TWILIO_PHONE_NUMBER`: Twilio Phone Number for sending messages.
+
+3. **Database Configuration**:
+   - `DB_CONNECTION`: Set to `mysql`.
+   - `DB_HOST`: Hostname of your database server (e.g., `127.0.0.1`).
+   - `DB_PORT`: Database port (default is `3306`).
+   - `DB_DATABASE`: Name of the database (e.g., `dental_management`).
+   - `DB_USERNAME`: Username for the database.
+   - `DB_PASSWORD`: Password for the database.
+
+4. **Email Service**:
+   - `MAIL_MAILER`: Set to your mail service (e.g., `smtp`).
+   - `MAIL_HOST`: Host of your mail server.
+   - `MAIL_PORT`: Port for mail server.
+   - `MAIL_USERNAME`: Email service username.
+   - `MAIL_PASSWORD`: Email service password.
+   - `MAIL_ENCRYPTION`: Encryption type (e.g., `tls`).
+   - `MAIL_FROM_ADDRESS`: Sender email address.
+   - `MAIL_FROM_NAME`: Sender name.
+
+Ensure these keys are correctly set to avoid issues during runtime.
+
+---
+
+## Resources
+
+- [Laravel Documentation](https://laravel.com/docs)
+- [Composer Documentation](https://getcomposer.org/doc/)
+- [Node.js and NPM](https://nodejs.org/)
+- [MySQL Guide](https://dev.mysql.com/doc/)
+- [Stripe Documentation](https://stripe.com/docs)
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
