@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -51,7 +52,7 @@ class RegisteredUserController extends Controller
             'naam' => $request->naam,
             'geboortedatum' => $request->geboortedatum,
             'mutualiteit' => $request->mutualiteit,
-            'rijksregister_nr' => Hash::make($request->rijksregister_nr),
+            'rijksregister_nr' => Crypt::encrypt($request->rijksregister_nr),
             'tandarts' => $request->tandarts,
             'gsm_nummer' => $request->gsm_nummer,
             'email' => $request->email,
