@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Afspraak;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class AfspraakController extends Controller
 {
