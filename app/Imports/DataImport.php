@@ -26,7 +26,7 @@ class DataImport implements ToModel, WithHeadingRow
                 'naam' => $row['naam'],
                 'geboortedatum' => $this->transformDate($row['geboortedatum']),
                 'mutualiteit' => $row['mutualiteit'],
-                'rijksregister_nr' => $row['rijksregister_nr'],
+                'rijksregister_nr' => encryptCompact($row['rijksregister_nr']),
                 'tandarts' => $row['tandarts'],
                 'gsm_nummer' => $row['gsm_nummer'],
                 'email' => $row['email'],

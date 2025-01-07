@@ -17,7 +17,7 @@ const Excel = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/upload-excel", formData, {
+      const response = await axios.post("http://127.0.0.1:8000/admin/upload-excel", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

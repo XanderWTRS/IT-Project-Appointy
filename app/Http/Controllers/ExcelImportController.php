@@ -18,7 +18,7 @@ class ExcelImportController extends Controller
             Excel::import(new DataImport, $request->file('file'));
             return response()->json(['message' => 'Data imported successfully'], 200);
         } catch (\Exception $e) {
-            \Log::error('Import error: ' . $e->getMessage(), ['stack' => $e->getTraceAsString()]);
+            Log::error('Import error: ' . $e->getMessage(), ['stack' => $e->getTraceAsString()]);
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
