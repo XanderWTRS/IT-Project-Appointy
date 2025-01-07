@@ -101,13 +101,14 @@ const AddPersoneelPage = () => {
             onClick={handleSubmit}
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Confirm
+            Bevestigen
           </button>
           <button
             type="button"
+            onClick={() => window.history.back()}
             className="bg-gray-500 text-white px-4 py-2 rounded"
           >
-            Cancel
+            Annuleren
           </button>
         </div>
       </form>

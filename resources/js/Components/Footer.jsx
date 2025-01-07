@@ -48,7 +48,7 @@ const Footer = () => {
                         <li><Link href="/privacypolicy" className="hover:text-blue-600">Privacy Policy</Link></li>
                     </ul>
                     <div className="mt-4">
-                        <a href="#" className="text-gray-500 hover:text-blue-600">
+                        <a href="https://www.facebook.com/liedent/" target='blank' className="text-gray-500 hover:text-blue-600">
                             <span className="inline-block bg-gray-200 rounded-full">
                                 <img src="/Assets/Icons/Facebook1.svg" alt="Facebook" className="w-8 h-8" />
                             </span>

@@ -23,7 +23,7 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if (Auth::check() && Auth::user()->is_admin) {
-        return redirect()->route('admin.klanten'); // Redirect admins to their dashboard
+        return redirect()->route('admin.admin.dashboard'); // Redirect admins to their dashboard
     }
 
     return Inertia::render('Welcome', [
@@ -71,7 +71,7 @@ Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('pa
 Route::get('/afspraken', [WachtlijstController::class, 'wachtlijst'])->name('afspraken');
 Route::post('/afspraken/annuleerWachtlijst', [WachtlijstController::class, 'cancelWaitlist'])->name('afspraken.cancelWachtlijst');
 Route::post('/afspraken/annuleerAfspraak', [AfspraakController::class, 'cancelAfspraak'])->name('afspraken.cancelAfspraak');
-
+Route::get('/release-users', [WachtlijstController::class, 'releaseUsers'])->name('release.users');
 
 Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
 Route::post('/afspraken/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');

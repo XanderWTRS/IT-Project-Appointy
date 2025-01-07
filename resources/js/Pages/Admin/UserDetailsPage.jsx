@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import DeletePopUp from "../../Components/DeletePopUp";
-import ConfirmationAnimation from "../../Components/ConfirmationAnimation"; // Importeer hier
+import ConfirmationAnimation from "../../Components/ConfirmationAnimation";
 import axios from "axios";
 import "/resources/css/bevstig.css";
 
@@ -22,31 +22,33 @@ const UserDetailsPage = ({ user }) => {
             setShowConfirmation(true);
             setTimeout(() => {
                 setShowConfirmation(false);
-                window.location.href = "/admin/klanten"; 
+                window.location.href = "/admin/klanten";
             }, 1100);
         } catch (error) {
             console.error("Error bij het bijwerken van de gebruiker:", error);
             alert("Er is iets misgegaan. Probeer het opnieuw.");
         }
     };
-    
+
     const handleDeleteClick = () => {
         setShowDeletePopUp(true);
+
     };
 
     const handleConfirmDelete = async () => {
         try {
-            const response = await axios.delete(`/admin/users/${user.id}`);
-    
-            // Controleer of er een redirect-URL in de response zit
-            if (response.data.redirect) {
-                window.location.href = response.data.redirect;
-            } else {
-                alert("Gebruiker succesvol verwijderd.");
-            }
+            await axios.delete(`/admin/users/${user.id}`);
+
+            setShowDeletePopUp(false);
+            setShowConfirmation(true);
+
+            setTimeout(() => {
+                setShowConfirmation(false);
+                window.location.href = "/admin/klanten";
+            }, 1500);
         } catch (error) {
             console.error("Error bij het verwijderen van de gebruiker:", error);
-    
+
             if (error.response?.status === 404) {
                 alert("Gebruiker niet gevonden. Het verwijderen is mislukt.");
             } else {
@@ -54,8 +56,7 @@ const UserDetailsPage = ({ user }) => {
             }
         }
     };
-    
-    
+
 
     const handleCancelDelete = () => {
         setShowDeletePopUp(false);
@@ -66,7 +67,7 @@ const UserDetailsPage = ({ user }) => {
             const response = await axios.patch(`/admin/users/${user.id}/toggle-boete`);
             if (response.data) {
                 setFormData({ ...formData, boete: response.data.boete });
-                
+
                 setShowConfirmation(true);
                 setTimeout(() => setShowConfirmation(false), 1100);
             }
@@ -78,7 +79,10 @@ const UserDetailsPage = ({ user }) => {
 
     return (
         <AdminLayout>
-            <h1 className="text-2xl font-bold mb-6">Gebruiker details</h1>
+                    <h1 className="text-2xl md:text-4xl font-bold text-gray-800 relative inline-block mb-12 mt-4">
+                    Klanten Details
+                    <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+                    </h1>
             <form className="grid grid-cols-2 gap-6">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Voornaam</label>
@@ -164,7 +168,7 @@ const UserDetailsPage = ({ user }) => {
                     </button>
                 </div>
             </form>
-            
+
 
             <ConfirmationAnimation show={showConfirmation} />
 

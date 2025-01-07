@@ -38,7 +38,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <nav>
                 <a
                     href="/admin/dashboard"
-                    className={`block py-2.5 px-4 rounded transition duration-200 `}
+                    className={`block py-2.5 px-4 rounded transition duration-200 ${
+                        isActive("/admin/dashboard") ? "bg-blue-700" : "hover:bg-blue-600"
+                    }`}
                 >
                     Dashboard
                 </a>

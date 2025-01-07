@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Head } from "@inertiajs/react";
 import AdminLayout from "../../Layouts/AdminLayout";
 import Excel from "/resources/js/Components/Excel";
 import SearchBar from "/resources/js/Components/SearchBar";
@@ -28,13 +29,12 @@ const KlantenPage = ({ klanten }) => {
 
   return (
     <AdminLayout>
+        <Head title="Klanten" />
       <div className="flex justify-between items-center mb-6">
-        {/* Title with Blue Line */}
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Klanten</h1>
-          <div className="h-1 w-60 bg-blue-500 mt-1"></div>
-        </div>
-        {/* Excel Button on the Right */}
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block mb-4 mt-4">
+            Klanten
+            <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500"></span>
+        </h1>
         <div>
           <Excel />
         </div>
