@@ -1,5 +1,15 @@
 # IT Project - Dental Practice Management Software
 
+![VScode](https://img.shields.io/badge/VScode-v1.96.2-blue?style=for-the-badge&logo=visual-studio-code&logoColor=white&labelColor=000000)
+![Node.js](https://img.shields.io/badge/Node.js-v20.18.1-green?style=for-the-badge&logo=node.js&logoColor=white&labelColor=000000)
+![MySQL](https://img.shields.io/badge/MySQL-v8.0.40-yellow?style=for-the-badge&logo=MySQL&logoColor=white&labelColor=000000)
+![Laravel](https://img.shields.io/badge/Laravel-v11.36.1-red?style=for-the-badge&logo=Laravel&logoColor=white&labelColor=000000)
+![Composer](https://img.shields.io/badge/Composer-v2.7.4-brown?style=for-the-badge&logo=Composer&logoColor=white&labelColor=000000)
+![PHP](https://img.shields.io/badge/PHP-v8.2.12-lightblue?style=for-the-badge&logo=PHP&logoColor=white&labelColor=000000)
+![Stripe](https://img.shields.io/badge/Stripe-v11-purple?style=for-the-badge&logo=Stripe&logoColor=white&labelColor=000000)
+![Twillio](https://img.shields.io/badge/Twillio-v5.4.0-darkred?style=for-the-badge&logo=Twillio&logoColor=white&labelColor=000000)
+![AWS](https://img.shields.io/badge/AWS-v2-orange?style=for-the-badge&logo=AWS&logoColor=white&labelColor=000000)
+
 ## Table of Contents
 
 1. [Overview](#overview)
