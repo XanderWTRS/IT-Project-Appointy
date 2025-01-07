@@ -12,10 +12,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Totaal afspraken
         $totalAppointments = Afspraak::count();
 
-        // Wachtlijstgegevens
         $totalInWaitlist = Wachtlijst::count();
         $waitlistByMonth = Wachtlijst::selectRaw('MONTH(added_at) as month, COUNT(*) as count')
             ->groupBy('month')
@@ -30,19 +28,17 @@ class DashboardController extends Controller
             ->toArray();
         $totalAvailableToSchedule = Wachtlijst::whereNotNull('can_make_appointment_at')->count();
 
-        // Afspraken per maand
+
         $appointmentsByMonth = Afspraak::selectRaw('MONTH(datum) as month, COUNT(*) as count')
             ->groupBy('month')
             ->orderBy('month')
             ->get()
             ->toArray();
 
-        // Voorschotten
         $advancePayments = Transaction::where('status', 'completed')
             ->where('behandeling', '!=', null)
             ->sum('amount') / 100;
 
-        // Betaalde boetes (Stripe)
         $paidFinesAmount = Transaction::where('status', 'completed')
             ->where('behandeling', '=', null)
             ->sum('amount') / 100;
@@ -50,13 +46,10 @@ class DashboardController extends Controller
             ->where('behandeling', '=', null)
             ->count();
 
-        // Onbetaalde boetes (actieve gebruikers met boete)
         $unpaidFinesCount = User::where('boete', true)->count();
 
-        // Totale boetes (betaald + onbetaald)
         $totalFinesCount = $paidFinesCount + $unpaidFinesCount;
 
-        // Boetes per maand (Stripe-transacties)
         $finesByMonth = Transaction::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
             ->where('behandeling', '=', null)
             ->groupBy('month')
@@ -64,17 +57,17 @@ class DashboardController extends Controller
             ->get()
             ->toArray();
 
-        // Donut data voor boetes
         $fineDonutData = [
             'paid' => $paidFinesCount,
             'unpaid' => $unpaidFinesCount,
         ];
 
-        // Donut data voor betalingen
         $paymentDonutData = [
             'advancePayments' => $advancePayments,
             'fines' => $paidFinesAmount,
         ];
+
+        $totalIncome = $advancePayments + $paidFinesAmount;
 
         return inertia('Admin/Dashboard', [
             'charts' => [
@@ -90,6 +83,7 @@ class DashboardController extends Controller
                 'totalFinesCount' => $totalFinesCount,
                 'fineDonutData' => $fineDonutData,
                 'donutData' => $paymentDonutData,
+                'totalIncome' => number_format($totalIncome, 2),
             ],
         ]);
     }

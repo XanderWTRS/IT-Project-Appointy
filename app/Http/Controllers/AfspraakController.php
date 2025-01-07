@@ -6,6 +6,7 @@ use App\Models\Afspraak;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 
 class AfspraakController extends Controller
 {

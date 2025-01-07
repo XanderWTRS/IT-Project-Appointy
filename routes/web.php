@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('pay-boete/{id}/success', [PaymentController::class, 'successBoete'])->name('successBoete');
     Route::get('/pay-boete', [PaymentController::class, 'payFine'])->name('payment.payFine');
+
+    Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
 });
 
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
@@ -73,7 +75,6 @@ Route::post('/afspraken/annuleerWachtlijst', [WachtlijstController::class, 'canc
 Route::post('/afspraken/annuleerAfspraak', [AfspraakController::class, 'cancelAfspraak'])->name('afspraken.cancelAfspraak');
 Route::get('/release-users', [WachtlijstController::class, 'releaseUsers'])->name('release.users');
 
-Route::get('/afspraken/make', [WachtlijstController::class, 'make'])->name('afspraken.make');
 Route::post('/afspraken/store', [WachtlijstController::class, 'storeAfspraak'])->name('afspraak.store');
 
 

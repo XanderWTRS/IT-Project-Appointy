@@ -27,12 +27,12 @@ class AfspraakSeeder extends Seeder
         ];
         $tijden = ['10:00-10:30', '10:30-11:00', '15:00-15:30', '15:30-16:00'];
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 100; $i++) {
 
             $behandeling = $faker->randomElement(array_keys($behandelingen));
             $dag = $behandelingen[$behandeling];
 
-            $datum = $faker->dateTimeBetween('-1 year', '+1 year');
+            $datum = $faker->dateTimeBetween('now', '+1 months');
             while ($datum->format('l') !== $dag) {
                 $datum->modify('+1 day');
             }

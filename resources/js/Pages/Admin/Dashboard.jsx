@@ -17,7 +17,6 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 export default function Dashboard({ charts }) {
     const [activeTab, setActiveTab] = useState("overview");
 
-    // Donut data for fines in Overview
     const fineDonutData = {
         labels: ["Betaalde Boetes", "Onbetaalde Boetes"],
         datasets: [
@@ -30,7 +29,6 @@ export default function Dashboard({ charts }) {
         ],
     };
 
-    // Donut data for revenue
     const revenueDonutData = {
         labels: ["Voorschotten", "Boetes"],
         datasets: [
@@ -43,7 +41,6 @@ export default function Dashboard({ charts }) {
         ],
     };
 
-    // Bar chart data for Appointments and Fines
     const barChartAppointmentsData = {
         labels: charts.appointmentsByMonth.map((item) => `Maand ${item.month}`),
         datasets: [
@@ -70,7 +67,6 @@ export default function Dashboard({ charts }) {
         ],
     };
 
-    // Waitlist charts
     const waitlistChartData = {
         labels: charts.waitlistByMonth.map((item) => `Maand ${item.month}`),
         datasets: [
@@ -208,7 +204,7 @@ export default function Dashboard({ charts }) {
                             <div className="mt-4 bg-white shadow rounded p-4">
                                 <h2 className="text-lg font-semibold">Totale Inkomsten</h2>
                                 <p className="text-3xl">
-                                    € {parseFloat(charts.advancePayments) + parseFloat(charts.fines)}
+                                    € {charts.totalIncome}
                                 </p>
                             </div>
                         </div>

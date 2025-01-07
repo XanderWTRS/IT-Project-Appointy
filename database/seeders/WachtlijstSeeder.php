@@ -27,7 +27,7 @@ class WachtlijstSeeder extends Seeder
 
             Wachtlijst::create([
                 'user_id' => $userId,
-                'added_at' => $faker->dateTimeBetween('-1 months', 'now')->format('Y-m-d'),
+                'added_at' => $faker->dateTimeBetween('-1 months', '+1 months')->format('Y-m-d'),
                 'behandeling' => $faker->randomElement($behandelingen),
                 'can_make_appointment_at' => $canMakeAppointmentAt ? $canMakeAppointmentAt->format('Y-m-d') : null,
             ]);
