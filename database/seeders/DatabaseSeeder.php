@@ -2,16 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Personeel;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
+        $this->call(UserSeeder::class);
+        $this->call(PersoneelSeeder::class);
+        $this->call(AfspraakSeeder::class);
         $this->call(WachtlijstSeeder::class);
+        $this->call(TransactionSeeder::class);
     }
 }
