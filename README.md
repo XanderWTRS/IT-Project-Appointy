@@ -9,6 +9,7 @@
 ![Stripe](https://img.shields.io/badge/Stripe-v11-purple?style=for-the-badge&logo=Stripe&logoColor=white&labelColor=000000)
 ![Twillio](https://img.shields.io/badge/Twillio-v5.4.0-darkred?style=for-the-badge&logo=Twillio&logoColor=white&labelColor=000000)
 ![AWS](https://img.shields.io/badge/AWS-v2-orange?style=for-the-badge&logo=AWS&logoColor=white&labelColor=000000)
+![React.js](https://img.shields.io/badge/React.js-v19.0-darkblue?style=for-the-badge&logo=React&logoColor=white&labelColor=000000)
 
 ## Table of Contents
 
@@ -136,6 +137,7 @@ Our software focuses on simplifying first-time appointment scheduling for dental
 
    - Create a MySQL database locally (e.g., `dental_management`).
    - Update `.env` with your database and email service details.
+   - Update `.env` with your Twillio and Stripe service details.
 
 ---
 
@@ -156,8 +158,8 @@ Our software focuses on simplifying first-time appointment scheduling for dental
 
 ### Admin Access
 
-- **Email**: `admin@ehb.be`
-- **Password**: `Password!321`
+- **Email**: `admin@admin.be`
+- **Password**: `12345678`
 
 ### Public Access
 
