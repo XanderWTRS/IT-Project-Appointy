@@ -56,10 +56,13 @@ class PaymentController extends Controller
            'success_url' => route('payment.succes', [], true),
            'cancel_url' => route('payment.cancel', [], true),
        ]);
+
+       $paymentIntentId = $session->payment_intent;
        Transaction::create([
             'status' => 'pending',
             'user_id' => $user->id,
             'session_id' => $session->id,
+            'payment_intent_id' => $paymentIntentId,
             'keuze_email' => $request->input('keuze_email', false),
             'keuze_sms' => $request->input('keuze_sms', false),
             'behandeling' => $request->input('treatment'),
@@ -72,7 +75,7 @@ class PaymentController extends Controller
     {
         $user = auth()->user();
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-        
+
         $session = $stripe->checkout->sessions->create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -89,7 +92,7 @@ class PaymentController extends Controller
         'success_url' => route('successBoete', ['id' => $user->id], true,),
         'cancel_url' => route('payment.cancel', [], true),
         ]);
-        
+
         Transaction::create([
             'status' => 'pending',
             'user_id' => $user->id,
@@ -97,7 +100,7 @@ class PaymentController extends Controller
             'behandeling' => null,
             'amount' => 5000,
         ]);
-        
+
         return redirect($session->url);
     }
 
@@ -138,10 +141,13 @@ class PaymentController extends Controller
         switch ($event->type) {
             case 'checkout.session.completed':
                 $session = $event->data->object;
+                $paymentIntentId = $session->payment_intent;
                 $transaction = Transaction::where('session_id', $session->id)->first();
 
                 if ($transaction && $transaction->status === 'pending') {
                     $transaction->update(['status' => 'completed']);
+                    $transaction->update(['payment_intent_id' => $paymentIntentId]);
+
                     $user = User::find($transaction->user_id);
                     $user->update([
                         'betaald' => true,

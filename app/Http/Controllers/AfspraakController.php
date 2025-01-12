@@ -74,9 +74,38 @@ class AfspraakController extends Controller
         $appointment = Afspraak::where('user_id', $user->id)->latest()->first();
 
         if ($appointment) {
+            $transaction = Transaction::where('user_id', $user->id)
+                ->where('status', 'completed')
+                ->latest()
+                ->first();
+
+            if ($transaction) {
+                $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+                try {
+                    $refund = $stripe->refunds->create([
+                        'payment_intent' => $transaction->payment_intent_id,
+                        'amount' => $transaction->amount,
+                    ]);
+
+                    Log::info('Refund issued for canceled appointment', [
+                        'refund_id' => $refund->id,
+                        'transaction_id' => $transaction->id,
+                        'user_id' => $user->id,
+                        'amount' => $transaction->amount,
+                    ]);
+
+                    $transaction->update(['status' => 'refunded']);
+                } catch (\Stripe\Exception\ApiErrorException $e) {
+                    Log::error('Stripe refund failed', ['exception' => $e]);
+                    return redirect()->route('afspraken')->with('error', 'Er is een fout opgetreden bij het verwerken van de terugbetaling.');
+                }
+            }
+
             $appointment->delete();
             $user->update(['betaald' => false]);
-            return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd.');
+
+            return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd en de betaling is terugbetaald.');
         }
 
         return redirect()->route('afspraken')->with('error', 'Er is geen afspraak om te annuleren.');

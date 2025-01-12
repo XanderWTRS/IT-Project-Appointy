@@ -9,6 +9,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentConfirmationMail;
 use App\Services\TwilioService;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 
 class WachtlijstController extends Controller
 {
@@ -64,20 +66,55 @@ class WachtlijstController extends Controller
 }
 
 
-    public function cancelWaitlist()
-    {
-        $user = auth()->user();
+public function cancelWaitlist()
+{
+    $user = auth()->user();
 
-        if (!$user) {
-            return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
-        }
-        Wachtlijst::where('user_id', $user->id)->delete();
-
-
-        $user->update(['betaald' => false]);
-
-        return redirect()->route('afspraken')->with('success', 'Uw afspraak is succesvol geannuleerd.');
+    if (!$user) {
+        return redirect()->route('afspraken')->with('error', 'Unauthorized access.');
     }
+
+    $transaction = Transaction::where('user_id', $user->id)
+        ->where('status', 'completed')
+        ->latest()
+        ->first();
+
+    if ($transaction) {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+        try {
+            $refund = $stripe->refunds->create([
+                'payment_intent' => $transaction->payment_intent_id,
+                'amount' => $transaction->amount,
+            ]);
+
+
+            Log::info('Refund issued', [
+                'refund_id' => $refund->id,
+                'transaction_id' => $transaction->id,
+                'user_id' => $user->id,
+                'amount' => $transaction->amount,
+            ]);
+
+            $transaction->update(['status' => 'refunded']);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            Log::error('Stripe refund failed', ['exception' => $e]);
+            return redirect()->route('afspraken')->with('error', 'Er is een fout opgetreden bij het verwerken van de terugbetaling.');
+        }
+    } else {
+        return redirect()->route('afspraken')->with('error', 'Geen voltooide transactie gevonden om terug te betalen.');
+    }
+
+
+    Wachtlijst::where('user_id', $user->id)->delete();
+
+
+    $user->update(['betaald' => false]);
+
+    return redirect()->route('afspraken')->with('success', 'Uw wachtlijst is geannuleerd en de betaling is terugbetaald.');
+}
+
+
 
     public function make()
     {

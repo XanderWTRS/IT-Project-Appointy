@@ -16,6 +16,7 @@ class Transaction extends Model
         'keuze_sms',
         'amount',
         'behandeling',
+        'payment_intent_id',
     ];
 
     public function user()
